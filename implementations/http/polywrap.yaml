@@ -1,9 +1,9 @@
 format: 0.2.0
 project:
-  name: http-uri-resolver
+  name: http-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml
-  schema: ./src/schema.graphql
+  schema: ./polywrap.graphql
 extensions:
   deploy: ./polywrap.deploy.yaml

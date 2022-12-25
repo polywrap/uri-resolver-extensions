@@ -1,6 +1,6 @@
 format: 0.2.0
 project:
-  name: ens-text-record-uri-resolver
+  name: ens-text-record-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml

@@ -1,9 +1,9 @@
 format: 0.3.0
 project:
-  name: uri-resolver-extension-interface
+  name: uri-resolver-ext-interface
   type: interface
 source:
-  schema: ./schema.graphql
+  schema: ./polywrap.graphql
 resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml

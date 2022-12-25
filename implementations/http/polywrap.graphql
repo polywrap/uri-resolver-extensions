@@ -1,0 +1,5 @@
+#import * into IUriResolverExt from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.0.0"
+#import { Module } into Http from "wrap://ens/wrappers.polywrap.eth:http@1.0.0"
+
+type Module implements UriResolver_Module {
+}

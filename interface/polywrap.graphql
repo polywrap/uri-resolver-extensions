@@ -1,0 +1,31 @@
+type Module {
+  """
+  Attempt to resolve a wrapper from its URI.
+    @param authority - URI authority (ex: "file")
+    @param path - URI path (ex: "/path/to/wrapper")
+  """
+  tryResolveUri(
+    authority: String!
+    path: String!
+  ): MaybeUriOrManifest
+
+  """
+  Attempt to read a file.
+    @param path - URI path (ex: "/path/to/wrapper/wrap.wasm")
+  """
+  getFile(
+    path: String!
+  ): Bytes
+}
+
+type MaybeUriOrManifest {
+  """
+  A new URI to be used for resolving the wrapper (redirection).
+  """
+  uri: String
+
+  """
+  The wrapper's manifest, if found (finality).
+  """
+  manifest: Bytes
+}

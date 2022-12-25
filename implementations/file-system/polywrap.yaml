@@ -1,9 +1,10 @@
-format: 0.2.0
+format: 0.3.0
 project:
-  name: file-system-uri-resolver
+  name: file-system-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml
-  schema: ./src/schema.graphql
+  schema: ./polywrap.graphql
+resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml

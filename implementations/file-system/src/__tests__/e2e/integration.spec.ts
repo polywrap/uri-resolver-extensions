@@ -1,22 +1,43 @@
-import { PolywrapClient } from "@polywrap/client-js";
+import {
+  PolywrapClient,
+  UriResolverAggregator,
+  StaticResolver,
+  ExtendableUriResolver
+} from "@polywrap/client-js";
+import { WasmPackage } from "@polywrap/wasm-js";
 import path from "path";
 import fs from "fs";
 
 jest.setTimeout(60000);
 
-describe("ens-contenthash-resolver e2e tests", () => {
+describe("file-system-uri-resolver-ext e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient();
-  let wrapperUri: string;
+  const dirname: string = path.resolve(__dirname);
+  const wrapperPath: string = path.join(dirname, "..", "..", "../build");
+  const wrapperPackage = WasmPackage.from(
+    fs.readFileSync(path.join(wrapperPath, "wrap.info")),
+    fs.readFileSync(path.join(wrapperPath, "wrap.wasm"))
+  );
+
+  const client = new PolywrapClient({
+    resolver: new UriResolverAggregator([
+      StaticResolver.from([
+        {
+          uri: "wrap://ens/wrappers.polywrap.eth:file-system-uri-resolver-ext@1.0.0",
+          package: wrapperPackage
+        }
+      ]),
+      // TODO: accept custom URI here + update URI to be new URI
+      new ExtendableUriResolver()
+    ]),
+    interfaces: [{
+      interface: ""
+    }]
+  }, { noDefaults: true })
+
   const manifest = fs.readFileSync(
     __dirname + "/../test-wrapper/wrap.info"
   ).buffer;
-
-  beforeAll(() => {
-    const dirname: string = path.resolve(__dirname);
-    const wrapperPath: string = path.join(dirname, "..", "..", "..");
-    wrapperUri = `fs/${wrapperPath}/build`;
-  })
 
   it("sanity - fs", async () => {
     const result = await client.invoke({
