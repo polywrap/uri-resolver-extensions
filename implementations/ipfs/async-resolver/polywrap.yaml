@@ -7,11 +7,7 @@ source:
   schema: ./src/schema.graphql
   import_abis:
     - uri: "wrap://ens/uri-resolver.core.polywrap.eth"
-      abi: ./schema.resolver.graphql
-    - uri: "wrap://ens/ipfs-http-client.polywrap.eth"
-      abi: ../../http-client/ipfs-http-client/src/schema.graphql
-    - uri: "wrap://ens/http.polywrap.eth"
-      abi: ../../http-client/http-plugin-formdata/schema.interface.graphql
+      abi: ../../../interface/schema.graphql
 extensions:
   build: ./polywrap.build.yaml
   deploy: ./polywrap.deploy.yaml

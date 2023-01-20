@@ -1,11 +1,14 @@
 import { concurrentPromisePlugin } from "concurrent-plugin-js";
-import { PolywrapCoreClientConfig } from "@polywrap/client-js";
+import {defaultInterfaces, defaultPackages, PolywrapCoreClientConfig} from "@polywrap/client-js";
 import path from "path";
 import { ClientConfigBuilder } from "@polywrap/client-config-builder-js";
 import { Uri } from "@polywrap/core-js";
 import { fileSystemPlugin } from "@polywrap/fs-plugin-js";
 import { fileSystemResolverPlugin } from "@polywrap/fs-resolver-plugin-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
+import {httpResolverPlugin} from "@polywrap/http-resolver-plugin-js";
+
+export const ipfsResolverUri: string = "wrap://ens/ipfs-resolver.polywrap.eth";
 
 export function getClientConfig(
   provider: string,
@@ -13,61 +16,56 @@ export function getClientConfig(
   retries?: { tryResolveUri: number; getFile: number },
 ): PolywrapCoreClientConfig {
   const ipfsResolverPath = path.resolve(path.join(__dirname, "/../../../build"));
-  const ipfsResolverUri = `wrap://fs/${ipfsResolverPath}`;
-
-  const ipfsClientPath = path.resolve(path.join(__dirname, "/../../../../../http-client/ipfs-http-client/build"));
-  const ipfsClientUri = `wrap://fs/${ipfsClientPath}`;
-
-  const concurrencyInterfacePath = path.resolve(path.join(__dirname, "/../../../../../../../system/concurrency/interface/build"));
-  const concurrencyInterfaceUri = `wrap://fs/${concurrencyInterfacePath}`;
+  const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
 
   return new ClientConfigBuilder()
     .addEnvs([
         {
-          uri: new Uri("wrap://ens/ipfs-resolver.polywrap.eth"),
+          uri: new Uri(ipfsResolverUri),
           env: { provider, timeout, retries },
         },
       ])
     .addRedirects([
         {
-          from: new Uri("wrap://ens/ipfs-resolver.polywrap.eth"),
-          to: new Uri(ipfsResolverUri),
+          from: new Uri(ipfsResolverUri),
+          to: new Uri(ipfsResolverFsUri),
         },
         {
           from: new Uri("ens/ipfs-http-client.polywrap.eth"),
-          to: new Uri(ipfsClientUri),
-        },
-        {
-          from: new Uri("wrap://ens/goerli/interface.concurrent.wrappers.eth"),
-          to: new Uri(concurrencyInterfaceUri),
+          to: new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"),
         },
       ])
     .addPackages( [
         {
-          uri: new Uri("wrap://ens/fs.polywrap.eth"),
+          uri: new Uri(defaultPackages.fileSystem),
           package: fileSystemPlugin({}),
         },
         {
-          uri: new Uri("wrap://ens/fs-resolver.polywrap.eth"),
+          uri: new Uri(defaultPackages.fileSystemResolver),
           package: fileSystemResolverPlugin({}),
         },
         {
-          uri: new Uri("ens/concurrent.polywrap.eth"),
+          uri: new Uri(defaultPackages.concurrent),
           package: concurrentPromisePlugin({})
         },
         {
-          uri: new Uri("wrap://ens/http.polywrap.eth"),
+          uri: new Uri(defaultPackages.http),
           package: httpPlugin({}),
         },
+      {
+        uri: new Uri(defaultPackages.httpResolver),
+        package: httpResolverPlugin({}),
+      }
       ])
     .addInterfaceImplementations(
-      new Uri("wrap://ens/uri-resolver.core.polywrap.eth"),[
-            new Uri("wrap://ens/ipfs-resolver.polywrap.eth"),
-            new Uri("wrap://ens/fs-resolver.polywrap.eth"),
+      new Uri(defaultInterfaces.uriResolver),[
+        new Uri(ipfsResolverUri),
+        new Uri(defaultPackages.fileSystemResolver),
+        new Uri(defaultPackages.httpResolver),
           ])
     .addInterfaceImplementations(
-      new Uri("wrap://ens/goerli/interface.concurrent.wrappers.eth"),
-      [new Uri("ens/concurrent.polywrap.eth")]
+      new Uri(defaultInterfaces.concurrent),
+      [new Uri(defaultPackages.concurrent)]
     )
     .buildCoreConfig()
 }

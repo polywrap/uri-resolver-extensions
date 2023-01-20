@@ -28,6 +28,7 @@ pub fn exec_cat(ipfs_provider: &str, cid: &str, timeout: u32) -> Result<Vec<u8>,
         response_type: HttpResponseType::BINARY,
         body: None,
         timeout: Some(timeout),
+        form_data: None,
     };
 
     let http_result = HttpModule::get(&ArgsGet { url, request: Some(request) });

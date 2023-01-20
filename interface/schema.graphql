@@ -7,7 +7,7 @@ type Module {
   tryResolveUri(
     authority: String!
     path: String!
-  ): MaybeUriOrManifest
+  ): MaybeUriOrManifest @env(required: false)
 
   """
   Attempt to read a file.
@@ -15,7 +15,7 @@ type Module {
   """
   getFile(
     path: String!
-  ): Bytes
+  ): Bytes @env(required: false)
 }
 
 type MaybeUriOrManifest {
