@@ -27,6 +27,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
 
 [[package]]
+name = "fs-uri-resolver-wasm-rs"
+version = "0.1.0"
+dependencies = [
+ "polywrap-wasm-rs",
+ "serde",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -65,9 +73,9 @@ dependencies = [
 
 [[package]]
 name = "polywrap-wasm-rs"
-version = "0.1.1"
+version = "0.10.0-pre.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "27b79b5780d0a24f0081280edd12957c0f3354a91665d8561177dd6248a977f5"
+checksum = "5ace5eefe0c8f2bec341eeecc143078d1afe66c850e7fe08910ed21852d56502"
 dependencies = [
  "bigdecimal",
  "byteorder",
@@ -141,14 +149,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "template-wasm-rs"
-version = "0.1.0"
-dependencies = [
- "polywrap-wasm-rs",
- "serde",
 ]
 
 [[package]]
