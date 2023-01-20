@@ -8,11 +8,7 @@
   "devDependencies": {
     "@polywrap/client-js": "0.10.0-pre.7",
     "@polywrap/wasm-js": "0.10.0-pre.7",
-    "@polywrap/ens-resolver-plugin-js": "0.10.0-pre.7",
-    "@polywrap/http-plugin-js": "0.10.0-pre.7",
-    "@polywrap/http-resolver-plugin-js": "0.10.0-pre.7",
-    "@polywrap/ipfs-plugin-js": "0.10.0-pre.7",
-    "@polywrap/ipfs-resolver-plugin-js": "0.10.0-pre.7",
+    "@polywrap/fs-plugin-js": "0.10.0-pre.7",
     "@types/jest": "26.0.8",
     "jest": "26.6.3",
     "polywrap": "0.10.0-pre.7",

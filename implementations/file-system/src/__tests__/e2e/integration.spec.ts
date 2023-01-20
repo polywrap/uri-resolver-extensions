@@ -1,12 +1,46 @@
-import { PolywrapClient } from "@polywrap/client-js";
+import {
+  defaultInterfaces,
+  defaultPackages,
+  PolywrapClient,
+} from "@polywrap/client-js";
 import fs from "fs";
-import {fsResolverUri, getClientConfig} from "../config";
+import path from "path";
+import {WasmPackage} from "@polywrap/wasm-js";
+import {ClientConfigBuilder} from "@polywrap/client-config-builder-js";
+import {Uri} from "@polywrap/core-js";
+import {fileSystemPlugin} from "@polywrap/fs-plugin-js";
 
 jest.setTimeout(120000);
 
 describe("file-system-uri-resolver-ext e2e tests", () => {
+  const fsResolverUri = "wrap://ens/wrappers.polywrap.eth:file-system-uri-resolver-ext@1.0.0";
+  const dirname: string = path.resolve(__dirname);
+  const wrapperPath: string = path.join(dirname, "..", "..", "..", "build");
+  const wrapperPackage = WasmPackage.from(
+    fs.readFileSync(path.join(wrapperPath, "wrap.info")),
+    fs.readFileSync(path.join(wrapperPath, "wrap.wasm"))
+  );
 
-  const client = new PolywrapClient(getClientConfig(), { noDefaults: true })
+  const config = new ClientConfigBuilder()
+    .addPackage({
+      uri: fsResolverUri,
+      package: wrapperPackage
+    })
+    .addPackage({
+      uri: defaultPackages.fileSystem,
+      package: fileSystemPlugin({}),
+    })
+    .addRedirect(
+      "wrap://ens/wrappers.polywrap.eth:file-system@1.0.0",
+      defaultPackages.fileSystem
+    )
+    .addInterfaceImplementation(
+      new Uri(defaultInterfaces.uriResolver),
+      new Uri(fsResolverUri)
+    )
+    .buildCoreConfig()
+
+  const client = new PolywrapClient(config, { noDefaults: true })
 
   const manifest = fs.readFileSync(
     __dirname + "/../test-wrapper/wrap.info"
