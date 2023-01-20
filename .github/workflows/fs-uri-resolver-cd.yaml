@@ -1,14 +1,14 @@
-name: sync-ipfs-uri-resolver-cd
+name: file-system-uri-resolver-cd
 
 on:
   pull_request:
     types: [closed]
     paths:
-      - "implementations/ipfs/sync-resolver/**"
+      - "implementations/file-system/**"
 
 jobs:
   cd:
-    name: sync-ipfs-uri-resolver-cd
+    name: file-system-uri-resolver-cd
     if: |
       github.event.pull_request.merged &&
       startsWith(github.event.pull_request.title, '[CD]') != true &&
@@ -22,7 +22,7 @@ jobs:
       - name: Read .nvmrc
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-        working-directory: ./implementations/ipfs/sync-resolver
+        working-directory: ./implementations/file-system
 
       - name: Setup Node.js
         uses: actions/setup-node@master
@@ -31,20 +31,20 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
-        working-directory: ./implementations/ipfs/sync-resolver
+        working-directory: ./implementations/file-system
 
       - name: Build
         run: yarn build
-        working-directory: ./implementations/ipfs/sync-resolver
+        working-directory: ./implementations/file-system
 
       - name: Deploy
         run: yarn deploy
-        working-directory: ./implementations/ipfs/sync-resolver
+        working-directory: ./implementations/file-system
 
       - name: PR New URI
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: ipfs-sync-uri-resolver-cd-pr-${{github.event.number}}
-          commit-message: "[CD] ipfs-sync-uri-resolver"
-          title: "[CD] ipfs-sync-uri-resolver"
+          branch: file-system-uri-resolver-cd-pr-${{github.event.number}}
+          commit-message: "[CD] file-system-uri-resolver"
+          title: "[CD] file-system-uri-resolver"
           body: "Triggered by: https://github.com/${{github.repository}}/pull/${{github.event.number}}"

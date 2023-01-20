@@ -1,14 +1,14 @@
-name: async-ipfs-uri-resolver-cd
+name: ens-text-record-uri-resolver-cd
 
 on:
   pull_request:
     types: [closed]
     paths:
-      - "implementations/ipfs/async-resolver/**"
+      - "implementations/ens-text-record/**"
 
 jobs:
   cd:
-    name: async-ipfs-uri-resolver-cd
+    name: ens-text-record-uri-resolver-cd
     if: |
       github.event.pull_request.merged &&
       startsWith(github.event.pull_request.title, '[CD]') != true &&
@@ -22,7 +22,7 @@ jobs:
       - name: Read .nvmrc
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-        working-directory: ./implementations/ipfs/async-resolver
+        working-directory: ./implementations/ens-text-record
 
       - name: Setup Node.js
         uses: actions/setup-node@master
@@ -31,20 +31,20 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
-        working-directory: ./implementations/ipfs/async-resolver
+        working-directory: ./implementations/ens-text-record
 
       - name: Build
         run: yarn build
-        working-directory: ./implementations/ipfs/async-resolver
+        working-directory: ./implementations/ens-text-record
 
       - name: Deploy
         run: yarn deploy
-        working-directory: ./implementations/ipfs/async-resolver
+        working-directory: ./implementations/ens-text-record
 
       - name: PR New URI
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: ipfs-async-uri-resolver-cd-pr-${{github.event.number}}
-          commit-message: "[CD] ipfs-async-uri-resolver"
-          title: "[CD] ipfs-async-uri-resolver"
+          branch: ens-text-record-uri-resolver-cd-pr-${{github.event.number}}
+          commit-message: "[CD] ens-text-record-uri-resolver"
+          title: "[CD] ens-text-record-uri-resolver"
           body: "Triggered by: https://github.com/${{github.repository}}/pull/${{github.event.number}}"
