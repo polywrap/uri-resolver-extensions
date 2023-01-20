@@ -1,0 +1,15 @@
+type Module {
+  tryResolveUri(
+    authority: String!
+    path: String!
+  ): MaybeUriOrManifest @env(required: false)
+
+  getFile(
+    path: String!
+  ): Bytes @env(required: false)
+}
+
+type MaybeUriOrManifest {
+  uri: String
+  manifest: Bytes
+}

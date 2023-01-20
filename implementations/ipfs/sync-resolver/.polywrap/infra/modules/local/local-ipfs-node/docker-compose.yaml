@@ -1,0 +1,8 @@
+version: "3"
+services:
+  ipfs:
+    build: /Users/kris/WebstormProjects/polywrap/ipfs/uri-resolver/sync-uri-resolver/.polywrap/infra/modules/local/local-ipfs-node/ipfs
+    ports:
+      - ${IPFS_PORT:-5001}:5001
+      - 8080:8080
+      - 4001:4001

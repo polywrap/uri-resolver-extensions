@@ -1,0 +1,17 @@
+format: 0.2.0
+project:
+  name: ipfs-uri-resolver-rs-async
+  type: wasm/rust
+source:
+  module: ./Cargo.toml
+  schema: ./src/schema.graphql
+  import_abis:
+    - uri: "wrap://ens/uri-resolver.core.polywrap.eth"
+      abi: ./schema.resolver.graphql
+    - uri: "wrap://ens/ipfs-http-client.polywrap.eth"
+      abi: ../../http-client/ipfs-http-client/src/schema.graphql
+    - uri: "wrap://ens/http.polywrap.eth"
+      abi: ../../http-client/http-plugin-formdata/schema.interface.graphql
+extensions:
+  build: ./polywrap.build.yaml
+  deploy: ./polywrap.deploy.yaml

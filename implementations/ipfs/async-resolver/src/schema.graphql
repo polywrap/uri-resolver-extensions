@@ -1,0 +1,38 @@
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/uri-resolver.core.polywrap.eth"
+#import { Module } into Client from "wrap://ens/ipfs-http-client.polywrap.eth"
+#import { Module, Task, TaskResult, ReturnWhen } into Concurrent from "wrap://ens/goerli/interface.concurrent.wrappers.eth"
+#use { getImplementations } for Concurrent
+
+type Module implements UriResolver_Module {}
+
+type Retries {
+  tryResolveUri: UInt32
+  getFile: UInt32
+}
+
+type Env {
+  """
+  Retry request on failure
+  """
+  retries: Retries
+
+  """
+  Response timeout for HTTP requests
+  """
+  timeout: UInt32
+
+  """
+  Default provider
+  """
+  provider: String!
+
+  """
+  Fallback providers
+  """
+  fallbackProviders: [String!]
+
+  """
+  Disable querying providers in parallel when resolving URIs
+  """
+  disableParallelRequests: Boolean
+}
