@@ -12,6 +12,11 @@ import {fileSystemPlugin} from "@polywrap/fs-plugin-js";
 
 jest.setTimeout(120000);
 
+type MaybeUriOrManifest = {
+  uri: string;
+  manifest: Uint8Array;
+}
+
 describe("file-system-uri-resolver-ext e2e tests", () => {
   const fsResolverUri = "wrap://ens/wrappers.polywrap.eth:file-system-uri-resolver-ext@1.0.0";
   const dirname: string = path.resolve(__dirname);
@@ -47,7 +52,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
   ).buffer
 
   it("sanity - fs", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: fsResolverUri,
       method: "tryResolveUri",
       args: {
@@ -58,15 +63,13 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
-        manifest: manifest,
-        uri: null
-      });
+      expect(result.value.manifest.buffer).toStrictEqual(manifest);
+      expect(result.value.uri).toStrictEqual(null);
     }
   });
 
   it("sanity - file", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: fsResolverUri,
       method: "tryResolveUri",
       args: {
@@ -77,15 +80,13 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
-        manifest: manifest,
-        uri: null
-      });
+      expect(result.value.manifest.buffer).toStrictEqual(manifest);
+      expect(result.value.uri).toStrictEqual(null);
     }
   });
 
   it("incorrect authority", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: fsResolverUri,
       method: "tryResolveUri",
       args: {
@@ -101,7 +102,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
   });
 
   it("found nothing", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: fsResolverUri,
       method: "tryResolveUri",
       args: {
@@ -112,7 +113,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         uri: null,
         manifest: null,
       });
@@ -120,7 +121,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
   });
 
   it("getFile", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<Uint8Array>({
       uri: fsResolverUri,
       method: "getFile",
       args: {
@@ -129,6 +130,6 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
     });
 
     if (!result.ok) fail(result.error);
-    expect(result.value).toMatchObject(manifest);
+    expect(result.value.buffer).toStrictEqual(manifest);
   });
 });
