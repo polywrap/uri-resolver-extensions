@@ -1,0 +1,4 @@
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ipfs/QmVnRxP9WGxC1D9xjFBGFmCVw8UPetu9EUtKMrXwi3hSDi"
+
+type Module implements UriResolver_Module {
+}

@@ -10,9 +10,9 @@
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
-  - [ ] build & deploy working
+  - [x] build & deploy working
   - [ ] publish to ENS
-  - [ ] remove import_abis
+  - [x] remove import_abis
 - [ ] http resolver
 - [ ] ens-text-record resolver
 - [ ] ens-contenthash resolver
