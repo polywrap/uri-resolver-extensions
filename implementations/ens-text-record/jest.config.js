@@ -9,5 +9,6 @@ module.exports = {
       diagnostics: false,
     },
   },
-  modulePathIgnorePatterns: [".polywrap"]
+  testPathIgnorePatterns: ["/.polywrap"],
+  modulePathIgnorePatterns: ["/.polywrap"]
 };

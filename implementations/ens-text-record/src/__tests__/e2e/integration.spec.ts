@@ -27,7 +27,7 @@ describe("ens-text-record-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         manifest: null,
         uri: "ipfs/QmYetqf2GwXx2TKvg7Mv5ikKLfJGdD1sY3GVrnM2nPKAf2"
       });
@@ -94,7 +94,7 @@ describe("ens-text-record-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         uri: null,
         manifest: null,
       });
@@ -120,7 +120,7 @@ describe("ens-text-record-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         manifest: null,
         uri: "wrap://ens/goerli/wrappers.polywrap-test.eth:foo"
       });
@@ -137,7 +137,7 @@ describe("ens-text-record-resolver e2e tests", () => {
     if (uri.ok) {
       expect(uri.value.type).toBe("wrapper");
     }
-    expect(path).toMatchObject([
+    expect(path).toStrictEqual([
       new Uri("ens/goerli/wrappers.polywrap-test.eth:package@1.0.0"),
       new Uri("ens/goerli/wrappers.polywrap-test.eth:foo"),
       new Uri("ipfs/QmYetqf2GwXx2TKvg7Mv5ikKLfJGdD1sY3GVrnM2nPKAf2")

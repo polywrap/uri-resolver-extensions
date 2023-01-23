@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "scripts": {
     "codegen": "npx polywrap codegen",
-    "build": "npx polywrap build",
+    "build": "yarn codegen && npx polywrap build",
     "deploy": "npx polywrap deploy -o deployment.json",
     "test": "jest --passWithNoTests --runInBand --verbose"
   },
