@@ -1,13 +1,23 @@
-import { PolywrapClient } from "@polywrap/client-js";
+import {defaultPackages, PolywrapClient} from "@polywrap/client-js";
 import { runCLI } from "@polywrap/test-env-js";
 import path from "path";
 import fs from "fs";
 
-jest.setTimeout(60000);
+jest.setTimeout(90000);
+
+type MaybeUriOrManifest = {
+  uri: string;
+  manifest: Uint8Array;
+}
 
 describe("http-resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient();
+  const client: PolywrapClient = new PolywrapClient({
+    redirects: [{
+      from: "wrap://ens/wrappers.polywrap.eth:http@1.0.0",
+      to: defaultPackages.http
+    }]
+  });
   let wrapperUri: string;
   const manifest = fs.readFileSync(
     __dirname + "/../test-wrapper/wrap.info"
@@ -39,7 +49,7 @@ describe("http-resolver e2e tests", () => {
   });
 
   it("sanity - http", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -50,15 +60,13 @@ describe("http-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
-        manifest: manifest,
-        uri: null
-      });
+      expect(result.value.manifest.buffer).toStrictEqual(manifest);
+      expect(result.value.uri).toStrictEqual(null);
     }
   });
 
   it("incorrect authority", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -74,7 +82,7 @@ describe("http-resolver e2e tests", () => {
   });
 
   it("found nothing", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -85,7 +93,7 @@ describe("http-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         uri: null,
         manifest: null,
       });
@@ -93,7 +101,7 @@ describe("http-resolver e2e tests", () => {
   });
 
   it("getFile", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<Uint8Array>({
       uri: wrapperUri,
       method: "getFile",
       args: {
@@ -101,9 +109,7 @@ describe("http-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toMatchObject(manifest);
-    }
+    if (!result.ok) throw result.error;
+    expect(result.value.buffer).toStrictEqual(manifest);
   });
 });

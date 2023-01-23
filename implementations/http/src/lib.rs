@@ -1,6 +1,5 @@
 pub mod wrap;
 pub use wrap::{*, imported::{ArgsGet}};
-use std::path::{Path, PathBuf};
 use base64::{decode};
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
@@ -12,8 +11,8 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
 
     let result = HttpModule::get(&ArgsGet {
         url: args.path + "/" + MANIFEST_SEARCH_PATTERN,
-        request: Some(HttpHttpRequest{
-            response_type: HttpHttpResponseType::BINARY,
+        request: Some(HttpRequest{
+            response_type: HttpResponseType::BINARY,
             headers: None,
             url_params: None,
             body: None
@@ -50,8 +49,8 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
 pub fn get_file(args: ArgsGetFile) -> Option<Vec<u8>> {
     let result = HttpModule::get(&ArgsGet {
         url: args.path,
-        request: Some(HttpHttpRequest{
-            response_type: HttpHttpResponseType::BINARY,
+        request: Some(HttpRequest{
+            response_type: HttpResponseType::BINARY,
             headers: None,
             url_params: None,
             body: None
