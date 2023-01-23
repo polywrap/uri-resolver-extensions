@@ -66,7 +66,7 @@ describe("http-resolver e2e tests", () => {
   });
 
   it("incorrect authority", async () => {
-    const result = await client.invoke<MaybeUriOrManifest>({
+    const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {

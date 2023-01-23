@@ -1,7 +1,7 @@
 [package]
-name = "template-wasm-rs"
+name = "http-uri-resolver-rs"
 version = "0.1.0"
-description = "A Polywrap Wasm wrapper template written in Rust"
+description = "A Polywrap Wasm wrapper for resolving HTTP URIs"
 authors = ["Polywrap"]
 repository = "https://github.com/polywrap/monorepo"
 license = "MIT"

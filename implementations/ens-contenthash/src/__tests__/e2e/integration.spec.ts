@@ -3,6 +3,11 @@ import path from "path";
 
 jest.setTimeout(60000);
 
+type MaybeUriOrManifest = {
+  uri: string;
+  manifest: Uint8Array;
+}
+
 describe("ens-contenthash-resolver e2e tests", () => {
 
   const client: PolywrapClient = new PolywrapClient();
@@ -15,7 +20,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   })
 
   it("sanity", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -26,7 +31,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         manifest: null,
         uri: "ens-contenthash/" + "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
       });
@@ -34,7 +39,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   });
 
   it("incorrect authority", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -50,7 +55,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   });
 
   it("found nothing", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -61,7 +66,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         uri: null,
         manifest: null,
       });
@@ -69,7 +74,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   });
 
   it("text-record appended", async () => {
-    const result = await client.invoke({
+    const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
@@ -80,7 +85,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toMatchObject({
+      expect(result.value).toStrictEqual({
         uri: null,
         manifest: null,
       });

@@ -86,7 +86,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
   });
 
   it("incorrect authority", async () => {
-    const result = await client.invoke<MaybeUriOrManifest>({
+    const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: fsResolverUri,
       method: "tryResolveUri",
       args: {
