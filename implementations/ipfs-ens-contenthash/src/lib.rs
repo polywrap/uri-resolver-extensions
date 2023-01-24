@@ -1,8 +1,8 @@
 pub mod wrap;
 
 use base58::ToBase58;
-pub use wrap::*;
-pub use hex;
+use wrap::*;
+use hex;
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "ens-contenthash" {

@@ -1,7 +1,7 @@
 pub mod wrap;
-pub use wrap::*;
-pub mod util;
-pub use util::*;
+use wrap::*;
+mod util;
+use util::*;
 use cid::Cid;
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
