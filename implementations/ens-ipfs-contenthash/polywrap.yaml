@@ -1,6 +1,6 @@
 format: 0.2.0
 project:
-  name: ipfs-ens-contenthash-uri-resolver-ext
+  name: ens-ipfs-contenthash-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml
@@ -8,5 +8,6 @@ source:
   import_abis:
     - uri: "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
       abi: ../../interface/schema.graphql
+resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml

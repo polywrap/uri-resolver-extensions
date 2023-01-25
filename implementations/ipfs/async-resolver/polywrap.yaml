@@ -10,6 +10,7 @@ source:
       abi: ../../../interface/schema.graphql
     - uri: "wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"
       abi: ../../../schema.concurrent.graphql
+resources: ./resources
 extensions:
   build: ./polywrap.build.yaml
   deploy: ./polywrap.deploy.yaml

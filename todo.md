@@ -17,7 +17,7 @@
 
 - [ ] http resolver
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -27,7 +27,7 @@
 
 - [ ] ens-text-record resolver
   - [x] all dependencies are IPFS URIs
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -37,7 +37,7 @@
 
 - [ ] ens-contenthash resolver
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -47,7 +47,7 @@
 
 - [ ] ipfs-ens-contenthash resolver
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -57,7 +57,7 @@
 
 - [ ] ocr-ens-contenthash resolver
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -67,7 +67,7 @@
 
 - [ ] ipfs async resolver
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -76,8 +76,8 @@
   - [ ] remove import_abis and buildConfig.ts
 
 - [ ] ipfs sync resolver
-  - [ ] all dependencies are versioned @ wrappers.polywrap.eth
-  - [ ] README
+  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] README
   - [x] tests full coverage
   - [ ] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
@@ -100,6 +100,7 @@
   - concurrent@1.0.0 -> wrap://ipfs/QmSXBti6Zf9yAXShBUCe79B1cpAeMZZKj7Ai1iF4g2EFNM
   - ipfs-http-client@1.0.0 -> wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build
   - http@1.1.0 ->
+  - all uri resolver ext implementations
 
 # README Checklist
 - VERSION + URI + WRAP STANDARD

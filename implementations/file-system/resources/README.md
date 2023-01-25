@@ -9,11 +9,10 @@ Resolve filesystem based URIs, prefaced with the `fs` or `file` URI authority. F
 
 ## Interface
 ```graphql
-#import { Module } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.0.0"
+#import { Module } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
 #import { Module } into FileSystem from "wrap://ens/wrappers.polywrap.eth:file-system@1.0.0"
 
-type Module implements UriResolver_Module {
-}
+type Module implements UriResolver_Module {}
 ```
 
 ## Usage

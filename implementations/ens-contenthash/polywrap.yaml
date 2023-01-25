@@ -10,5 +10,6 @@ source:
       abi: ../../interface/schema.graphql
     - uri: "wrap://ens/wrappers.polywrap.eth:ens@1.0.0"
       abi: ../../schema.ens.graphql
+resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml
