@@ -3,7 +3,7 @@ pub mod wrap;
 use wrap::*;
 use ocr_core_rs::ocr_id::{OcrId, decode_ocr_id_from_contenthash};
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "ens-contenthash" {
         return None;
     }
@@ -28,6 +28,6 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
     )
 }
 
-pub fn get_file(_: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     None
 }

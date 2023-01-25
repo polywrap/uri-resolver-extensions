@@ -1,6 +1,5 @@
 import {
   defaultInterfaces,
-  defaultPackages,
   PolywrapClient,
 } from "@polywrap/client-js";
 import fs from "fs";
@@ -32,13 +31,9 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
       package: wrapperPackage
     })
     .addPackage({
-      uri: defaultPackages.fileSystem,
+      uri: "wrap://ens/wrappers.polywrap.eth:file-system@1.0.0",
       package: fileSystemPlugin({}),
     })
-    .addRedirect(
-      "wrap://ens/wrappers.polywrap.eth:file-system@1.0.0",
-      defaultPackages.fileSystem
-    )
     .addInterfaceImplementation(
       new Uri(defaultInterfaces.uriResolver),
       new Uri(fsResolverUri)

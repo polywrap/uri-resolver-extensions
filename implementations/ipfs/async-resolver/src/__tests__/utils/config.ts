@@ -31,7 +31,7 @@ export function getClientConfig(
           to: new Uri(ipfsResolverFsUri),
         },
         {
-          from: new Uri("ens/ipfs-http-client.polywrap.eth"),
+          from: new Uri("wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"),
           to: new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"),
         },
       ])
@@ -64,7 +64,7 @@ export function getClientConfig(
         new Uri(defaultPackages.httpResolver),
           ])
     .addInterfaceImplementations(
-      new Uri(defaultInterfaces.concurrent),
+      new Uri("wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"),
       [new Uri(defaultPackages.concurrent)]
     )
     .buildCoreConfig()

@@ -13,14 +13,22 @@ use crate::{
     serialize_get_file_result
 };
 
+use crate::Env;
 
 pub fn try_resolve_uri_wrapped(args: &[u8], env_size: u32) -> Vec<u8> {
+    let mut env: Option<Env> = None;
+
+    if env_size > 0 {
+      let env_buf = wrap_load_env(env_size);
+      env = Some(Env::from_buffer(&env_buf).unwrap());
+    }
+
     match deserialize_try_resolve_uri_args(args) {
         Ok(args) => {
             let result = try_resolve_uri(ArgsTryResolveUri {
                 authority: args.authority,
                 path: args.path,
-            });
+            }, env);
             serialize_try_resolve_uri_result(&result).unwrap()
         }
         Err(e) => {
@@ -30,11 +38,18 @@ pub fn try_resolve_uri_wrapped(args: &[u8], env_size: u32) -> Vec<u8> {
 }
 
 pub fn get_file_wrapped(args: &[u8], env_size: u32) -> Vec<u8> {
+    let mut env: Option<Env> = None;
+
+    if env_size > 0 {
+      let env_buf = wrap_load_env(env_size);
+      env = Some(Env::from_buffer(&env_buf).unwrap());
+    }
+
     match deserialize_get_file_args(args) {
         Ok(args) => {
             let result = get_file(ArgsGetFile {
                 path: args.path,
-            });
+            }, env);
             serialize_get_file_result(&result).unwrap()
         }
         Err(e) => {

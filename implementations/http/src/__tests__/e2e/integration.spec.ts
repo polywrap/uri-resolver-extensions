@@ -1,7 +1,8 @@
-import {defaultPackages, PolywrapClient} from "@polywrap/client-js";
+import {PolywrapClient} from "@polywrap/client-js";
 import { runCLI } from "@polywrap/test-env-js";
 import path from "path";
 import fs from "fs";
+import {httpPlugin} from "@polywrap/http-plugin-js";
 
 jest.setTimeout(90000);
 
@@ -13,9 +14,9 @@ type MaybeUriOrManifest = {
 describe("http-resolver e2e tests", () => {
 
   const client: PolywrapClient = new PolywrapClient({
-    redirects: [{
-      from: "wrap://ens/wrappers.polywrap.eth:http@1.0.0",
-      to: defaultPackages.http
+    packages: [{
+      uri: "wrap://ens/wrappers.polywrap.eth:http@1.1.0",
+      package: httpPlugin({})
     }]
   });
   let wrapperUri: string;

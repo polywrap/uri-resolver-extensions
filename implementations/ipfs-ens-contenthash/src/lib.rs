@@ -4,7 +4,7 @@ use base58::ToBase58;
 use wrap::*;
 use hex;
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "ens-contenthash" {
         return None;
     }
@@ -25,7 +25,7 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
     return Some(UriResolverMaybeUriOrManifest { uri: None, manifest: None });
 }
 
-pub fn get_file(_: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(_: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     None
 }
 

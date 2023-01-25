@@ -24,7 +24,7 @@ pub struct UriResolverMaybeUriOrManifest {
 }
 
 impl UriResolverMaybeUriOrManifest {
-    pub const URI: &'static str = "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.0.0";
+    pub const URI: &'static str = "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0";
 
     pub fn new() -> UriResolverMaybeUriOrManifest {
         UriResolverMaybeUriOrManifest {

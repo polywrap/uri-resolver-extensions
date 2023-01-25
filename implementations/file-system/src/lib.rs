@@ -1,5 +1,5 @@
 pub mod wrap;
-pub use wrap::{
+use wrap::{
     *,
     imported::{
         ArgsGetFile,
@@ -11,7 +11,7 @@ use std::path::{Path, PathBuf};
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "fs" && args.authority != "file" {
         return None;
     }
@@ -52,7 +52,7 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
     })
 }
 
-pub fn get_file(args: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     let res = FileSystemModule::read_file(&ArgsReadFile {
         path: args.path
     });

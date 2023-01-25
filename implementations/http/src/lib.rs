@@ -1,10 +1,10 @@
 pub mod wrap;
-pub use wrap::{*, imported::{ArgsGet}};
+use wrap::{*, imported::{ArgsGet}};
 use base64::{decode};
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "http" && args.authority != "https" {
         return None;
     }
@@ -15,7 +15,9 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
             response_type: HttpResponseType::BINARY,
             headers: None,
             url_params: None,
-            body: None
+            body: None,
+            timeout: None,
+            form_data: None,
         })
     });
 
@@ -46,14 +48,16 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrM
     };
 }
 
-pub fn get_file(args: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     let result = HttpModule::get(&ArgsGet {
         url: args.path,
         request: Some(HttpRequest{
             response_type: HttpResponseType::BINARY,
             headers: None,
             url_params: None,
-            body: None
+            body: None,
+            timeout: None,
+            form_data: None,
         })
     });
 

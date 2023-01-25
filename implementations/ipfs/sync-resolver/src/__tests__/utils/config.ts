@@ -39,7 +39,7 @@ export function getClientConfig(
         package: fileSystemResolverPlugin({}),
       },
       {
-        uri: new Uri(defaultPackages.http),
+        uri: new Uri("wrap://ens/wrappers.polywrap.eth:http@1.1.0"),
         package: httpPlugin({}),
       },
       {
@@ -53,9 +53,5 @@ export function getClientConfig(
         new Uri(defaultPackages.fileSystemResolver),
         new Uri(defaultPackages.httpResolver),
       ])
-    .addInterfaceImplementations(
-      new Uri(defaultInterfaces.concurrent),
-      [new Uri(defaultPackages.concurrent)]
-    )
     .buildCoreConfig()
 }

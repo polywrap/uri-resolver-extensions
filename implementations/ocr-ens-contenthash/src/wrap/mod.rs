@@ -1,4 +1,6 @@
 pub mod entry;
+pub mod env;
+pub use env::Env;
 pub mod imported;
 pub use imported::uri_resolver_maybe_uri_or_manifest::UriResolverMaybeUriOrManifest;
 pub use imported::uri_resolver_module::UriResolverModule;

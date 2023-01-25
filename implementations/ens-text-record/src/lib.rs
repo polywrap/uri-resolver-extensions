@@ -71,7 +71,7 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
 
 // wrap://ens/test.eth:v1/wrap.info
 // wrap://ens/goerli/test.eth:v1/wrap.info
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     _try_resolve_uri(&args, &ENSModule::get_resolver, &ENSModule::get_text_record)
 }
 
@@ -140,7 +140,7 @@ fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
     })
 } 
 
-pub fn get_file(_: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     None
 }
 

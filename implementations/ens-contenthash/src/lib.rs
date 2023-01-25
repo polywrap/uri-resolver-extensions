@@ -1,5 +1,5 @@
 pub mod wrap;
-pub use wrap::{*, imported::{ArgsGetResolver, ArgsGetContentHash}};
+use wrap::{*, imported::{ArgsGetResolver, ArgsGetContentHash}};
 
 const ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 const PATH_SEPARATOR: &str = "/";
@@ -52,7 +52,7 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<DomainInfo> {
     )
 }
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     _try_resolve_uri(&args, &ENSModule::get_resolver, &ENSModule::get_content_hash)
 }
 
@@ -119,6 +119,6 @@ fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
     })
 } 
 
-pub fn get_file(_: ArgsGetFile) -> Option<Vec<u8>> {
+pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
     None
 }

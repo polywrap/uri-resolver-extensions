@@ -19,7 +19,7 @@ const createRacePromise = (
   );
 };
 
-describe("IPFS Plugin", () => {
+describe("Async IPFS URI Resolver Extension", () => {
   let wrapperIpfsUri: string;
 
   beforeAll(async () => {
