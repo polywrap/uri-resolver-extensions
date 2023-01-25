@@ -3,4 +3,4 @@ URI resolver extensions are used to extend the built-in URI resolution capabilit
 
 Table Of Contents
 1. [URI Resolver Extension Interface](./interface/resources/README.md)
-2. [URI Resolver Implementations](./implementations/)
+2. [URI Resolver Implementations](./implementations)
