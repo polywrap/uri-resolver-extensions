@@ -94,12 +94,16 @@
 - IPFS resolver
 - versioning
 
-- to publish to ens text record:
-  - ens@1.0.0 -> wrap://ipfs/QmWiUQiVVPjvzsbWxnkysQVqDEbhKtdjGPBXPd4dyaT4wc
+interfaces to publish to ens text record:
   - uri-resolver-ext@1.1.0 -> wrap://ipfs/QmSAXrSLcmGUkQRrApAtG5qTPmuRMMX2Zf1wihpguDQfbm
   - concurrent@1.0.0 -> wrap://ipfs/QmSXBti6Zf9yAXShBUCe79B1cpAeMZZKj7Ai1iF4g2EFNM
+  - ethereum-provider@1.0.0 -> wrap://ipfs/QmTSoxuNwFKRC1eoySoa1Ch6WQAxTZZmdsxhQPMRbNk5QZ
+  - http@1.1.0 -> wrap://ipfs/Qmb7k3fZq8sPQpBtL1NWBNdudKoj44hrB85fANUo6wHExK
+
+wasm wrappers to publish to ens text record
   - ipfs-http-client@1.0.0 -> wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build
-  - http@1.1.0 ->
+  - ens@1.0.0 -> wrap://ipfs/QmWiUQiVVPjvzsbWxnkysQVqDEbhKtdjGPBXPd4dyaT4wc
+  - ethereum@1.0.0 -> wrap://ipfs/QmPV4sG9zaVVv686Z9bXDFcysUEFfQwME5ayneWQTabNUe
   - all uri resolver ext implementations
 
 # README Checklist
