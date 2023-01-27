@@ -117,7 +117,7 @@ wasm wrappers published to ens text record:
 - sha3@1.0.0 -> wrap://ipfs/QmThRxFfr7Hj9Mq6WmcGXjkRrgqMG3oD93SLX27tinQWy5
 - uts46@1.0.0 -> wrap://ipfs/QmPL9Njg3rGkpoJyoy8pZ5fTavjvHxNuuuiGRApzyGESZB
 
-dependency in ens resolution -> use ipfs hash with alias "wrap://ens/ethereum.polywrap.eth":
+dependency in ens resolution -> use ipfs hash with alias
 - ethereum -> wrap://ipfs/QmPV4sG9zaVVv686Z9bXDFcysUEFfQwME5ayneWQTabNUe
 
 ipfs client -> embed or http uri
