@@ -1,12 +1,26 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
 import { PolywrapClient } from "@polywrap/client-js";
 import path from "path";
+import {ethereumProviderPlugin, Connections} from "ethereum-provider-js";
 
 jest.setTimeout(60000);
 
 describe("ens-text-record-resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient();
+  const client: PolywrapClient = new PolywrapClient({
+    packages: [
+      {
+        uri: "wrap://plugin/ethereum-provider",
+        package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
+      }
+    ],
+    interfaces: [
+      {
+        interface: "wrap://ens/wrappers.polywrap.eth:ethereum-provider@1.0.0",
+        implementations: ["wrap://plugin/ethereum-provider"]
+      }
+    ]
+  });
   let wrapperUri: string;
 
   beforeAll(async () => {
@@ -103,10 +117,22 @@ describe("ens-text-record-resolver e2e tests", () => {
 
   it("recursively resolves", async () => {
     const client = new PolywrapClient({
-      interfaces: [{
-        interface: "wrap://ens/uri-resolver.core.polywrap.eth",
-        implementations: [wrapperUri]
-      }]
+      interfaces: [
+        {
+          interface: "wrap://ens/uri-resolver.core.polywrap.eth",
+          implementations: [wrapperUri]
+        },
+        {
+          interface: "wrap://ens/wrappers.polywrap.eth:ethereum-provider@1.0.0",
+          implementations: ["wrap://plugin/ethereum-provider"]
+        }
+      ],
+      packages: [
+        {
+          uri: "wrap://plugin/ethereum-provider",
+          package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
+        }
+      ],
     });
 
     const result = await client.invoke({

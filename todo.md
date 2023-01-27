@@ -113,7 +113,7 @@ interfaces published to ens text record:
 - http@1.1.0 -> wrap://ipfs/Qmb7k3fZq8sPQpBtL1NWBNdudKoj44hrB85fANUo6wHExK
 
 wasm wrappers published to ens text record:
-- ens@1.0.0 -> wrap://ipfs/QmPPRhoMHdQp25ADTSLnR6FPQ439fWa155LzZx3jtSGFPR
+- ens@1.0.0 -> wrap://ipfs/QmUKsxcf3cAjBa4SUMg9fuGyNHRWa1qvu41o66wBE5vLKd
 - sha3@1.0.0 -> wrap://ipfs/QmThRxFfr7Hj9Mq6WmcGXjkRrgqMG3oD93SLX27tinQWy5
 - uts46@1.0.0 -> wrap://ipfs/QmPL9Njg3rGkpoJyoy8pZ5fTavjvHxNuuuiGRApzyGESZB
 
