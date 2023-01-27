@@ -1,15 +1,10 @@
-format: 0.2.0
+format: 0.3.0
 project:
   name: http-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml
   schema: ./polywrap.graphql
-  import_abis:
-    - uri: "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
-      abi: ../../interface/schema.graphql
-    - uri: "wrap://ens/wrappers.polywrap.eth:http@1.1.0"
-      abi: ../../schema.http.graphql
 resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml

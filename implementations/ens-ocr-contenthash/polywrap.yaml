@@ -1,12 +1,10 @@
-format: 0.2.0
+format: 0.3.0
 project:
   name: ens-ocr-contenthash-uri-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml
   schema: ./src/schema.graphql
-  import_abis:
-    - uri: "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
-      abi: ../../interface/schema.graphql
+resources: ./resources
 extensions:
   deploy: ./polywrap.deploy.yaml

@@ -5,7 +5,6 @@ import { Uri } from "@polywrap/core-js";
 import { fileSystemPlugin } from "@polywrap/fs-plugin-js";
 import { fileSystemResolverPlugin } from "@polywrap/fs-resolver-plugin-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
-import {httpResolverPlugin} from "@polywrap/http-resolver-plugin-js";
 
 export const ipfsResolverUri: string = "wrap://ens/ipfs-resolver.polywrap.eth";
 
@@ -42,16 +41,11 @@ export function getClientConfig(
         uri: new Uri("wrap://ens/wrappers.polywrap.eth:http@1.1.0"),
         package: httpPlugin({}),
       },
-      {
-        uri: new Uri(defaultPackages.httpResolver),
-        package: httpResolverPlugin({}),
-      }
       ])
     .addInterfaceImplementations(
       new Uri(defaultInterfaces.uriResolver),[
         new Uri(ipfsResolverUri),
         new Uri(defaultPackages.fileSystemResolver),
-        new Uri(defaultPackages.httpResolver),
       ])
     .buildCoreConfig()
 }

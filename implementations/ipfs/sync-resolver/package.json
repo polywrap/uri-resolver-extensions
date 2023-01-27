@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn codegen && npx polywrap build -s image",
     "codegen": "npx polywrap codegen",
-    "deploy": "npx polywrap deploy",
+    "deploy": "npx polywrap deploy -o deployment.json",
     "test": "jest --passWithNoTests --runInBand --verbose",
     "test:ci": "yarn test:codegen && yarn test",
     "test:codegen": "npx polywrap codegen -m ./src/__tests__/types/polywrap.app.yaml -g ./src/__tests__/types/wrap"
