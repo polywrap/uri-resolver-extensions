@@ -9,7 +9,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -19,7 +19,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -29,7 +29,7 @@
   - [x] all dependencies are IPFS URIs
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -39,7 +39,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -49,7 +49,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -59,7 +59,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -69,7 +69,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
@@ -79,7 +79,7 @@
   - [x] all dependencies are versioned @ wrappers.polywrap.eth
   - [x] README
   - [x] tests full coverage
-  - [ ] makes no client configuration assumptions
+  - [x] makes no client configuration assumptions
   - [ ] tests URI resolution using the client's configuration directly
   - [x] build & deploy working
   - [ ] publish to ENS
