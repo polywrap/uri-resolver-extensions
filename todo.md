@@ -122,5 +122,5 @@ dependency in ens resolution -> use ipfs hash with alias
 
 ipfs client -> embed or http uri
 - ipfs-http-client ->
-  - wrap://ipfs/QmW4hCnXzdbuSqbTRnEMXpWu7qMJCeU3JEZznGdEziTw9Q
+  - wrap://ipfs/QmbBTJ3mLmLZAhzLZzK7auoxzNm6iQgVnhkbXfLU7sJCEj
   - wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build
