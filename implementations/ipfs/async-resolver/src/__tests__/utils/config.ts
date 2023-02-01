@@ -34,6 +34,10 @@ export function getClientConfig(
           from: new Uri("wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"),
           to: new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"),
         },
+      {
+        from: "wrap://ens/http.polywrap.eth",
+        to: "wrap://ens/wrappers.polywrap.eth:http@1.1.0",
+      }
       ])
     .addPackages( [
         {
@@ -49,7 +53,7 @@ export function getClientConfig(
           package: concurrentPromisePlugin({})
         },
         {
-          uri: new Uri(defaultPackages.http),
+          uri: new Uri("wrap://ens/wrappers.polywrap.eth:http@1.1.0"),
           package: httpPlugin({}),
         },
       {
