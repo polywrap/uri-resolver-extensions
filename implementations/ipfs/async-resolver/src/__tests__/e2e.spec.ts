@@ -9,6 +9,11 @@ import fs from "fs";
 
 jest.setTimeout(300000);
 
+type MaybeUriOrManifest = {
+  uri: string | null;
+  manifest: Uint8Array | null;
+}
+
 const createRacePromise = (
   timeout: number
 ): Promise<Result<Uint8Array, Error>> => {
@@ -20,7 +25,9 @@ const createRacePromise = (
 };
 
 describe("Async IPFS URI Resolver Extension", () => {
+  let manifest: ArrayBuffer;
   let wrapperIpfsUri: string;
+  let wrapperIpfsHash: string;
 
   beforeAll(async () => {
     await initInfra();
@@ -28,12 +35,14 @@ describe("Async IPFS URI Resolver Extension", () => {
     // build simple wrapper test case
     const wrapperPath = path.resolve(__dirname, "simple-wrapper");
     await buildWrapperWithImage(wrapperPath);
+    manifest = fs.readFileSync(__dirname + "/simple-wrapper/build/wrap.info").buffer;
 
     // deploy simple wrapper test case and read cid
     const deployOutputPath = path.join(wrapperPath, "ipfs.json");
     await deployWrapper(wrapperPath, deployOutputPath);
     const deployOutputStr: string = fs.readFileSync(deployOutputPath, "utf-8");
     wrapperIpfsUri = JSON.parse(deployOutputStr)[0].steps[0].result.trim();
+    wrapperIpfsHash = wrapperIpfsUri.substring(wrapperIpfsUri.indexOf("Qm"));
   });
 
   afterAll(async () => {
@@ -46,17 +55,48 @@ describe("Async IPFS URI Resolver Extension", () => {
 
     const result = await client.tryResolveUri({ uri: wrapperIpfsUri });
 
-    if (!result.ok) {
-      fail(result.error);
-    }
+    if (!result.ok) fail(result.error);
 
     if (result.value.type !== "wrapper") {
       fail("Expected response to be a wrapper");
     }
 
     const manifest = result.value.wrapper.getManifest();
-
     expect(manifest?.name).toBe("Simple");
+  });
+
+  it("Should successfully resolve a deployed wrapper - direct invocation", async () => {
+    const config = getClientConfig(ipfsProvider);
+    const client = new PolywrapClient(config, { noDefaults: true });
+
+    const result = await client.invoke<MaybeUriOrManifest>({
+      uri: ipfsResolverUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "ipfs",
+        path: wrapperIpfsHash,
+      }
+    })
+
+    if (!result.ok) fail(result.error);
+    expect(result.value.manifest?.buffer).toStrictEqual(manifest);
+    expect(result.value.uri).toBeNull();
+  });
+
+  it("Should successfully get a file - direct invocation", async () => {
+    const config = getClientConfig(ipfsProvider);
+    const client = new PolywrapClient(config, { noDefaults: true });
+
+    const result = await client.invoke<Uint8Array>({
+      uri: ipfsResolverUri,
+      method: "getFile",
+      args: {
+        path: wrapperIpfsHash + "/wrap.info"
+      }
+    })
+
+    if (!result.ok) fail(result.error);
+    expect(result.value.buffer).toStrictEqual(manifest);
   });
 
   it.skip("Should properly timeout - getFile", async () => {
