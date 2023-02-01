@@ -1,5 +1,6 @@
 import { PolywrapClient } from "@polywrap/client-js";
 import path from "path";
+import {Connections, ethereumProviderPlugin} from "ethereum-provider-js";
 
 jest.setTimeout(60000);
 
@@ -10,7 +11,20 @@ type MaybeUriOrManifest = {
 
 describe("ens-contenthash-resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient();
+  const client: PolywrapClient = new PolywrapClient({
+    interfaces:[
+      {
+        interface: "wrap://ens/wrappers.polywrap.eth:ethereum-provider@1.0.0",
+        implementations: ["wrap://plugin/ethereum-provider"]
+      }
+    ],
+    packages: [
+      {
+        uri: "wrap://plugin/ethereum-provider",
+        package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
+      },
+    ]
+  });
   let wrapperUri: string;
 
   beforeAll(() => {
@@ -29,13 +43,11 @@ describe("ens-contenthash-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        manifest: null,
-        uri: "ens-contenthash/" + "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
-      });
-    }
+    if (!result.ok) throw result.error;
+    expect(result.value).toStrictEqual({
+      manifest: null,
+      uri: "ens-contenthash/" + "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
+    });
   });
 
   it("incorrect authority", async () => {
