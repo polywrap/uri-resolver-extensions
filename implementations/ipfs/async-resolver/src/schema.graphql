@@ -2,6 +2,7 @@
 #import { Module } into Client from "wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"
 #import { Module, Task, TaskResult, ReturnWhen } into Concurrent from "wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"
 #use { getImplementations } for Concurrent
+#use { getImplementations } for Client
 
 type Module implements UriResolver_Module {}
 

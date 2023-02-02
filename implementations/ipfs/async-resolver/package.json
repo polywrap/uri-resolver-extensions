@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build": "yarn codegen && npx polywrap build -s image",
+    "build": "npx polywrap build -s image --codegen",
     "codegen": "npx polywrap codegen",
     "deploy": "npx polywrap deploy -o deployment.json",
     "test": "jest --passWithNoTests --runInBand --verbose",
