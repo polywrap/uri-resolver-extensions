@@ -1,5 +1,5 @@
 #import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
-#import { Module } into Client from "wrap://package/ipfs-http-client"
+#import { Module } into Client from "wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"
 #import { Module, Task, TaskResult, ReturnWhen } into Concurrent from "wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"
 #use { getImplementations } for Concurrent
 
