@@ -31,7 +31,7 @@ export function getClientConfig(
           to: new Uri(ipfsResolverFsUri),
         },
         {
-          from: new Uri("wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"),
+          from: new Uri("wrap://package/ipfs-http-client"),
           to: new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"),
         },
       {

@@ -4,7 +4,7 @@ export function configure(builder: IClientConfigBuilder): IClientConfigBuilder {
   return builder
     .addDefaults()
     .addRedirect(
-      "wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0",
+      "wrap://package/ipfs-http-client",
       "wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build",
       )
 }
