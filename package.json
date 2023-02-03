@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@wraplib/pwr": "0.3.4"
+  }
+}

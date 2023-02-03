@@ -1,0 +1,32 @@
+name: monowrap
+commands:
+  - alias: install
+    uri: ens/command.polywrap.eth
+    args:
+      command: "yarn install"
+  - alias: build
+    uri: ens/command.polywrap.eth
+    args:
+      command: "yarn build"
+    requires:
+      - install
+  - alias: test
+    uri: ens/command.polywrap.eth
+    args:
+      command: "yarn test"
+    requires:
+      - build
+  - alias: deploy
+    uri: ens/command.polywrap.eth
+    args:
+      command: "yarn deploy"
+    requires:
+      - test
+dependencies:
+  - name: interface
+    path: ./interface
+  - name: implementations
+    path: ./implementations
+    requires:
+      - interface
+sub_deps_execute_after: build
