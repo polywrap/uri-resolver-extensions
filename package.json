@@ -1,5 +1,24 @@
 {
+  "name": "@polywrap/uri-resolver-extensions",
+  "description": "Uri Resolver Extentions",
+  "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polywrap/uri-resolver-extensions.git"
+  },
+  "workspaces": {
+    "packages": [
+      "./interface",
+      "./implementations/**"
+    ]
+  },
+  "scripts": {
+    "build": "yarn monowrap build",
+    "test": "yarn monowrap test",
+    "deploy": "yarn monowrap deploy",
+    "monowrap": "npx @wraplib/pwr monowrap -m ./monowrap.json"
+  },
   "devDependencies": {
     "@wraplib/pwr": "0.3.4"
   }

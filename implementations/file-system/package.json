@@ -1,4 +1,8 @@
 {
+  "name": "@polywrap/file-system-resolver",
+  "description": "File system resolver",
+  "private": true,
+  "version": "0.9.4",
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
     "codegen": "npx polywrap codegen",
