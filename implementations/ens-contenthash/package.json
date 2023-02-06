@@ -1,0 +1,20 @@
+{
+  "name": "template-wasm-rs",
+  "description": "Polywrap Rust Wrapper Template",
+  "private": true,
+  "version": "0.9.4",
+  "scripts": {
+    "build": "yarn codegen && npx polywrap build",
+    "codegen": "npx polywrap codegen",
+    "deploy": "npx polywrap deploy -o deployment.json",
+    "test": "jest --passWithNoTests --runInBand --verbose"
+  },
+  "devDependencies": {
+    "ethereum-provider-js": "0.1.6",
+    "@types/jest": "26.0.8",
+    "jest": "26.6.3",
+    "polywrap": "0.10.0-pre.7",
+    "ts-jest": "26.5.4",
+    "typescript": "4.1.6"
+  }
+}

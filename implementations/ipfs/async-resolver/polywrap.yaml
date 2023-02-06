@@ -1,0 +1,11 @@
+format: 0.3.0
+project:
+  name: ipfs-uri-resolver-rs-async
+  type: wasm/rust
+source:
+  module: ./Cargo.toml
+  schema: ./src/schema.graphql
+resources: ./resources
+extensions:
+  build: ./polywrap.build.yaml
+  deploy: ./polywrap.deploy.yaml

@@ -1,0 +1,34 @@
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
+#import { Module, Request, Response, ResponseType } into Http from "wrap://ens/wrappers.polywrap.eth:http@1.1.0"
+
+type Module implements UriResolver_Module {}
+
+"""
+Number of times to retry request on failure (excluding initial request)
+"""
+type Retries {
+  tryResolveUri: UInt32
+  getFile: UInt32
+}
+
+type Env {
+  """
+  Retry request on failure
+  """
+  retries: Retries
+
+  """
+  Global timeout for IPFS actions
+  """
+  timeout: UInt32
+
+  """
+  Default provider
+  """
+  provider: String!
+
+  """
+  Fallback providers
+  """
+  fallbackProviders: [String!]
+}

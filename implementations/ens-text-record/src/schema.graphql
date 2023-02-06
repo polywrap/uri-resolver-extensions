@@ -1,0 +1,6 @@
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ipfs/QmSAXrSLcmGUkQRrApAtG5qTPmuRMMX2Zf1wihpguDQfbm"
+#import { Module } into ENS from "wrap://ipfs/QmUKsxcf3cAjBa4SUMg9fuGyNHRWa1qvu41o66wBE5vLKd"
+
+type Module implements UriResolver_Module {}
+
+type Env {}
