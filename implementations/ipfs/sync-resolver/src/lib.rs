@@ -5,8 +5,9 @@ use util::*;
 use cid::Cid;
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    let env = env.expect("Ipfs uri resolver requires a configured Env");
-
+    if env.is_none() {
+        panic!("Ipfs uri resolver requires a configured Env")
+    }
     if args.authority != "ipfs" {
         return None;
     }
@@ -17,28 +18,15 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriR
     }
 
     let path = format!("{}/wrap.info", &args.path);
-    let options: Options = get_options(&env, false);
-    let manifest: Option<Vec<u8>> = exec_with_options(&path, &options);
+    let manifest: Option<Vec<u8>> = get_file(ArgsGetFile { path }, env);
 
     return Some(UriResolverMaybeUriOrManifest { manifest, uri: None });
 }
 
 pub fn get_file(args: ArgsGetFile, env: Option<Env>) -> Option<Vec<u8>> {
     let env = env.expect("Ipfs uri resolver requires a configured Env");
-    let options: Options = get_options(&env, true);
-    exec_with_options(&args.path, &options)
-}
-
-fn exec_with_options(path: &str, options: &Options) -> Option<Vec<u8>> {
-    let mut attempts = options.retries + 1;
-    while attempts > 0 {
-        let result = exec_sequential(&options.providers, &path, options.timeout);
-        if result.is_ok() {
-            return result.ok();
-        }
-        attempts = attempts - 1;
-    }
-    None
+    let options: Options = get_options(&env);
+    exec_sequential(&options.providers, &args.path, options.timeout).ok()
 }
 
 fn is_cid(maybe_cid: &str) -> bool {

@@ -6,20 +6,7 @@
 
 type Module implements UriResolver_Module {}
 
-"""
-Number of times to retry request on failure (excluding initial request)
-"""
-type Retries {
-  tryResolveUri: UInt32
-  getFile: UInt32
-}
-
 type Env {
-  """
-  Retry request on failure
-  """
-  retries: Retries
-
   """
   Response timeout for HTTP requests
   """

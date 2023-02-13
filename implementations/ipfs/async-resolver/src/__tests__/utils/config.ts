@@ -13,7 +13,6 @@ export const ipfsResolverUri: string = "wrap://package/ipfs-resolver";
 export function getClientConfig(
   provider: string,
   timeout?: number,
-  retries?: { tryResolveUri: number; getFile: number },
 ): PolywrapCoreClientConfig {
   const ipfsResolverPath = path.resolve(path.join(__dirname, "/../../../build"));
   const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
@@ -22,7 +21,7 @@ export function getClientConfig(
     .addEnvs([
         {
           uri: new Uri(ipfsResolverUri),
-          env: { provider, timeout, retries },
+          env: { provider, timeout },
         },
       ])
     .addRedirects([
