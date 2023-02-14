@@ -1,0 +1,10 @@
+format: 0.3.0
+project:
+  name: github-uri-resolver-ext
+  type: wasm/rust
+source:
+  module: ./Cargo.toml
+  schema: ./polywrap.graphql
+resources: ./resources
+extensions:
+  deploy: ./polywrap.deploy.yaml
