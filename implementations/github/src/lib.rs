@@ -8,11 +8,21 @@ const GITHUB_RAW_URL: &str = "https://raw.githubusercontent.com";
 const URI_SEARCH_PATTERN: &str = "deployment.txt";
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    if args.authority != "github.com" {
+    if args.authority != "github.com" && args.authority != "http" && args.authority != "https" {
         return None;
     }
 
-    let request_url = GITHUB_RAW_URL.to_string() + "/" + &args.path + "/" + URI_SEARCH_PATTERN;
+    // http url must be github.com
+    let path_has_gh = args.path.starts_with("github.com/");
+    if args.authority != "github.com" && !path_has_gh {
+        return None;
+    }
+
+   let path = args.path.trim_start_matches("github.com/");
+
+   // https://github.com/polywrap/toolchain/tree/origin-dev/packages
+
+    let request_url = GITHUB_RAW_URL.to_string() + "/" + path + "/" + URI_SEARCH_PATTERN;
     let result = HttpModule::get(&ArgsGet {
         url: request_url,
         request: Some(HttpRequest{
