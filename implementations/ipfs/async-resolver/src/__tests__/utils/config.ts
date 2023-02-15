@@ -69,7 +69,7 @@ export function getClientConfig(
     )
     .addInterfaceImplementations(
       new Uri("wrap://ens/wraps.eth:concurrent@1.0.0"),
-      [new Uri(defaultPackages.concurrent)]
+      [new Uri("wrap://ens/wraps.eth:concurrent@1.0.0")]
     )
     .buildCoreConfig()
 }
