@@ -115,9 +115,7 @@ interfaces published to ens text record:
 wasm wrappers published to ens text record:
 - sha3@1.0.0 -> wrap://ipfs/QmThRxFfr7Hj9Mq6WmcGXjkRrgqMG3oD93SLX27tinQWy5
 - uts46@1.0.0 -> wrap://ipfs/QmPL9Njg3rGkpoJyoy8pZ5fTavjvHxNuuuiGRApzyGESZB
-
-need to publish:
-- ens@1.0.0 -> wrap://ipfs/Qmez2b7nXaqhZhkfd25bdAkhPQgzJEZBtaUC5eM9gFdhHA
+- ens@1.0.0 -> wrap://ipfs/QmaUR5ZQANrbRZBv6RHVse4ZRqmMBbD4xTegAzVwYB4uoB
 
 dependency in ens resolution -> use ipfs hash with alias
 - ethereum -> wrap://ipfs/QmPV4sG9zaVVv686Z9bXDFcysUEFfQwME5ayneWQTabNUe
