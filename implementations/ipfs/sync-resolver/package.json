@@ -4,8 +4,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build": "yarn codegen && npx polywrap build -s image",
-    "codegen": "npx polywrap codegen",
+    "build": "yarn codegen && npx polywrap build -s image -c ./config.ts",
+    "codegen": "npx polywrap codegen -c ./config.ts",
     "deploy": "npx polywrap deploy -o deployment.json",
     "test": "jest --passWithNoTests --runInBand --verbose",
     "test:ci": "yarn test"

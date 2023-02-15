@@ -38,7 +38,7 @@ export function getClientConfig(
         package: fileSystemResolverPlugin({}),
       },
       {
-        uri: new Uri("wrap://ens/wrappers.polywrap.eth:http@1.1.0"),
+        uri: new Uri("wrap://ens/wraps.eth:http@1.1.0"),
         package: httpPlugin({}),
       },
       ])

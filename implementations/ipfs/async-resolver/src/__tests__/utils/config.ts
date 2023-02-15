@@ -32,7 +32,7 @@ export function getClientConfig(
         },
       {
         from: "wrap://ens/http.polywrap.eth",
-        to: "wrap://ens/wrappers.polywrap.eth:http@1.1.0",
+        to: "wrap://ens/wraps.eth:http@1.1.0",
       }
       ])
     .addPackages( [
@@ -45,11 +45,11 @@ export function getClientConfig(
           package: fileSystemResolverPlugin({}),
         },
         {
-          uri: new Uri(defaultPackages.concurrent),
+          uri: new Uri("wrap://ens/wraps.eth:concurrent@1.0.0"),
           package: concurrentPromisePlugin({})
         },
         {
-          uri: new Uri("wrap://ens/wrappers.polywrap.eth:http@1.1.0"),
+          uri: new Uri("wrap://ens/wraps.eth:http@1.1.0"),
           package: httpPlugin({}),
         },
       {
@@ -64,11 +64,11 @@ export function getClientConfig(
         new Uri(defaultPackages.httpResolver),
           ])
     .addInterfaceImplementation(
-      new Uri("wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"),
+      new Uri("wrap://ens/wraps.eth:ipfs-http-client@1.0.0"),
       new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build")
     )
     .addInterfaceImplementations(
-      new Uri("wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"),
+      new Uri("wrap://ens/wraps.eth:concurrent@1.0.0"),
       [new Uri(defaultPackages.concurrent)]
     )
     .buildCoreConfig()
