@@ -1,0 +1,87 @@
+{
+  "name": "monowrap",
+  "commands": [
+    {
+      "alias": "build",
+      "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
+      "method": "spawn",
+      "args": {
+        "command": "yarn build",
+        "options": {
+          "shell": "bash"
+        }
+      }
+    },
+    {
+      "alias": "test",
+      "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
+      "method": "spawn",
+      "args": {
+        "command": "yarn test",
+        "options": {
+          "shell": "bash"
+        }
+      },
+      "requires": ["build"]
+    },
+    {
+      "alias": "deploy",
+      "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
+      "method": "spawn",
+      "args": {
+        "command": "yarn deploy",
+        "options": {
+          "shell": "bash"
+        }
+      },
+      "requires": ["test"]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "interface",
+      "path": "./interface"
+    },
+    {
+      "name": "ens-contenthash",
+      "path": "./implementations/ens-contenthash",
+      "requires": ["interface"]
+    },
+    {
+      "name": "ens-ipfs-contenthash",
+      "path": "./implementations/ens-ipfs-contenthash",
+      "requires": ["interface"]
+    },
+    {
+      "name": "ens-ocr-contenthash",
+      "path": "./implementations/ens-ocr-contenthash",
+      "requires": ["interface"]
+    },
+    {
+      "name": "ens-text-record",
+      "path": "./implementations/ens-text-record",
+      "requires": ["interface"]
+    },
+    {
+      "name": "file-system",
+      "path": "./implementations/file-system",
+      "requires": ["interface"]
+    },
+    {
+      "name": "http",
+      "path": "./implementations/http",
+      "requires": ["interface"]
+    },
+    {
+      "name": "ipfs-async",
+      "path": "./implementations/ipfs/async-resolver",
+      "requires": ["interface"]
+    },
+    {
+      "name": "ipfs-sync",
+      "path": "./implementations/ipfs/sync-resolver",
+      "requires": ["interface"]
+    }
+  ],
+  "sub_deps_execute_after": "build"
+}

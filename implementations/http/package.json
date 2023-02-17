@@ -1,4 +1,8 @@
 {
+  "name": "@polywrap/http-resolver",
+  "description": "Http resolver",
+  "private": true,
+  "version": "0.9.4",
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
     "codegen": "npx polywrap codegen",

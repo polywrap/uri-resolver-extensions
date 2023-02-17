@@ -1,4 +1,13 @@
 {
+  "name": "@polywrap/uri-resolver-extension-interface",
+  "description": "Uri Resolver Extention interface",
+  "license": "MIT",
+  "version": "0.0.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polywrap/uri-resolver-extensions.git"
+  },
   "scripts": {
     "build": "polywrap build",
     "deploy": "polywrap deploy -o deployment.json"

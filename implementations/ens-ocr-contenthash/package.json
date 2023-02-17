@@ -1,6 +1,6 @@
 {
-  "name": "template-wasm-rs",
-  "description": "Polywrap Rust Wrapper Template",
+  "name": "@polywrap/ens-ocr-contenthash-resolver",
+  "description": "Ens OCR contenthash resolver",
   "private": true,
   "version": "0.9.4",
   "scripts": {

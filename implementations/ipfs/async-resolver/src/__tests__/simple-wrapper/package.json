@@ -1,5 +1,5 @@
 {
-  "name": "test-case-simple",
+  "name": "async-ipfs-simple-test-case",
   "private": true,
   "scripts": {
     "build": "npx polywrap build -s image",
