@@ -20,6 +20,6 @@
     "monowrap": "npx @wraplib/pwr monowrap -m ./monowrap.json"
   },
   "devDependencies": {
-    "@wraplib/pwr": "0.3.4"
+    "@wraplib/pwr": "0.3.5"
   }
 }

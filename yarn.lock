@@ -2837,10 +2837,10 @@
     "@polywrap/msgpack-js" "0.8.0"
     ipfs-core "0.14.1"
 
-"@wraplib/pwr@0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@wraplib/pwr/-/pwr-0.3.4.tgz#666eb1060847f3f1a35f37368c9e3a90de98c8e0"
-  integrity sha512-72wZvnRj0a9pYO4M7F+sW1nn3aCo84dhIr6NMoCnTvBg0oskxglZq4/a1HgOH2bLZWsOlvkRgJyFPFxiqYlzQQ==
+"@wraplib/pwr@0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@wraplib/pwr/-/pwr-0.3.5.tgz#29f0a94b816eba00f012741d94fb9d4e540132c1"
+  integrity sha512-X3xuUpe5u7AI3UTjo/3imsWkADedwjWGmuS8GyZqMhE5St5Pvp3DJ7mX3nQY9oYpJkvUlmDKNw1ZTBOT49enHA==
   dependencies:
     "@nerfzael/ens-contenthash-resolver-plugin-wrapper" "0.2.0"
     "@nerfzael/http-plugin-wrapper" "0.3.0"

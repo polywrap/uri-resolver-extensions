@@ -6,7 +6,10 @@
       "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
       "method": "spawn",
       "args": {
-        "command": "yarn build"
+        "command": "yarn build",
+        "options": {
+          "shell": "bash"
+        }
       }
     },
     {
@@ -14,7 +17,10 @@
       "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
       "method": "spawn",
       "args": {
-        "command": "yarn test"
+        "command": "yarn test",
+        "options": {
+          "shell": "bash"
+        }
       },
       "requires": ["build"]
     },
@@ -23,7 +29,10 @@
       "uri": "wrap://ens/goerli/interface.subprocess.polywrap.eth",
       "method": "spawn",
       "args": {
-        "command": "yarn deploy"
+        "command": "yarn deploy",
+        "options": {
+          "shell": "bash"
+        }
       },
       "requires": ["test"]
     }
