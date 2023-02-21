@@ -16,7 +16,7 @@ describe("ens-text-record-resolver e2e tests", () => {
     ],
     interfaces: [
       {
-        interface: "wrap://ens/wraps.eth:ethereum-provider@1.0.0",
+        interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
         implementations: ["wrap://plugin/ethereum-provider"]
       }
     ]
@@ -123,7 +123,7 @@ describe("ens-text-record-resolver e2e tests", () => {
           implementations: [wrapperUri]
         },
         {
-          interface: "wrap://ens/wraps.eth:ethereum-provider@1.0.0",
+          interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
           implementations: ["wrap://plugin/ethereum-provider"]
         }
       ],
