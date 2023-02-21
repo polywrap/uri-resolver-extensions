@@ -1,12 +1,18 @@
 import { concurrentPromisePlugin } from "concurrent-plugin-js";
-import {defaultInterfaces, defaultPackages, PolywrapCoreClientConfig} from "@polywrap/client-js";
+import {
+  defaultInterfaces,
+  defaultPackages,
+  defaultWrappers,
+  ExtendableUriResolver,
+  PolywrapCoreClientConfig
+} from "@polywrap/client-js";
 import path from "path";
 import { ClientConfigBuilder } from "@polywrap/client-config-builder-js";
-import { Uri } from "@polywrap/core-js";
 import { fileSystemPlugin } from "@polywrap/fs-plugin-js";
 import { fileSystemResolverPlugin } from "@polywrap/fs-resolver-plugin-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
 import {httpResolverPlugin} from "@polywrap/http-resolver-plugin-js";
+import {Connections, ethereumProviderPlugin} from "ethereum-provider-js";
 
 export const ipfsResolverUri: string = "wrap://package/ipfs-resolver";
 
@@ -19,57 +25,38 @@ export function getClientConfig(
   const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
 
   return new ClientConfigBuilder()
-    .addEnvs([
-        {
-          uri: new Uri(ipfsResolverUri),
-          env: { provider, timeout, retries },
-        },
-      ])
-    .addRedirects([
-        {
-          from: new Uri(ipfsResolverUri),
-          to: new Uri(ipfsResolverFsUri),
-        },
-      {
-        from: "wrap://ens/http.polywrap.eth",
-        to: "wrap://ens/wraps.eth:http@1.1.0",
-      }
-      ])
-    .addPackages( [
-        {
-          uri: new Uri(defaultPackages.fileSystem),
-          package: fileSystemPlugin({}),
-        },
-        {
-          uri: new Uri(defaultPackages.fileSystemResolver),
-          package: fileSystemResolverPlugin({}),
-        },
-        {
-          uri: new Uri("wrap://ens/wraps.eth:concurrent@1.0.0"),
-          package: concurrentPromisePlugin({})
-        },
-        {
-          uri: new Uri("wrap://ens/wraps.eth:http@1.1.0"),
-          package: httpPlugin({}),
-        },
-      {
-        uri: new Uri(defaultPackages.httpResolver),
-        package: httpResolverPlugin({}),
-      }
-      ])
+    .addEnvs({
+      [ipfsResolverUri]: { provider, timeout, retries },
+    })
+    .addRedirects({
+      [ipfsResolverUri]: ipfsResolverFsUri,
+    })
+    .addPackages({
+      [defaultInterfaces.fileSystem]: fileSystemPlugin({}),
+      [defaultPackages.fileSystemResolver]: fileSystemResolverPlugin({}),
+      "wrap://ens/wraps.eth:concurrent@1.0.0": concurrentPromisePlugin({}),
+      "wrap://ens/wraps.eth:http@1.1.0": httpPlugin({}),
+      [defaultPackages.httpResolver]: httpResolverPlugin({}),
+      "wrap://plugin/ethereum-provider": ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
+    })
     .addInterfaceImplementations(
-      new Uri(defaultInterfaces.uriResolver),[
-        new Uri(ipfsResolverUri),
-        new Uri(defaultPackages.fileSystemResolver),
-        new Uri(defaultPackages.httpResolver),
-          ])
+      ExtendableUriResolver.extInterfaceUri.uri,[
+        ipfsResolverUri,
+        defaultPackages.fileSystemResolver,
+        defaultPackages.httpResolver,
+        defaultWrappers.ensTextRecordResolver,
+      ])
     .addInterfaceImplementation(
-      new Uri("wrap://ens/wraps.eth:ipfs-http-client@1.0.0"),
-      new Uri("wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build")
+      "wrap://ens/wraps.eth:ipfs-http-client@1.0.0",
+      "wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"
     )
-    .addInterfaceImplementations(
-      new Uri("wrap://ens/wraps.eth:concurrent@1.0.0"),
-      [new Uri("wrap://ens/wraps.eth:concurrent@1.0.0")]
+    .addInterfaceImplementation(
+      "wrap://ens/wraps.eth:concurrent@1.0.0",
+      "wrap://ens/wraps.eth:concurrent@1.0.0"
     )
-    .buildCoreConfig()
+    .addInterfaceImplementation(
+      "wrap://ens/wraps.eth:ethereum-provider@1.0.0",
+      "wrap://package/ethereum-provider"
+    )
+    .build()
 }

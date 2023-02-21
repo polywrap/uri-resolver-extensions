@@ -8,4 +8,3 @@ source:
 resources: ./resources
 extensions:
   build: ./polywrap.build.yaml
-  deploy: ./polywrap.deploy.yaml
