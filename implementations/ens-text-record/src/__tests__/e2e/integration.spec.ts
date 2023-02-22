@@ -1,5 +1,5 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
-import { PolywrapClient } from "@polywrap/client-js";
+import { PolywrapClient, ExtendableUriResolver } from "@polywrap/client-js";
 import path from "path";
 import {ethereumProviderPlugin, Connections} from "ethereum-provider-js";
 
@@ -7,17 +7,19 @@ jest.setTimeout(60000);
 
 describe("ens-text-record-resolver e2e tests", () => {
 
+  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
+
   const client: PolywrapClient = new PolywrapClient({
     packages: [
       {
-        uri: "wrap://plugin/ethereum-provider",
+        uri: ethereumProviderUri,
         package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
       }
     ],
     interfaces: [
       {
-        interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
-        implementations: ["wrap://plugin/ethereum-provider"]
+        interface: ethereumProviderUri,
+        implementations: [ethereumProviderUri]
       }
     ]
   });
@@ -119,17 +121,17 @@ describe("ens-text-record-resolver e2e tests", () => {
     const client = new PolywrapClient({
       interfaces: [
         {
-          interface: "wrap://ens/uri-resolver.core.polywrap.eth",
+          interface: ExtendableUriResolver.extInterfaceUri.uri,
           implementations: [wrapperUri]
         },
         {
-          interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
-          implementations: ["wrap://plugin/ethereum-provider"]
+          interface: ethereumProviderUri,
+          implementations: [ethereumProviderUri]
         }
       ],
       packages: [
         {
-          uri: "wrap://plugin/ethereum-provider",
+          uri: ethereumProviderUri,
           package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
         }
       ],
