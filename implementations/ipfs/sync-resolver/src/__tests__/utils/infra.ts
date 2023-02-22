@@ -1,6 +1,5 @@
 import { runCLI } from "@polywrap/test-env-js";
 import axios from "axios";
-import path from "path";
 
 export const ipfsProvider = "http://localhost:5001";
 
@@ -80,42 +79,11 @@ async function awaitResponse(
   return false;
 }
 
-export async function buildWrapperWithImage(
-  wrapperAbsPath: string,
-  manifestPathOverride?: string
-): Promise<void> {
-  const manifestPath = manifestPathOverride
-    ? path.join(wrapperAbsPath, manifestPathOverride)
-    : `${wrapperAbsPath}/polywrap.yaml`;
-  const {
-    exitCode: buildExitCode,
-    stdout: buildStdout,
-    stderr: buildStderr,
-  } = await runCLI({
-    args: [
-      "build",
-      "--manifest-file",
-      manifestPath,
-      "--output-dir",
-      `${wrapperAbsPath}/build`,
-      "-s",
-      "image"
-    ],
-  });
-
-  if (buildExitCode !== 0) {
-    console.error(`polywrap exited with code: ${buildExitCode}`);
-    console.log(`stderr:\n${buildStderr}`);
-    console.log(`stdout:\n${buildStdout}`);
-    throw Error("polywrap CLI failed");
-  }
-}
-
 export async function deployWrapper(
   wrapperAbsPath: string,
   outputPath?: string
 ): Promise<void> {
-  const manifestPath = `${wrapperAbsPath}/polywrap.yaml`;
+  const manifestPath = `${wrapperAbsPath}/polywrap.deploy.yaml`;
 
   const outputArgs = outputPath ? ["--output-file", outputPath] : [];
 

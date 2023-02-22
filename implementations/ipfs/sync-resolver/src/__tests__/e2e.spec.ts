@@ -2,10 +2,11 @@ import { PolywrapClient } from "@polywrap/client-js";
 
 import { Result } from "@polywrap/core-js";
 import { ResultOk } from "@polywrap/result";
-import { getClientConfig } from "./utils/config";
-import { buildWrapperWithImage, deployWrapper, initInfra, ipfsProvider, stopInfra } from "./utils/infra";
+import {getClientConfig, ipfsResolverUri} from "./utils/config";
+import { deployWrapper, initInfra, ipfsProvider, stopInfra } from "./utils/infra";
 import path from "path";
 import fs from "fs";
+import { buildWrapper } from "@polywrap/test-env-js";
 
 jest.setTimeout(180000);
 
@@ -25,7 +26,6 @@ const createRacePromise = (
 };
 
 describe("Sync IPFS URI Resolver Extension", () => {
-  let ipfsResolverUri: string = "wrap://ens/ipfs-resolver.polywrap.eth";
   let manifest: ArrayBuffer;
   let wrapperIpfsUri: string;
   let wrapperIpfsHash: string;
@@ -35,7 +35,7 @@ describe("Sync IPFS URI Resolver Extension", () => {
 
     // build simple wrapper test case
     const wrapperPath = path.resolve(__dirname, "simple-wrapper");
-    await buildWrapperWithImage(wrapperPath);
+    await buildWrapper(wrapperPath);
     manifest = fs.readFileSync(__dirname + "/simple-wrapper/build/wrap.info").buffer;
 
     // deploy simple wrapper test case and read cid
