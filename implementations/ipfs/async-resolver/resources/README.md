@@ -5,13 +5,13 @@ Resolve IPFS URIs, prefaced with the `ipfs` URI authority. For example:
 
 | Version | URI | WRAP Version |
 |-|-|-|
-| 1.0.0 | [`wrap://ens/wrappers.polywrap.eth:async-ipfs-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:async-ipfs-uri-resolver-ext@1.0.0) | 0.1 |
+| 1.0.0 | [`wrap://ens/wraps.eth:async-ipfs-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wraps.eth:async-ipfs-uri-resolver-ext@1.0.0) | 0.1 |
 
 ## Interface
 ```graphql
-#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
-#import { Module } into Client from "wrap://ens/wrappers.polywrap.eth:ipfs-http-client@1.0.0"
-#import { Module, Task, TaskResult, ReturnWhen } into Concurrent from "wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0"
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wraps.eth:uri-resolver-ext@1.1.0"
+#import { Module } into Client from "wrap://ens/wraps.eth:ipfs-http-client@1.0.0"
+#import { Module, Task, TaskResult, ReturnWhen } into Concurrent from "wrap://ens/wraps.eth:concurrent@1.0.0"
 #use { getImplementations } for Concurrent
 
 type Module implements UriResolver_Module {}
@@ -55,11 +55,11 @@ type Env {
 ## Usage
 Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-The Async IPFS URI Resolver Extension Wrapper can make concurrent requests to providers. This feature is enabled by default when an implementation of the Concurrent interface `"wrap://ens/wrappers.polywrap.eth:concurrent@1.0.0` is registered in the client configuration.
+The Async IPFS URI Resolver Extension Wrapper can make concurrent requests to providers. This feature is enabled by default when an implementation of the Concurrent interface `"wrap://ens/wraps.eth:concurrent@1.0.0` is registered in the client configuration.
 
 If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
 ```typescript
-const uri = "wrap://ens/wrappers.polywrap.eth:async-ipfs-uri-resolver-ext@1.0.0";
+const uri = "wrap://ens/wraps.eth:async-ipfs-uri-resolver-ext@1.0.0";
 
 await client.invoke({
   uri,
