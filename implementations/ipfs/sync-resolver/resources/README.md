@@ -5,12 +5,12 @@ Resolve IPFS URIs, prefaced with the `ipfs` URI authority. For example:
 
 | Version | URI | WRAP Version |
 |-|-|-|
-| 1.0.0 | [`wrap://ens/wrappers.polywrap.eth:sync-ipfs-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:sync-ipfs-uri-resolver-ext@1.0.0) | 0.1 |
+| 1.0.0 | [`wrap://ens/wraps.eth:sync-ipfs-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wraps.eth:sync-ipfs-uri-resolver-ext@1.0.0) | 0.1 |
 
 ## Interface
 ```graphql
-#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
-#import { Module, Request, Response, ResponseType } into Http from "wrap://ens/wrappers.polywrap.eth:http@1.1.0"
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wraps.eth:uri-resolver-ext@1.1.0"
+#import { Module, Request, Response, ResponseType } into Http from "wrap://ens/wraps.eth:http@1.1.0"
 
 type Module implements UriResolver_Module {}
 
@@ -50,7 +50,7 @@ Polywrap client configurations should allow users to register URI Resolver Exten
 
 If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
 ```typescript
-const uri = "wrap://ens/wrappers.polywrap.eth:sync-ipfs-uri-resolver-ext@1.0.0";
+const uri = "wrap://ens/wraps.eth:sync-ipfs-uri-resolver-ext@1.0.0";
 
 await client.invoke({
   uri,

@@ -6,6 +6,3 @@ source:
   module: ./Cargo.toml
   schema: ./src/schema.graphql
 resources: ./resources
-extensions:
-  build: ./polywrap.build.yaml
-  deploy: ./polywrap.deploy.yaml

@@ -2,7 +2,7 @@ import {PolywrapClient} from "@polywrap/client-js";
 import { runCLI } from "@polywrap/test-env-js";
 import path from "path";
 import fs from "fs";
-import {httpPlugin} from "@polywrap/http-plugin-js";
+import {httpPlugin} from "temp-http-plugin-js";
 
 jest.setTimeout(90000);
 
@@ -15,7 +15,7 @@ describe("http-resolver e2e tests", () => {
 
   const client: PolywrapClient = new PolywrapClient({
     packages: [{
-      uri: "wrap://ens/wrappers.polywrap.eth:http@1.1.0",
+      uri: "wrap://ens/wraps.eth:http@1.1.0",
       package: httpPlugin({})
     }]
   });

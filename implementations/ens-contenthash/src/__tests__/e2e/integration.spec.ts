@@ -14,7 +14,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   const client: PolywrapClient = new PolywrapClient({
     interfaces:[
       {
-        interface: "wrap://ens/wrappers.polywrap.eth:ethereum-provider@1.0.0",
+        interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
         implementations: ["wrap://plugin/ethereum-provider"]
       }
     ],
