@@ -1267,7 +1267,7 @@
     "@polywrap/core-js" "0.10.0-pre.8"
     "@polywrap/plugin-js" "0.10.0-pre.8"
 
-"@polywrap/http-plugin-js@0.10.0-pre.7", "@polywrap/http-plugin-js@~0.10.0-pre":
+"@polywrap/http-plugin-js@~0.10.0-pre":
   version "0.10.0-pre.7"
   resolved "https://registry.yarnpkg.com/@polywrap/http-plugin-js/-/http-plugin-js-0.10.0-pre.7.tgz#2ce3106f1e32c78e68b71d58f2331bd79b88f659"
   integrity sha512-1WXrx9etHq2qd88XzxC1ofqZA+RI4f5rz8BzH2e9lIzxiBQf4m8zj00dIB2xm+IaEAMq48l9u18CNiYDowIXUg==
@@ -5749,6 +5749,16 @@ symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
+
+temp-http-plugin-js@0.10.0-pre.8:
+  version "0.10.0-pre.8"
+  resolved "https://registry.yarnpkg.com/temp-http-plugin-js/-/temp-http-plugin-js-0.10.0-pre.8.tgz#2ae7c4b05f87ca6a3329c171c3eda122b40fb6d1"
+  integrity sha512-Y5hLQgPqVZNCfu2lbLk5S4Jg1Wr9Mt1zAsJ3KHpKu9TBW4AofsnhbCquBrx5OFGBW+5v0QQXf56+d18YXNHj8A==
+  dependencies:
+    "@polywrap/core-js" "0.10.0-pre.8"
+    "@polywrap/plugin-js" "0.10.0-pre.8"
+    axios "0.21.4"
+    form-data "4.0.0"
 
 terminal-link@^2.0.0:
   version "2.1.1"

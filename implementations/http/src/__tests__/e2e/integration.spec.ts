@@ -2,7 +2,7 @@ import {PolywrapClient} from "@polywrap/client-js";
 import { runCLI } from "@polywrap/test-env-js";
 import path from "path";
 import fs from "fs";
-import {httpPlugin} from "@polywrap/http-plugin-js";
+import {httpPlugin} from "temp-http-plugin-js";
 
 jest.setTimeout(90000);
 
