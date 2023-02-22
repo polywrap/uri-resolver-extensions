@@ -2,17 +2,15 @@ import { concurrentPromisePlugin } from "concurrent-plugin-js";
 import {
   defaultInterfaces,
   defaultPackages,
-  defaultWrappers,
   ExtendableUriResolver,
-  PolywrapCoreClientConfig
+  PolywrapCoreClientConfig,
 } from "@polywrap/client-js";
 import path from "path";
 import { ClientConfigBuilder } from "@polywrap/client-config-builder-js";
-import { fileSystemPlugin } from "@polywrap/fs-plugin-js";
+import { fileSystemPlugin } from "temp-fs-plugin-js";
 import { fileSystemResolverPlugin } from "@polywrap/fs-resolver-plugin-js";
-import { httpPlugin } from "@polywrap/http-plugin-js";
+import { httpPlugin } from "temp-http-plugin-js";
 import {httpResolverPlugin} from "@polywrap/http-resolver-plugin-js";
-import {Connections, ethereumProviderPlugin} from "ethereum-provider-js";
 
 export const ipfsResolverUri: string = "wrap://package/ipfs-resolver";
 
@@ -30,6 +28,7 @@ export function getClientConfig(
     })
     .addRedirects({
       [ipfsResolverUri]: ipfsResolverFsUri,
+      [defaultInterfaces.http]: "wrap://ens/wraps.eth:http@1.1.0",
     })
     .addPackages({
       [defaultInterfaces.fileSystem]: fileSystemPlugin({}),
@@ -37,14 +36,12 @@ export function getClientConfig(
       "wrap://ens/wraps.eth:concurrent@1.0.0": concurrentPromisePlugin({}),
       "wrap://ens/wraps.eth:http@1.1.0": httpPlugin({}),
       [defaultPackages.httpResolver]: httpResolverPlugin({}),
-      "wrap://plugin/ethereum-provider": ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
     })
     .addInterfaceImplementations(
       ExtendableUriResolver.extInterfaceUri.uri,[
         ipfsResolverUri,
         defaultPackages.fileSystemResolver,
         defaultPackages.httpResolver,
-        defaultWrappers.ensTextRecordResolver,
       ])
     .addInterfaceImplementation(
       "wrap://ens/wraps.eth:ipfs-http-client@1.0.0",
@@ -53,10 +50,6 @@ export function getClientConfig(
     .addInterfaceImplementation(
       "wrap://ens/wraps.eth:concurrent@1.0.0",
       "wrap://ens/wraps.eth:concurrent@1.0.0"
-    )
-    .addInterfaceImplementation(
-      "wrap://ens/wraps.eth:ethereum-provider@1.0.0",
-      "wrap://package/ethereum-provider"
     )
     .build()
 }

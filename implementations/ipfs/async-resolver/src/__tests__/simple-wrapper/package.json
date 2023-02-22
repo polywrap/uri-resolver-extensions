@@ -2,7 +2,7 @@
   "name": "test-case-simple",
   "private": true,
   "scripts": {
-    "build": "npx polywrap build -s image",
+    "build": "npx polywrap build",
     "deploy": "npx polywrap deploy"
   },
   "dependencies": {
