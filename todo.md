@@ -6,7 +6,7 @@
 
 - [ ] file-system resolver
   - [x] uses polywrap.graphql
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -16,7 +16,7 @@
   - [x] remove import_abis
 
 - [ ] http resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -36,7 +36,7 @@
   - [x] remove import_abis
 
 - [ ] ens-contenthash resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -46,7 +46,7 @@
   - [x] remove import_abis
 
 - [ ] ipfs-ens-contenthash resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -56,7 +56,7 @@
   - [x] remove import_abis
 
 - [ ] ocr-ens-contenthash resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -66,7 +66,7 @@
   - [x] remove import_abis
 
 - [ ] ipfs async resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions
@@ -76,7 +76,7 @@
   - [x] remove import_abis
 
 - [ ] ipfs sync resolver
-  - [x] all dependencies are versioned @ wrappers.polywrap.eth
+  - [x] all dependencies are versioned @ wraps.eth
   - [x] README
   - [x] tests full coverage
   - [x] makes no client configuration assumptions

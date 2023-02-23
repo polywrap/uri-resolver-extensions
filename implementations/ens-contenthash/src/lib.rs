@@ -91,6 +91,10 @@ fn _try_resolve_uri(
         Err(_) => return not_found()
     };
 
+    if content_hash == "0x" {
+        return not_found();
+    }
+
     if carry_over_path.is_empty() {
         redirect("ens-contenthash/".to_owned() + &content_hash)
     } else {
