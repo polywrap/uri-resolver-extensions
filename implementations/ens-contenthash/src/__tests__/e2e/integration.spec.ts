@@ -103,4 +103,42 @@ describe("ens-contenthash-resolver e2e tests", () => {
       });
     }
   });
+
+  it("uses registry address in env", async () => {
+    const client: PolywrapClient = new PolywrapClient({
+      envs: [
+        {
+          uri: wrapperUri,
+          env: { registryAddress: "0x123" }
+        }
+      ],
+      interfaces:[
+        {
+          interface: "wrap://ens/wraps.eth:ethereum-provider@1.1.0",
+          implementations: ["wrap://plugin/ethereum-provider"]
+        }
+      ],
+      packages: [
+        {
+          uri: "wrap://plugin/ethereum-provider",
+          package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
+        },
+      ]
+    });
+
+    const result = await client.invoke<MaybeUriOrManifest>({
+      uri: wrapperUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "ens",
+        path: "goerli/wrappers.polywrap-test.eth"
+      }
+    });
+
+    if (!result.ok) throw result.error;
+    expect(result.value).toStrictEqual({
+      manifest: null,
+      uri: null,
+    });
+  });
 });
