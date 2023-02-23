@@ -2,8 +2,8 @@
 
 | Version | URI | WRAP Version |
 |-|-|-|
-| 1.0.0 | [`wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:uri-resolver-ext@1.0.0) | 0.1 |
-| 1.1.0 | [`wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0) | 0.1 |
+| 1.0.0 | [`wrap://ens/wraps.eth:uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wraps.eth:uri-resolver-ext@1.0.0) | 0.1 |
+| 1.1.0 | [`wrap://ens/wraps.eth:uri-resolver-ext@1.1.0`](https://wrappers.io/v/ens/wraps.eth:uri-resolver-ext@1.1.0) | 0.1 |
 
 ## Interface
 ```graphql
@@ -42,7 +42,7 @@ type MaybeUriOrManifest {
 
 ## Usage
 ```graphql
-#import { Module } into IUriResolverExt from "ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0"
+#import { Module } into IUriResolverExt from "ens/wraps.eth:uri-resolver-ext@1.1.0"
 
 type Module implements IUriResolverExt_Module {
 }

@@ -72,7 +72,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "ens",
-        path: "goerli/foo.polywrap-test.eth"
+        path: "uri.eth"
       }
     });
 
