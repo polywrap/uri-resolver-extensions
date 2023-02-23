@@ -1,7 +1,7 @@
 pub mod wrap;
 use wrap::{*, imported::{ArgsGetResolver, ArgsGetContentHash}};
 
-const ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
+const DEFAULT_ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 const PATH_SEPARATOR: &str = "/";
 
 struct DomainInfo {
@@ -52,12 +52,13 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<DomainInfo> {
     )
 }
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args, &ENSModule::get_resolver, &ENSModule::get_content_hash)
+pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+    _try_resolve_uri(&args,env, &ENSModule::get_resolver, &ENSModule::get_content_hash)
 }
 
 fn _try_resolve_uri(
     args: &ArgsTryResolveUri,
+    env: Option<Env>,
     get_resolver: &dyn Fn(&ArgsGetResolver) -> Result<String, String>,
     get_content_hash: &dyn Fn(&ArgsGetContentHash) -> Result<String, String>
 ) -> Option<UriResolverMaybeUriOrManifest> {
@@ -73,8 +74,13 @@ fn _try_resolve_uri(
         domain
     } = domain_info.unwrap();
 
+    let registry_address = match env {
+        Some(vars) => vars.registry_address.unwrap_or(DEFAULT_ENS_REGISTRY_ADDRESS.to_string()).clone(),
+        None => DEFAULT_ENS_REGISTRY_ADDRESS.to_string()
+    };
+
     let resolver_address = match get_resolver(&ArgsGetResolver {
-        registry_address: ENS_REGISTRY_ADDRESS.to_string(),
+        registry_address,
         domain: domain.to_string(),
         connection: network_to_connection(network_name.clone())
     }) {
