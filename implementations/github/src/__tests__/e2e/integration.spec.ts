@@ -1,6 +1,6 @@
-import {PolywrapClient} from "@polywrap/client-js";
+import {PolywrapClient, Uri} from "@polywrap/client-js";
 import path from "path";
-import {httpPlugin} from "@polywrap/http-plugin-js";
+import {httpPlugin} from "temp-http-plugin-js";
 
 jest.setTimeout(90000);
 
@@ -13,7 +13,7 @@ describe("github resolver e2e tests", () => {
 
   const client: PolywrapClient = new PolywrapClient({
     packages: [{
-      uri: "wrap://ens/wrappers.polywrap.eth:http@1.1.0",
+      uri: "wrap://ens/wraps.eth:http@1.1.0",
       package: httpPlugin({})
     }]
   });
@@ -31,14 +31,15 @@ describe("github resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "github.com",
-        path: "polywrap/uri-resolver-extensions/master/interface"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
       }
     });
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
       expect(result.value.manifest).toStrictEqual(null);
-      expect(result.value.uri).toStrictEqual("Qm");
+      let uri = Uri.from(result.value.uri ?? "wrap://fail/fail")
+      expect(uri.path.startsWith("Qm")).toBeTruthy();
     }
   });
 
@@ -47,8 +48,8 @@ describe("github resolver e2e tests", () => {
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
-        authority: "https://github.com",
-        path: "polywrap/uri-resolver-extensions/master/interface"
+        authority: "ipfs",
+        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
       }
     });
 
@@ -64,7 +65,7 @@ describe("github resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "github.com",
-        path: "polywrap/uri-resolver-extensions/master/interface"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations"
       }
     });
 
@@ -78,20 +79,17 @@ describe("github resolver e2e tests", () => {
   });
 
   it("getFile", async () => {
-    const result = await client.invoke<Uint8Array>({
+    const result = await client.invoke<Uint8Array | null>({
       uri: wrapperUri,
       method: "getFile",
       args: {
-        path: "github.com/polywrap/uri-resolver-extensions/master/interface/deployment.json"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
       }
     });
 
     expect(result.ok).toBeTruthy();
     if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+      expect(result.value).toStrictEqual(null);
     }
   });
 });
