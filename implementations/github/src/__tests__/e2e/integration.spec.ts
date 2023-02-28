@@ -31,7 +31,7 @@ describe("github resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "github.com",
-        path: "github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
+        path: "polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
       }
     });
 
