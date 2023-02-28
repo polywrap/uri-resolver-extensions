@@ -25,13 +25,13 @@ describe("github resolver e2e tests", () => {
     wrapperUri = `fs/${wrapperPath}/build`;
   });
 
-  it("sanity - github", async () => {
+  it("sanity - github authority", async () => {
     const result = await client.invoke<MaybeUriOrManifest>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
         authority: "github.com",
-        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
       }
     });
 
@@ -43,13 +43,47 @@ describe("github resolver e2e tests", () => {
     }
   });
 
+  it("sanity - http authority", async () => {
+    const result = await client.invoke<MaybeUriOrManifest>({
+      uri: wrapperUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "https",
+        path: "https://github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
+      }
+    });
+
+    expect(result.ok).toBeTruthy();
+    if (result.ok) {
+      expect(result.value.manifest).toStrictEqual(null);
+      let uri = Uri.from(result.value.uri ?? "wrap://fail/fail")
+      expect(uri.path.startsWith("Qm")).toBeTruthy();
+    }
+  });
+
+  it("http url without github domain", async () => {
+    const result = await client.invoke<MaybeUriOrManifest>({
+      uri: wrapperUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "https",
+        path: "https://google.com/polywrap/"
+      }
+    });
+
+    expect(result.ok).toBeTruthy();
+    if (result.ok) {
+      expect(result.value).toStrictEqual(null);
+    }
+  });
+
   it("incorrect authority", async () => {
     const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
         authority: "ipfs",
-        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
       }
     });
 
@@ -65,7 +99,7 @@ describe("github resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "github.com",
-        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations"
       }
     });
 
@@ -83,7 +117,7 @@ describe("github resolver e2e tests", () => {
       uri: wrapperUri,
       method: "getFile",
       args: {
-        path: "github.com/polywrap/uri-resolver-extensions/tree/master/implementations/github"
+        path: "github.com/polywrap/uri-resolver-extensions/tree/github-resolver/implementations/github"
       }
     });
 
