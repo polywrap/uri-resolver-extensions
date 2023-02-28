@@ -5,7 +5,7 @@ Resolve ENS Text Record URIs, prefaced with the `ens` URI authority and suffixed
 
 | Version | URI | WRAP Version |
 |-|-|-|
-| 1.0.0 | [`wrap://ens/wrappers.polywrap.eth:ens-text-record-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wrappers.polywrap.eth:ens-text-record-uri-resolver-ext@1.0.0) | 0.1 |
+| 1.0.0 | [`wrap://ens/wraps.eth:ens-text-record-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wraps.eth:ens-text-record-uri-resolver-ext@1.0.0) | 0.1 |
 
 ## Interface
 ```graphql
@@ -20,7 +20,7 @@ Polywrap client configurations should allow users to register URI Resolver Exten
 
 If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
 ```typescript
-const uri = "wrap://ens/wrappers.polywrap.eth:ens-text-record-uri-resolver-ext@1.0.0";
+const uri = "wrap://ens/wraps.eth:ens-text-record-uri-resolver-ext@1.0.0";
 
 await client.invoke({
   uri,
