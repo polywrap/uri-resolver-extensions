@@ -9,8 +9,27 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
         return None;
     }
 
+    let path = if args.path.starts_with("https://") {
+        args.path.clone()
+    } else if args.path.starts_with("http://") {
+        if args.authority == "https" {
+            "https://".to_string() + &args.path[7..]
+        } else {
+            args.path.clone()
+        }
+    } else {
+        let authority_prefix = format!("{}://", args.authority);
+        authority_prefix + &args.path
+    };
+
+    let url = if path.ends_with("/") {
+        path + MANIFEST_SEARCH_PATTERN
+    } else {
+        path + "/" + MANIFEST_SEARCH_PATTERN
+    };
+
     let result = HttpModule::get(&ArgsGet {
-        url: args.path + "/" + MANIFEST_SEARCH_PATTERN,
+        url,
         request: Some(HttpRequest{
             response_type: HttpResponseType::BINARY,
             headers: None,
