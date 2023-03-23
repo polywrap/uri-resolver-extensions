@@ -76,12 +76,9 @@ describe("ens-contenthash-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: No content hash found for domain: uri.eth\ncode: 51 WRAPPER INVOKE ABORTED/);
     }
   });
 
@@ -94,13 +91,10 @@ describe("ens-contenthash-resolver e2e tests", () => {
         path: "goerli/wrappers.polywrap-test.eth:foo"
       }
     });
-
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+  
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: No content hash found for domain: wrappers.polywrap-test.eth:foo/);
     }
   });
 
@@ -135,10 +129,9 @@ describe("ens-contenthash-resolver e2e tests", () => {
       }
     });
 
-    if (!result.ok) throw result.error;
-    expect(result.value).toStrictEqual({
-      manifest: null,
-      uri: null,
-    });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error getting resolver address for registry: 0x123/);
+    }
   });
 });

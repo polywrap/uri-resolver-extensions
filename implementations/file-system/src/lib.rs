@@ -7,7 +7,7 @@ use wrap::{
         ArgsReadFile
     }
 };
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
 
@@ -24,32 +24,37 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
         .unwrap()
         .to_string();
 
-    let exists = FileSystemModule::exists(&ArgsExists {
+    let exists_result = FileSystemModule::exists(&ArgsExists {
         path: manifest_path.clone()
     });
 
-    if exists.is_err() || exists.unwrap() == false {
-        return Some(UriResolverMaybeUriOrManifest {
-            uri: None,
-            manifest: None
-        });
+    match exists_result {
+        Ok(exists) => {
+            match exists {
+                false => panic!("Manifest not found"),
+                true => {
+                    let bytes = FileSystemModule::read_file(&ArgsReadFile {
+                        path: manifest_path
+                    });
+                
+                    match bytes {
+                        Ok(bytes) => {
+                            Some(UriResolverMaybeUriOrManifest {
+                                manifest: Some(bytes),
+                                uri: None
+                            })
+                        },
+                        Err(_) => {
+                            panic!("Error reading manifest");
+                        }
+                    }
+                }
+            }
+        },
+        Err(_) => {
+            panic!("Error checking if manifest exists");
+        }
     }
-
-    let bytes = FileSystemModule::read_file(&ArgsReadFile {
-        path: manifest_path
-    });
-
-    if bytes.is_err() {
-        return Some(UriResolverMaybeUriOrManifest {
-            uri: None,
-            manifest: None
-        });
-    }
-
-    Some(UriResolverMaybeUriOrManifest {
-        manifest: Some(bytes.unwrap()),
-        uri: None
-    })
 }
 
 pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {

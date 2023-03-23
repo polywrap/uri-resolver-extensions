@@ -61,9 +61,6 @@ describe("ocr-ens-contenthash-resolver e2e tests", () => {
     });
 
     if (!result.ok) throw result.error;
-    expect(result.value).toStrictEqual({
-      uri: null,
-      manifest: null,
-    });
+    expect(result.value).toStrictEqual(null);
   });
 });
