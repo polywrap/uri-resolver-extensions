@@ -5,40 +5,48 @@ use util::*;
 use cid::Cid;
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    let env = env.expect("Ipfs uri resolver requires a configured Env");
+    let env = env.expect("IPFS uri resolver requires a configured Env");
 
     if args.authority != "ipfs" {
         return None;
     }
 
     if !is_cid(&args.path) {
-        // Not a valid CID
-        return Some(UriResolverMaybeUriOrManifest { manifest: None, uri: None });
+        panic!("Invalid CID: {}", &args.path);
     }
 
     let path = format!("{}/wrap.info", &args.path);
     let options: Options = get_options(&env, false);
-    let manifest: Option<Vec<u8>> = exec_with_options(&path, &options);
+    let manifest: Vec<u8> = exec_with_options(&path, &options);
 
-    return Some(UriResolverMaybeUriOrManifest { manifest, uri: None });
+    return Some(UriResolverMaybeUriOrManifest { 
+        manifest: Some(manifest), 
+        uri: None 
+    });
 }
 
 pub fn get_file(args: ArgsGetFile, env: Option<Env>) -> Option<Vec<u8>> {
-    let env = env.expect("Ipfs uri resolver requires a configured Env");
+    let env = env.expect("IPFS URI resolver requires a configured Env");
     let options: Options = get_options(&env, true);
-    exec_with_options(&args.path, &options)
+    Some(exec_with_options(&args.path, &options))
 }
 
-fn exec_with_options(path: &str, options: &Options) -> Option<Vec<u8>> {
+fn exec_with_options(path: &str, options: &Options) -> Vec<u8> {
     let mut attempts = options.retries + 1;
-    while attempts > 0 {
+    loop {
         let result = exec_sequential(&options.providers, &path, options.timeout);
-        if result.is_ok() {
-            return result.ok();
-        }
-        attempts = attempts - 1;
+        
+        match result {
+            Ok(result) => return result,
+            Err(err) => {
+                attempts = attempts - 1;
+
+                if attempts == 0 {
+                    panic!("Failed to resolve IPFS URI with error: {}", err);
+                }
+            }
+        };
     }
-    None
 }
 
 fn is_cid(maybe_cid: &str) -> bool {
