@@ -3,6 +3,7 @@ import {
   defaultPackages,
   ExtendableUriResolver,
   PolywrapCoreClientConfig,
+  IWrapPackage,
 } from "@polywrap/client-js";
 import path from "path";
 import { ClientConfigBuilder } from "@polywrap/client-config-builder-js";
@@ -16,6 +17,7 @@ export function getClientConfig(
   provider: string,
   timeout?: number,
   retries?: { tryResolveUri: number; getFile: number },
+  httpPluginOverride?: IWrapPackage
 ): PolywrapCoreClientConfig {
   const ipfsResolverPath = path.resolve(path.join(__dirname, "/../../../build"));
   const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
@@ -31,7 +33,7 @@ export function getClientConfig(
     .addPackages({
       [defaultInterfaces.fileSystem]: fileSystemPlugin({}),
       [defaultPackages.fileSystemResolver]: fileSystemResolverPlugin({}),
-      "wrap://ens/wraps.eth:http@1.1.0": httpPlugin({}),
+      "wrap://ens/wraps.eth:http@1.1.0": httpPluginOverride ?? httpPlugin({}),
     })
     .addInterfaceImplementations(
       ExtendableUriResolver.extInterfaceUri.uri,[
