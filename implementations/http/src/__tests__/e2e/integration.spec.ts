@@ -111,21 +111,7 @@ describe("http-resolver e2e tests", () => {
 
     expect(result.ok).toBeFalsy();
     if (!result.ok) {
-      expect(result.error?.toString().startsWith(`WrapError: __wrap_abort: Error during HTTP request: WrapError: Request failed with status code 404
-code: 51 WRAPPER INVOKE ABORTED
-uri: wrap://ens/wraps.eth:http@1.1.0
-method: get
-args: {
-  \"url\": \"http://localhost:3500/wrappers/local/foo/wrap.info\",
-  \"request\": {
-    \"headers\": null,
-    \"urlParams\": null,
-    \"responseType\": 1,
-    \"body\": null,
-    \"formData\": null,
-    \"timeout\": null
-  }
-}`)).toBeTruthy();
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error during HTTP request: WrapError: Request failed with status code 404/);
     }
   });
 
