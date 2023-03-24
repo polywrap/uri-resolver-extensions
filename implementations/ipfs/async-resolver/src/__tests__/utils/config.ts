@@ -45,7 +45,7 @@ export function getClientConfig(
       ])
     .addInterfaceImplementation(
       "wrap://ens/wraps.eth:ipfs-http-client@1.0.0",
-      "wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build"
+      "wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/wrappers/ipfs-http-client/build"
     )
     .addInterfaceImplementation(
       "wrap://ens/wraps.eth:concurrent@1.0.0",
