@@ -82,23 +82,23 @@ fn _try_resolve_uri(
         Err(_) => panic!("Error getting resolver address for registry: {}", registry_address)
     };
 
-    let content_hash = match get_content_hash(&ArgsGetContentHash {
+    let contenthash = match get_content_hash(&ArgsGetContentHash {
         domain: domain.clone(),
         resolver_address,
         connection: network_to_connection(network_name.clone())
     }) {
         Ok(value) => value,
-        Err(_) => panic!("No content hash found for domain: {}", domain)
+        Err(_) => panic!("Error getting contenthash for domain: {}", domain)
     };
 
     if content_hash == "0x" {
-        panic!("No content hash found for domain: {}", domain)
+        panic!("No contenthash found for domain: {}", domain)
     }
 
     if carry_over_path.is_empty() {
-        redirect("ens-contenthash/".to_owned() + &content_hash)
+        redirect("ens-contenthash/".to_owned() + &contenthash)
     } else {
-        redirect("ens-contenthash/".to_owned() + &content_hash + "/" + &carry_over_path)
+        redirect("ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path)
     }
 }
 
