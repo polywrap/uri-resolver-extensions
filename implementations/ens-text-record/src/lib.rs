@@ -1,7 +1,7 @@
 pub mod wrap;
 use wrap::{*, imported::{ArgsGetResolver, ArgsGetTextRecord}};
 
-const ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
+const DEFAULT_ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 const POLYWRAP_TEXT_RECORD_PREFIX: &str = "wrap/";
 const TEXT_RECORD_SEPARATOR: &str = ":";
 const PATH_SEPARATOR: &str = "/";
@@ -21,13 +21,13 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
     let path_parts: Vec<&str> = args.path.split(PATH_SEPARATOR).collect();
 
     if path_parts.len() < 1 {
-        return None;
+        panic!("Invalid URI");
     }
 
     let domain_or_network = path_parts[0];
 
     if domain_or_network.is_empty() {
-        return None;
+        panic!("Invalid URI");
     }
 
     let network_name;
@@ -43,7 +43,7 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
             carry_over_path = "".to_string();
         }
     } else if path_parts.len() < 2 {
-        return None;
+        panic!("ENS domain not specified");
     } else {
         network_name = domain_or_network;
         domain_and_text_record = path_parts[1];
@@ -71,12 +71,13 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
 
 // wrap://ens/test.eth:v1/wrap.info
 // wrap://ens/goerli/test.eth:v1/wrap.info
-pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args, &ENSModule::get_resolver, &ENSModule::get_text_record)
+pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+    _try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_text_record)
 }
 
 fn _try_resolve_uri(
     args: &ArgsTryResolveUri, 
+    env: Option<Env>,
     get_resolver: &dyn Fn(&ArgsGetResolver) -> Result<String, String>,
     get_text_record:  &dyn Fn(&ArgsGetTextRecord) -> Result<String, String>
 ) -> Option<UriResolverMaybeUriOrManifest> {
@@ -93,13 +94,18 @@ fn _try_resolve_uri(
         text_record_key
     } = text_record_info.unwrap();
 
+    let registry_address = match env {
+        Some(vars) => vars.registry_address.unwrap_or(DEFAULT_ENS_REGISTRY_ADDRESS.to_string()).clone(),
+        None => DEFAULT_ENS_REGISTRY_ADDRESS.to_string()
+    };
+
     let resolver_address = match get_resolver(&ArgsGetResolver {
-        registry_address: ENS_REGISTRY_ADDRESS.to_string(),
+        registry_address: registry_address.to_string(),
         domain: domain.to_string(),
         connection: network_to_connection(network_name.clone())
     }) {
         Ok(value) => value,
-        Err(_) => return not_found()
+        Err(_) => panic!("Error getting resolver address for registry: {}", registry_address)
     };
 
     let text_record = match get_text_record(&ArgsGetTextRecord{
@@ -109,7 +115,7 @@ fn _try_resolve_uri(
         connection: network_to_connection(network_name.clone())
     }) {
         Ok(value) => value,
-        Err(_) => return not_found()
+        Err(_) => panic!("Error getting text record({}) for domain: {}", text_record_key, domain)
     };
 
     if carry_over_path.is_empty() {
@@ -117,13 +123,6 @@ fn _try_resolve_uri(
     } else {
         redirect(text_record + "/" + &carry_over_path)
     }
-}
-
-fn not_found() -> Option<UriResolverMaybeUriOrManifest> {
-    Some(UriResolverMaybeUriOrManifest {
-        uri: None,
-        manifest: None
-    })
 }
 
 fn network_to_connection<T: Into<String>>(network_name: T) -> Option<ENSEthereumConnection> {
@@ -217,19 +216,17 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Error getting text record(wrap/invalid_key) for domain: domain.eth")]
     fn not_found() {
-        assert_resolve_uri(&ArgsTryResolveUri {
-            authority: "ens".to_string(),
-            path: "domain.eth:invalid_key".to_string(),
-        },
-        "wrap/some_key".to_string(),
-        "wrap://ens/test.eth".to_string(), 
-        &Some(
-            UriResolverMaybeUriOrManifest {
-                uri: None,
-                manifest: None
-            }
-        ));
+        assert_resolve_uri(
+            &ArgsTryResolveUri {
+                authority: "ens".to_string(),
+                path: "domain.eth:invalid_key".to_string(),
+            },
+            "wrap/some_key".to_string(),
+            "wrap://ens/test.eth".to_string(), 
+            &None
+        );
     }
 
     #[test]
@@ -269,6 +266,7 @@ mod tests {
     fn assert_resolve_uri(args: &ArgsTryResolveUri, text_record_key: String, text_record_value: String, expected_res: &Option<UriResolverMaybeUriOrManifest>) {
         match _try_resolve_uri(
             &args, 
+            None,
             &|_| Ok("0x123".to_string()),
             &|args| {
                 let ArgsGetTextRecord{

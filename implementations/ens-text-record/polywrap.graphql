@@ -3,4 +3,6 @@
 
 type Module implements UriResolver_Module {}
 
-type Env {}
+type Env {
+    registryAddress: String
+}

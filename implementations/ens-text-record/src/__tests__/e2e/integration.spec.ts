@@ -88,13 +88,29 @@ describe("ens-text-record-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "ens",
+        path: ""
+      }
+    });
+
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Invalid URI/);
+    }
+  });
+
+  it("invalid uri", async () => {
+    const result = await client.invoke({
+      uri: wrapperUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "ens",
         path: "foo-bar-baz"
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toBe(null);
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: ENS domain not specified/);
     }
   });
 
@@ -108,12 +124,9 @@ describe("ens-text-record-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error getting text record\(wrap\/bar\) for domain: foo.polywrap-test.eth/);
     }
   });
 
