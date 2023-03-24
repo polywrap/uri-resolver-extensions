@@ -78,7 +78,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
 
     expect(result.ok).toBeFalsy();
     if (!result.ok) {
-      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: No content hash found for domain: uri.eth\ncode: 51 WRAPPER INVOKE ABORTED/);
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: No contenthash found for domain: uri.eth\ncode: 51 WRAPPER INVOKE ABORTED/);
     }
   });
 
@@ -94,7 +94,7 @@ describe("ens-contenthash-resolver e2e tests", () => {
   
     expect(result.ok).toBeFalsy();
     if (!result.ok) {
-      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: No content hash found for domain: wrappers.polywrap-test.eth:foo/);
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error getting contenthash for domain: wrappers.polywrap-test.eth:foo/);
     }
   });
 

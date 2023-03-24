@@ -91,7 +91,7 @@ fn _try_resolve_uri(
         Err(_) => panic!("Error getting contenthash for domain: {}", domain)
     };
 
-    if content_hash == "0x" {
+    if contenthash == "0x" {
         panic!("No contenthash found for domain: {}", domain)
     }
 
