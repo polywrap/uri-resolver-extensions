@@ -7,7 +7,7 @@ type Module {
   tryResolveUri(
     authority: String!
     path: String!
-  ): UriResolutionResult! @env(required: false)
+  ): MaybeUriOrManifest @env(required: false)
 
   """
   Attempt to read a file.
@@ -28,10 +28,4 @@ type MaybeUriOrManifest {
   The wrapper's manifest, if found (finality).
   """
   manifest: Bytes
-}
-
-type UriResolutionResult {
-  ok: Boolean!
-  value: MaybeUriOrManifest
-  error: String
 }
