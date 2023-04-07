@@ -109,12 +109,9 @@ describe("http-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error during HTTP request: WrapError: Request failed with status code 404/);
     }
   });
 

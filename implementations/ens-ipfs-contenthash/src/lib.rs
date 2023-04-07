@@ -13,16 +13,16 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
         let hex_data = &args.path[10..];
         let cid = match hex::decode(hex_data) {
             Ok(bytes) => bytes.to_base58(),
-            Err(_e) => return None,
+            Err(err) => panic!("Error decoding hex({}): {}", hex_data, err),
         };
 
-        return Some( UriResolverMaybeUriOrManifest {
+        return Some(UriResolverMaybeUriOrManifest {
             uri: Some(format!("wrap://ipfs/{cid}")),
             manifest: None,
         });
     }
 
-    return Some(UriResolverMaybeUriOrManifest { uri: None, manifest: None });
+    return None;
 }
 
 pub fn get_file(_: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {

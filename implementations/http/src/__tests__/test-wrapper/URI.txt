@@ -1,0 +1,1 @@
+wrap://http/http://localhost:3500/wrappers/local/test-wrapper

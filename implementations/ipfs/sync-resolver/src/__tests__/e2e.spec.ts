@@ -1,4 +1,5 @@
 import { PolywrapClient } from "@polywrap/client-js";
+import { PluginPackage } from "@polywrap/plugin-js";
 
 import { Result } from "@polywrap/core-js";
 import { ResultOk } from "@polywrap/result";
@@ -101,6 +102,28 @@ describe("Sync IPFS URI Resolver Extension", () => {
 
     if (!result.ok) fail(result.error);
     expect(result.value.buffer).toStrictEqual(manifest);
+  });
+
+  it("Should show an error in case of HTTP request failure", async () => {
+    const httpPluginThatThrows = PluginPackage.from(() => ({
+      get(): Promise<any> {
+        throw new Error("HTTP request failed");
+      }
+    }));
+
+    const config = getClientConfig(ipfsProvider, undefined, undefined, httpPluginThatThrows);
+    const client = new PolywrapClient(config, { noDefaults: true });
+
+    const result = await client.invoke<Uint8Array>({
+      uri: ipfsResolverUri,
+      method: "getFile",
+      args: {
+        path: wrapperIpfsHash + "/wrap.info"
+      }
+    })
+
+    if (result.ok) fail("Expected error");
+    expect((result.error as Error).message).toMatch(/^__wrap_abort: Failed to resolve IPFS URI with error: IPFS method 'cat' failed. WrapError: HTTP request failed/);
   });
 
   it.skip("Should properly timeout - getFile", async () => {

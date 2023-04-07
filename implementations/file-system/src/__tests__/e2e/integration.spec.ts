@@ -96,12 +96,9 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Manifest not found/);
     }
   });
 

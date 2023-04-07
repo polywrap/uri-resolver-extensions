@@ -10,21 +10,17 @@ struct DomainInfo {
     domain: String
 }
 
-fn parse_uri(args: &ArgsTryResolveUri) -> Option<DomainInfo> {
-    if args.authority != "ens" {
-        return None;
-    }
-
+fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
     let path_parts: Vec<&str> = args.path.split(PATH_SEPARATOR).collect();
 
     if path_parts.len() < 1 {
-        return None;
+        panic!("Invalid URI");
     }
 
     let domain_or_network = path_parts[0];
 
     if domain_or_network.is_empty() {
-        return None;
+        panic!("Invalid URI");
     }
 
     let network_name;
@@ -36,24 +32,22 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<DomainInfo> {
         domain = domain_or_network;
         carry_over_path = path_parts[1..].join(PATH_SEPARATOR);
     } else if path_parts.len() < 2 {
-        return None;
+        panic!("ENS domain not specified");
     } else {
         network_name = domain_or_network;
         domain = path_parts[1];
         carry_over_path = path_parts[2..].join(PATH_SEPARATOR);
     }
 
-    Some(
-        DomainInfo {
-            network_name: network_name.to_string(),
-            carry_over_path: carry_over_path,
-            domain: domain.to_string()
-        }
-    )
+    DomainInfo {
+        network_name: network_name.to_string(),
+        carry_over_path: carry_over_path,
+        domain: domain.to_string()
+    }
 }
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args,env, &ENSModule::get_resolver, &ENSModule::get_content_hash)
+    _try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_content_hash)
 }
 
 fn _try_resolve_uri(
@@ -62,17 +56,17 @@ fn _try_resolve_uri(
     get_resolver: &dyn Fn(&ArgsGetResolver) -> Result<String, String>,
     get_content_hash: &dyn Fn(&ArgsGetContentHash) -> Result<String, String>
 ) -> Option<UriResolverMaybeUriOrManifest> {
-    let domain_info = parse_uri(args);
-
-    if let None = domain_info {
+    if args.authority != "ens" {
         return None;
     }
+
+    let domain_info = parse_uri(args);
 
     let DomainInfo {
         network_name,
         carry_over_path,
         domain
-    } = domain_info.unwrap();
+    } = domain_info;
 
     let registry_address = match env {
         Some(vars) => vars.registry_address.unwrap_or(DEFAULT_ENS_REGISTRY_ADDRESS.to_string()).clone(),
@@ -80,39 +74,32 @@ fn _try_resolve_uri(
     };
 
     let resolver_address = match get_resolver(&ArgsGetResolver {
-        registry_address,
+        registry_address: registry_address.clone(),
         domain: domain.to_string(),
         connection: network_to_connection(network_name.clone())
     }) {
         Ok(value) => value,
-        Err(_) => return not_found()
+        Err(_) => panic!("Error getting resolver address for registry: {}", registry_address)
     };
 
-    let content_hash = match get_content_hash(&ArgsGetContentHash {
-        domain: domain.to_string(),
+    let contenthash = match get_content_hash(&ArgsGetContentHash {
+        domain: domain.clone(),
         resolver_address,
         connection: network_to_connection(network_name.clone())
     }) {
         Ok(value) => value,
-        Err(_) => return not_found()
+        Err(_) => panic!("Error getting contenthash for domain: {}", domain)
     };
 
-    if content_hash == "0x" {
-        return not_found();
+    if contenthash == "0x" {
+        panic!("No contenthash found for domain: {}", domain)
     }
 
     if carry_over_path.is_empty() {
-        redirect("ens-contenthash/".to_owned() + &content_hash)
+        redirect("ens-contenthash/".to_owned() + &contenthash)
     } else {
-        redirect("ens-contenthash/".to_owned() + &content_hash + "/" + &carry_over_path)
+        redirect("ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path)
     }
-}
-
-fn not_found() -> Option<UriResolverMaybeUriOrManifest> {
-    Some(UriResolverMaybeUriOrManifest {
-        uri: None,
-        manifest: None
-    })
 }
 
 fn network_to_connection<T: Into<String>>(network_name: T) -> Option<ENSEthereumConnection> {
