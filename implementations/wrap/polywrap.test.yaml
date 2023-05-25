@@ -1,0 +1,16 @@
+name: wrap-uri-resolver
+format: 0.1.0
+validation: "./polywrap.test.cue"
+jobs:
+  tryResolveUri:
+    steps:
+      - uri: fs/build
+        method: tryResolveUri
+        args:
+          authority: "wrap"
+          path: "QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n"
+      - uri: fs/build
+        method: tryResolveUri
+        args:
+          authority: "wrap"
+          path: "bafkreibme22gw2h7y2h7tg2fhqotaqjucnbc24deqo72b6mkl2egezxhvy"
