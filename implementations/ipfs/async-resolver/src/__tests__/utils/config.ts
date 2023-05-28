@@ -1,24 +1,27 @@
-import { concurrentPromisePlugin } from "concurrent-plugin-js";
 import {
-  defaultInterfaces,
-  defaultPackages,
   ExtendableUriResolver,
-  PolywrapCoreClientConfig,
+  CoreClientConfig,
 } from "@polywrap/client-js";
-import path from "path";
 import { ClientConfigBuilder } from "@polywrap/client-config-builder-js";
-import { fileSystemPlugin } from "temp-fs-plugin-js";
-import { fileSystemResolverPlugin } from "@polywrap/fs-resolver-plugin-js";
-import { httpPlugin } from "temp-http-plugin-js";
-import {httpResolverPlugin} from "@polywrap/http-resolver-plugin-js";
+import { concurrentPromisePlugin } from "@polywrap/concurrent-plugin-js";
+import { httpPlugin } from "@polywrap/http-plugin-js";
+import path from "path";
 
 export const ipfsResolverUri: string = "wrap://package/ipfs-resolver";
+
+// build -> file/path/build -> WrapEmbed
+// config -> ipfs-resolver -> WrapEmbed
+// config -> uri-resolver-ext += ipfs-resolver
+// invoke -> ipfs-resolver
+// tryResolveUri -> ipfs uri
+// use: wrappers.io
+// loose: local setup
 
 export function getClientConfig(
   provider: string,
   timeout?: number,
   retries?: { tryResolveUri: number; getFile: number },
-): PolywrapCoreClientConfig {
+): CoreClientConfig {
   const ipfsResolverPath = path.resolve(path.join(__dirname, "/../../../build"));
   const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
 
@@ -28,7 +31,6 @@ export function getClientConfig(
     })
     .addRedirects({
       [ipfsResolverUri]: ipfsResolverFsUri,
-      [defaultInterfaces.http]: "wrap://ens/wraps.eth:http@1.1.0",
     })
     .addPackages({
       [defaultInterfaces.fileSystem]: fileSystemPlugin({}),

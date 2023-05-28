@@ -2,11 +2,11 @@ import { PolywrapClient } from "@polywrap/client-js";
 
 import { Result } from "@polywrap/core-js";
 import { ResultOk } from "@polywrap/result";
-import {getClientConfig, ipfsResolverUri} from "./utils/config";
+import { Commands } from "@polywrap/cli-js";
+import { getClientConfig, ipfsResolverUri } from "./utils/config";
 import { deployWrapper, initInfra, ipfsProvider, stopInfra } from "./utils/infra";
 import path from "path";
 import fs from "fs";
-import { buildWrapper } from "@polywrap/test-env-js";
 
 jest.setTimeout(300000);
 
@@ -35,7 +35,7 @@ describe("Async IPFS URI Resolver Extension", () => {
 
     // build simple wrapper test case
     const wrapperPath = path.resolve(__dirname, "simple-wrapper");
-    await buildWrapper(wrapperPath);
+    await Commands.build({}, { cwd: wrapperPath });
     manifest = fs.readFileSync(__dirname + "/simple-wrapper/build/wrap.info").buffer;
 
     // deploy simple wrapper test case and read cid
@@ -55,6 +55,22 @@ describe("Async IPFS URI Resolver Extension", () => {
     const client = new PolywrapClient(config, { noDefaults: true });
 
     const result = await client.tryResolveUri({ uri: wrapperIpfsUri });
+
+    if (!result.ok) fail(result.error);
+
+    if (result.value.type !== "wrapper") {
+      fail("Expected response to be a wrapper");
+    }
+
+    const manifest = result.value.wrapper.getManifest();
+    expect(manifest?.name).toBe("Simple");
+  });
+
+  it("Should successfully resolve with wrap/ authority - e2e", async () => {
+    const config = getClientConfig(ipfsProvider);
+    const client = new PolywrapClient(config, { noDefaults: true });
+
+    const result = await client.tryResolveUri({ uri: `wrap/${wrapperIpfsHash}` });
 
     if (!result.ok) fail(result.error);
 
