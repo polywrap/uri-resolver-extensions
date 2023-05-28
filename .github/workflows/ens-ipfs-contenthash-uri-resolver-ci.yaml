@@ -3,7 +3,7 @@ name: ens-ipfs-contenthash-uri-resolver-ci
 on:
   pull_request:
     paths:
-      - "implementations/ens-ipfs-contenthash/**"
+      - "implementations/ens/ipfs-contenthash/**"
 
 jobs:
   ci:
@@ -17,7 +17,7 @@ jobs:
       - name: Read .nvmrc
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-        working-directory: ./implementations/ens-ipfs-contenthash
+        working-directory: ./implementations/ens/ipfs-contenthash
 
       - name: Setup Node.js
         uses: actions/setup-node@master
@@ -26,12 +26,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
-        working-directory: ./implementations/ens-ipfs-contenthash
+        working-directory: ./implementations/ens/ipfs-contenthash
 
       - name: Build
         run: yarn build
-        working-directory: ./implementations/ens-ipfs-contenthash
+        working-directory: ./implementations/ens/ipfs-contenthash
 
       - name: Test
         run: yarn test
-        working-directory: ./implementations/ens-ipfs-contenthash
+        working-directory: ./implementations/ens/ipfs-contenthash
