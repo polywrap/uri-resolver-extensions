@@ -1,0 +1,8 @@
+format: 0.3.0
+project:
+  name: ens-text-record-uri-resolver-ext
+  type: wasm/rust
+source:
+  module: ./Cargo.toml
+  schema: ./polywrap.graphql
+resources: ./resources

@@ -66,6 +66,23 @@ describe("http-resolver e2e tests", () => {
     }
   });
 
+  it("path without protocol", async () => {
+    const result = await client.invoke<MaybeUriOrManifest>({
+      uri: wrapperUri,
+      method: "tryResolveUri",
+      args: {
+        authority: "http",
+        path: "localhost:3500/wrappers/local/test-wrapper"
+      }
+    });
+
+    expect(result.ok).toBeTruthy();
+    if (result.ok) {
+      expect(result.value.manifest.buffer).toStrictEqual(manifest);
+      expect(result.value.uri).toStrictEqual(null);
+    }
+  });
+
   it("incorrect authority", async () => {
     const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: wrapperUri,
@@ -92,12 +109,9 @@ describe("http-resolver e2e tests", () => {
       }
     });
 
-    expect(result.ok).toBeTruthy();
-    if (result.ok) {
-      expect(result.value).toStrictEqual({
-        uri: null,
-        manifest: null,
-      });
+    expect(result.ok).toBeFalsy();
+    if (!result.ok) {
+      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error during HTTP request: WrapError: Request failed with status code 404/);
     }
   });
 
