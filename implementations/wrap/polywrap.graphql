@@ -1,5 +1,0 @@
-#import * into UriResolver from "wrap://ipfs/QmSAXrSLcmGUkQRrApAtG5qTPmuRMMX2Zf1wihpguDQfbm"
-
-type Module implements UriResolver_Module {}
-
-type Env { }
