@@ -8,7 +8,7 @@ impl ModuleTrait for Module {
     fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
         let env = env.expect("Ipfs uri resolver requires a configured Env");
 
-        if args.authority != "ipfs" || args.authority != "wrap" {
+        if args.authority != "ipfs" && args.authority != "wrap" {
             return Ok(None);
         }
 

@@ -3,9 +3,7 @@ use crate::wrap::{
     ConcurrentModule,
     ConcurrentReturnWhen,
     ConcurrentTask,
-    ConcurrentTaskResult,
-    ClientModule,
-    Client
+    ConcurrentTaskResult
 };
 use crate::wrap::imported::{ArgsSchedule, ArgsResult};
 use crate::util::exec_cat::*;
@@ -15,12 +13,9 @@ pub fn exec_sequential(
     cid: &str,
     timeout: u32,
 ) -> Result<Vec<u8>, String> {
-    let client_uri: String = get_ipfs_http_client_uri()?;
-    let client: ClientModule = ClientModule::new(client_uri);
-
     let mut errors: Vec<String> = Vec::new();
     for provider in providers {
-        let result: Result<Vec<u8>, String> = exec_cat(provider, cid, timeout, &client);
+        let result: Result<Vec<u8>, String> = exec_cat(provider, cid, timeout);
         if result.is_ok() {
             return result;
         }
@@ -36,9 +31,6 @@ pub fn exec_parallel(
     cid: &str,
     timeout: u32,
 ) -> Result<Vec<u8>, String> {
-    // get ipfs http client uri
-    let client_uri: String = get_ipfs_http_client_uri()?;
-
     // get Concurrent implementation
     let impls = Concurrent::get_implementations();
     if impls.len() < 1 {
@@ -52,7 +44,7 @@ pub fn exec_parallel(
     // schedule tasks
     let mut tasks: Vec<ConcurrentTask> = Vec::new();
     for &provider in providers {
-        tasks.push(cat_task(provider, cid, timeout, &client_uri));
+        tasks.push(cat_task(provider, cid, timeout));
     }
     let task_ids: Vec<i32> = concurrent_module.schedule(&ArgsSchedule { tasks })?;
 
@@ -80,13 +72,4 @@ fn build_exec_error(provider: &str, timeout: u32, error: &str) -> String  {
                    timeout,
                    error
     );
-}
-
-fn get_ipfs_http_client_uri() -> Result<String, String> {
-    let impls = Client::get_implementations();
-    if impls.len() < 1 {
-        panic!("Execution requires an implementation of the IPFS HTTP Client interface. \
-        You can declare an interface implementation in your Polywrap Client configuration.");
-    }
-    Ok(impls[0].clone())
 }

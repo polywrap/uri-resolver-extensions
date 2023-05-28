@@ -10,8 +10,8 @@ use crate::wrap::imported::client_module::{
     serialize_cat_args,
 };
 
-pub fn exec_cat(ipfs_provider: &str, cid: &str, timeout: u32, client: &ClientModule) -> Result<Vec<u8>, String> {
-    return client.cat(&ClientArgsCat {
+pub fn exec_cat(ipfs_provider: &str, cid: &str, timeout: u32) -> Result<Vec<u8>, String> {
+    return ClientModule::cat(&ClientArgsCat {
         cid: cid.to_string(),
         ipfs_provider: ipfs_provider.to_string(),
         timeout: Some(timeout),
@@ -19,9 +19,9 @@ pub fn exec_cat(ipfs_provider: &str, cid: &str, timeout: u32, client: &ClientMod
     });
 }
 
-pub fn cat_task(ipfs_provider: &str, cid: &str, timeout: u32, client_uri: &str) -> ConcurrentTask {
+pub fn cat_task(ipfs_provider: &str, cid: &str, timeout: u32) -> ConcurrentTask {
     ConcurrentTask {
-        uri: client_uri.to_string(),
+        uri: ClientModule::URI.to_string(),
         method: String::from("cat"),
         args: serialize_cat_args(&ClientArgsCat {
             cid: cid.to_string(),
