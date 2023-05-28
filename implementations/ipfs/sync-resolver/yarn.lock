@@ -1373,7 +1373,7 @@
     "@polywrap/tracing-js" "0.10.0-pre.10"
     "@polywrap/wrap-manifest-types-js" "0.10.0-pre.10"
 
-"@polywrap/plugin-js@0.10.1":
+"@polywrap/plugin-js@0.10.1", "@polywrap/plugin-js@~0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@polywrap/plugin-js/-/plugin-js-0.10.1.tgz#e11ce19dde01245750c297a62f2f75fd58ef9ced"
   integrity sha512-WBk4ZUrI5m6FG4bIocLHo7XS+QMeNa23odli6Ss6onUyo7mPIo1wlceEgw7Cu4gd/3bmuc6VGoCKRA1/glBT3g==
