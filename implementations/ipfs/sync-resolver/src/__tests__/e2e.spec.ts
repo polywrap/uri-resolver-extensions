@@ -1,107 +1,104 @@
+import { getClientConfig, ipfsResolverUri } from "./utils/client";
+import { MaybeUriOrManifest, createRacePromise } from "./utils/promise";
+
 import { PolywrapClient } from "@polywrap/client-js";
 import { PluginPackage } from "@polywrap/plugin-js";
-
-import { Result } from "@polywrap/core-js";
-import { ResultOk } from "@polywrap/result";
-import {getClientConfig, ipfsResolverUri} from "./utils/config";
-import { deployWrapper, initInfra, ipfsProvider, stopInfra } from "./utils/infra";
+import { WasmPackage } from "@polywrap/wasm-js";
 import path from "path";
 import fs from "fs";
-import { buildWrapper } from "@polywrap/test-env-js";
 
-jest.setTimeout(180000);
-
-type MaybeUriOrManifest = {
-  uri: string | null;
-  manifest: Uint8Array | null;
-}
-
-const createRacePromise = (
-  timeout: number
-): Promise<Result<Uint8Array, Error>> => {
-  return new Promise<Result<Uint8Array, Error>>((resolve) =>
-    setTimeout(() => {
-      resolve(ResultOk(Uint8Array.from([1, 2, 3, 4])));
-    }, timeout)
-  );
-};
+jest.setTimeout(300000);
 
 describe("Sync IPFS URI Resolver Extension", () => {
-  let manifest: ArrayBuffer;
-  let wrapperIpfsUri: string;
-  let wrapperIpfsHash: string;
+  let ipfsWrap: WasmPackage;
+  let testIpfsCid = "QmNeSVRrYVDhgoqz1C9VAJTfHgedkk1QY3J6YpSGghgxQk";
+  let testIpfsUri = `ipfs/${testIpfsCid}`;
+  let testWrapUri = `wrap/${testIpfsCid}`;
+  let testManifest: ArrayBuffer;
 
   beforeAll(async () => {
-    await initInfra();
+    // Load the ipfs resolver
+    ipfsWrap = WasmPackage.from(
+      fs.readFileSync(path.join(__dirname, "../../build/wrap.info")),
+      fs.readFileSync(path.join(__dirname, "../../build/wrap.wasm")),
+    );
 
     // build simple wrapper test case
-    const wrapperPath = path.resolve(__dirname, "simple-wrapper");
-    await buildWrapper(wrapperPath);
-    manifest = fs.readFileSync(__dirname + "/simple-wrapper/build/wrap.info").buffer;
-
-    // deploy simple wrapper test case and read cid
-    const deployOutputPath = path.join(wrapperPath, "ipfs.json");
-    await deployWrapper(wrapperPath, deployOutputPath);
-    const deployOutputStr: string = fs.readFileSync(deployOutputPath, "utf-8");
-    wrapperIpfsUri = JSON.parse(deployOutputStr)[0].steps[0].result.trim();
-    wrapperIpfsHash = wrapperIpfsUri.substring(wrapperIpfsUri.indexOf("Qm"));
-  });
-
-  afterAll(async () => {
-    await stopInfra();
+    testManifest = fs.readFileSync(__dirname + "/test-wrap/wrap.info").buffer;
   });
 
   it("Should successfully resolve a deployed wrapper - e2e", async () => {
-    const config = getClientConfig(ipfsProvider, undefined);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap);
+    const client = new PolywrapClient(config);
 
-    const result = await client.tryResolveUri({ uri: wrapperIpfsUri });
+    const result = await client.tryResolveUri({ uri: testIpfsUri });
 
     if (!result.ok) {
       fail(result.error);
     }
 
-    if (result.value.type !== "wrapper") {
-      fail("Expected response to be a wrapper");
+    if (result.value.type !== "package") {
+      fail(`Expected response to be a package, got ${result.value.type}`);
     }
 
-    const manifest = result.value.wrapper.getManifest();
+    const manifest = await result.value.package.getManifest();
 
-    expect(manifest?.name).toBe("Simple");
+    if (!manifest.ok) fail("failed to get manifest");
+
+    expect(manifest.value.name).toBe("hello-world");
+  });
+
+  it("Should successfully resolve with wrap/ authority - e2e", async () => {
+    const config = getClientConfig(ipfsWrap);
+    const client = new PolywrapClient(config);
+
+    const result = await client.tryResolveUri({ uri: testWrapUri });
+
+    if (!result.ok) fail(result.error);
+
+    if (result.value.type !== "package") {
+      fail(`Expected response to be a package, got ${result.value.type}`);
+    }
+
+    const manifest = await result.value.package.getManifest();
+
+    if (!manifest.ok) fail("failed to get manifest");
+
+    expect(manifest.value.name).toBe("hello-world");
   });
 
   it("Should successfully resolve a deployed wrapper - direct invocation", async () => {
-    const config = getClientConfig(ipfsProvider);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap);
+    const client = new PolywrapClient(config);
 
     const result = await client.invoke<MaybeUriOrManifest>({
       uri: ipfsResolverUri,
       method: "tryResolveUri",
       args: {
         authority: "ipfs",
-        path: wrapperIpfsHash,
+        path: testIpfsCid,
       }
     })
 
     if (!result.ok) fail(result.error);
-    expect(result.value.manifest?.buffer).toStrictEqual(manifest);
+    expect(result.value.manifest?.buffer).toStrictEqual(testManifest);
     expect(result.value.uri).toBeNull();
   });
 
   it("Should successfully get a file - direct invocation", async () => {
-    const config = getClientConfig(ipfsProvider);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap);
+    const client = new PolywrapClient(config);
 
     const result = await client.invoke<Uint8Array>({
       uri: ipfsResolverUri,
       method: "getFile",
       args: {
-        path: wrapperIpfsHash + "/wrap.info"
+        path: testIpfsCid + "/wrap.info"
       }
     })
 
     if (!result.ok) fail(result.error);
-    expect(result.value.buffer).toStrictEqual(manifest);
+    expect(result.value.buffer).toStrictEqual(testManifest);
   });
 
   it("Should show an error in case of HTTP request failure", async () => {
@@ -111,14 +108,14 @@ describe("Sync IPFS URI Resolver Extension", () => {
       }
     }));
 
-    const config = getClientConfig(ipfsProvider, undefined, undefined, httpPluginThatThrows);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap, undefined, undefined, httpPluginThatThrows);
+    const client = new PolywrapClient(config);
 
     const result = await client.invoke<Uint8Array>({
       uri: ipfsResolverUri,
       method: "getFile",
       args: {
-        path: wrapperIpfsHash + "/wrap.info"
+        path: testIpfsCid + "/wrap.info"
       }
     })
 
@@ -128,8 +125,8 @@ describe("Sync IPFS URI Resolver Extension", () => {
 
   it.skip("Should properly timeout - getFile", async () => {
     const timeout = 1000;
-    const config = getClientConfig(ipfsProvider, timeout);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap, timeout);
+    const client = new PolywrapClient(config);
 
     const nonExistentFileCid = "Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
@@ -166,8 +163,8 @@ describe("Sync IPFS URI Resolver Extension", () => {
 
   it.skip("Should properly timeout - tryResolveUri", async () => {
     const timeout = 1000;
-    const config = getClientConfig(ipfsProvider, timeout);
-    const client = new PolywrapClient(config, { noDefaults: true });
+    const config = getClientConfig(ipfsWrap, timeout);
+    const client = new PolywrapClient(config);
 
     const nonExistentFileCid = "Qmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 

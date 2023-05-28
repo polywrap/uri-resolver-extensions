@@ -1,9 +1,0 @@
-format: 0.2.0
-jobs:
-  local_ipfs_deploy:
-    steps:
-      - name: local_ipfs_deploy
-        package: ipfs
-        uri: fs/./build
-        config:
-          gatewayUri: http://localhost:5001

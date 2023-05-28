@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [closed]
     paths:
-      - "implementations/ens-contenthash/**"
+      - "implementations/ens/contenthash/**"
 
 jobs:
   cd:
@@ -22,7 +22,7 @@ jobs:
       - name: Read .nvmrc
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-        working-directory: ./implementations/ens-contenthash
+        working-directory: ./implementations/ens/contenthash
 
       - name: Setup Node.js
         uses: actions/setup-node@master
@@ -31,15 +31,15 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
-        working-directory: ./implementations/ens-contenthash
+        working-directory: ./implementations/ens/contenthash
 
       - name: Build
         run: yarn build
-        working-directory: ./implementations/ens-contenthash
+        working-directory: ./implementations/ens/contenthash
 
       - name: Deploy
         run: yarn deploy
-        working-directory: ./implementations/ens-contenthash
+        working-directory: ./implementations/ens/contenthash
 
       - name: PR New URI
         uses: peter-evans/create-pull-request@v3
