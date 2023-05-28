@@ -1,6 +1,6 @@
 format: 0.3.0
 project:
-  name: ipfs-uri-resolver-rs-async
+  name: ipfs-uri-resolver-async
   type: wasm/rust
 source:
   module: ./Cargo.toml
