@@ -53,24 +53,27 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
 
     let redirect_uri = get_redirect_uri_from_headers(&response.headers);
 
-    match response.body {
+    let manifest = match response.body {
         None => None,
         Some(body) => if body.len() == 0 {
-            Some(UriResolverMaybeUriOrManifest {
-                uri: redirect_uri,
-                manifest: None
-            })
+            None
         } else {
             match decode(body) {
-                Ok(body) => Some(UriResolverMaybeUriOrManifest {
-                    uri: redirect_uri,
-                    manifest: Some(body)
-                }),
+                Ok(body) => Some(body),
                 Err(err) => {
                     panic!("Error during base64 decoding of body: {}", err.to_string());
                 }
             }
         }
+    };
+
+    if redirect_uri.is_none() && manifest.is_none() {
+        None
+    } else {
+        Some(UriResolverMaybeUriOrManifest {
+            uri: redirect_uri,
+            manifest
+        })
     }
 }
 
