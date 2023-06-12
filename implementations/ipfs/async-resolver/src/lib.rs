@@ -60,3 +60,31 @@ fn exec_with_options(path: &str, options: &Options) -> Vec<u8> {
 fn is_cid(maybe_cid: &str) -> bool {
     return Cid::try_from(maybe_cid).is_ok();
 }
+
+#[cfg(test)]
+mod tests {
+ use polywrap_client::{msgpack, core::uri::Uri, resolvers::uri_resolver_wrapper::MaybeUriOrManifest};
+    use serde::{Serialize, Deserialize};
+    mod utils;
+    use utils::get_client_with_module;
+
+    use crate::tests::utils::load_wrap;
+
+    #[test]
+    fn client_sanity() {
+        let (_manifest, module) = load_wrap("./build");
+        let client = get_client_with_module(&module);
+
+        let result: MaybeUriOrManifest = client.invoke(
+            &Uri::try_from("mock/test").unwrap(),
+            "tryResolveUri", 
+            Some(&msgpack::msgpack!({
+                "prop": "arg1"
+            })),
+            None,
+            None,
+        ).unwrap();
+
+        assert_eq!(result.uri, None);
+    }
+}
