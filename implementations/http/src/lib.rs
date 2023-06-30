@@ -1,8 +1,10 @@
 pub mod wrap;
-use wrap::{*, imported::{ArgsGet}};
+use polywrap_wasm_rs::Map;
 use base64::decode;
+use wrap::{*, imported::ArgsGet};
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
+const URI_HEADER_KEY: &str = "x-wrap-uri";
 
 pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "http" && args.authority != "https" {
@@ -29,7 +31,7 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
     };
 
     let result = HttpModule::get(&ArgsGet {
-        url,
+        url: url.clone(),
         request: Some(HttpHttpRequest{
             response_type: HttpHttpResponseType::BINARY,
             headers: None,
@@ -49,18 +51,18 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
         Some(x) => x,
     };
 
-    match response.body {
-        None => return None,
-        Some(body) => match decode(body) {
-            Ok(body) => return Some(UriResolverMaybeUriOrManifest {
-                uri: None,
-                manifest: Some(body)
-            }),
-            Err(err) => {
-                panic!("Error during base64 decoding of body: {}", err.to_string());
-            }
-        }
-    };
+    let redirect_uri = get_redirect_uri_from_headers(&response.headers);
+
+    let manifest = get_manifest_from_body(&response.body);
+
+    if redirect_uri.is_none() && manifest.is_none() {
+        panic!("No URI or manifest found at {}", &url);
+    } 
+    
+    Some(UriResolverMaybeUriOrManifest {
+        uri: redirect_uri,
+        manifest
+    })
 }
 
 pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
@@ -94,4 +96,30 @@ pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
             }
         }
     };
+}
+
+fn get_redirect_uri_from_headers(headers: &Option<Map<String, String>>) -> Option<String> {
+    if let Some(headers) = headers {
+        if let Some(uri) = headers.get(URI_HEADER_KEY) {
+            return Some(uri.clone())
+        }
+    }
+
+    None
+}
+
+fn get_manifest_from_body(body: &Option<String>) -> Option<Vec<u8>> {
+    match body {
+        None => None,
+        Some(body) => if body.len() == 0 {
+            None
+        } else {
+            match decode(body) {
+                Ok(body) => Some(body),
+                Err(err) => {
+                    panic!("Error during base64 decoding of body: {}", err.to_string());
+                }
+            }
+        }
+    }
 }
