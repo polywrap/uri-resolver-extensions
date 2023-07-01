@@ -1,6 +1,5 @@
 import {PolywrapClient, Uri} from "@polywrap/client-js";
 import path from "path";
-import {httpPlugin} from "temp-http-plugin-js";
 
 jest.setTimeout(90000);
 
@@ -11,12 +10,7 @@ type MaybeUriOrManifest = {
 
 describe("github resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient({
-    packages: [{
-      uri: "wrap://ens/wraps.eth:http@1.1.0",
-      package: httpPlugin({})
-    }]
-  });
+  const client: PolywrapClient = new PolywrapClient();
   let wrapperUri: string;
 
   beforeAll(async () => {
