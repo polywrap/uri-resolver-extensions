@@ -1,0 +1,9 @@
+format: 0.4.0
+project:
+  name: wrapscan-registry-resolver-ext
+  type: wasm/rust
+source:
+  module: ./Cargo.toml
+  schema: ./polywrap.graphql
+extensions:
+  build: ./polywrap.build.yaml
