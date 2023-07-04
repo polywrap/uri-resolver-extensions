@@ -1,6 +1,6 @@
 format: 0.3.0
 project:
-  name: ens-contenthash-uri-resolver-ext
+  name: ens-contenthash-uri-resolver
   type: wasm/rust
 source:
   module: ./Cargo.toml
