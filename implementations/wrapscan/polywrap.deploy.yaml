@@ -12,7 +12,7 @@ jobs:
         package: http
         uri: $$ipfs_deploy
         config:
-          postUrl: https://wraps.wrapscan.io/r/wrap/wrapscan-resolver-ext@0.1.0
+          postUrl: https://wraps.wrapscan.io/r/wrap/wrapscan-uri-resolver@0.1.0
           headers:
             - name: Authorization
               value: $POLYWRAP_WRAPSCAN_AUTH_HEADER_PROD

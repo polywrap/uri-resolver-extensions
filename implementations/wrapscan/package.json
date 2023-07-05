@@ -1,5 +1,5 @@
 {
-  "name": "@polywrap/wrapscan-resolver-ext",
+  "name": "@polywrap/wrapscan-uri-resolver",
   "description": "Polywrap Rust Wrapper Template",
   "private": true,
   "version": "0.1.0",

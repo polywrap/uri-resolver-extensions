@@ -1,4 +1,4 @@
-name: wrapscan-resolver-cd
+name: wrapscan-uri-resolver-cd
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   cd:
-    name: wrapscan-resolver-cd
+    name: wrapscan-uri-resolver-cd
     if: |
       github.event.pull_request.merged &&
       startsWith(github.event.pull_request.title, '[CD]') != true &&
@@ -44,7 +44,7 @@ jobs:
       - name: PR New URI
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: wrapscan-resolver-cd-pr-${{github.event.number}}
-          commit-message: "[CD] wrapscan-resolver"
-          title: "[CD] wrapscan-resolver"
+          branch: wrapscan-uri-resolver-cd-pr-${{github.event.number}}
+          commit-message: "[CD] wrapscan-uri-resolver"
+          title: "[CD] wrapscan-uri-resolver"
           body: "Triggered by: https://github.com/${{github.repository}}/pull/${{github.event.number}}"
