@@ -58,7 +58,7 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
     }
   });
 
-  it("correct authoritay - custom resolve endpoint", async () => {
+  it("custom provider", async () => {
     const result = await client.invoke<MaybeUriOrManifest | null>({
       uri: wrapperUri,
       method: "tryResolveUri",
@@ -67,7 +67,7 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
         path: testWrapPath,
       },
       env: {
-        resolveUrl: wrapscanDevUrl,
+        providerUrl: wrapscanDevUrl,
       },
     });
 

@@ -3,5 +3,5 @@
 type Module implements UriResolver_Module {}
 
 type Env {
-  resolveUrl: String
+  providerUrl: String
 }

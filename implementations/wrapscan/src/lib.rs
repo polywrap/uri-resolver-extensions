@@ -1,7 +1,7 @@
 pub mod wrap;
 pub use wrap::*;
 
-const DEFAULT_ENDPOINT_URL: &str = "http/wraps.wrapscan.io";
+const DEFAULT_PROVIDER_URL: &str = "http/wraps.wrapscan.io";
 const RESOLVE_PATH: &str = "/r/";
 
 impl ModuleTrait for Module {
@@ -13,12 +13,12 @@ impl ModuleTrait for Module {
             return Ok(None);
         }
 
-        let endpoint_url = match env {
-            Some(env) => env.resolve_url.unwrap_or(DEFAULT_ENDPOINT_URL.to_string()),
-            None => DEFAULT_ENDPOINT_URL.to_string(),
+        let provider_url = match env {
+            Some(env) => env.provider_url.unwrap_or(DEFAULT_PROVIDER_URL.to_string()),
+            None => DEFAULT_PROVIDER_URL.to_string(),
         };
 
-        let wrap_url = endpoint_url + RESOLVE_PATH + &args.path;
+        let wrap_url = provider_url + RESOLVE_PATH + &args.path;
 
         Ok(Some(UriResolverMaybeUriOrManifest {
             uri: Some(wrap_url),
