@@ -1,5 +1,5 @@
 [package]
-name = "wrapscan-registry-resolver-ext"
+name = "wrapscan-resolver-ext"
 version = "0.1.0"
 description = "A Polywrap Wasm wrapper for resolving Wrapscan registry URIs"
 authors = ["Polywrap"]

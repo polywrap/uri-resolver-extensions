@@ -12,8 +12,9 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
   const client: PolywrapClient = new PolywrapClient();
 
   const testWrapPath = "wrap/test-wrap@1.0.0";
-  const wrapscanResolveUrl = "http/wraps.wrapscan.io/r/";
-  const wrapscanDevResolveUrl = "http/dev.wraps.wrapscan.io/r/";
+  const wrapscanUrl = "http/wraps.wrapscan.io";
+  const wrapscanDevUrl = "http/dev.wraps.wrapscan.io";
+  const resolvePath = "/r/";
 
   let wrapperUri: string;
 
@@ -52,7 +53,7 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
     expect(result.ok).toBeTruthy();
 
     if (result.ok) {
-      expect(result.value?.uri).toBe(wrapscanResolveUrl + testWrapPath);
+      expect(result.value?.uri).toBe(wrapscanUrl + resolvePath + testWrapPath);
       expect(result.value?.manifest).toBeNull();
     }
   });
@@ -66,14 +67,14 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
         path: testWrapPath,
       },
       env: {
-        resolveUrl: wrapscanDevResolveUrl,
+        resolveUrl: wrapscanDevUrl,
       },
     });
 
     expect(result.ok).toBeTruthy();
 
     if (result.ok) {
-      expect(result.value?.uri).toBe(wrapscanDevResolveUrl + testWrapPath);
+      expect(result.value?.uri).toBe(wrapscanDevUrl + resolvePath + testWrapPath);
       expect(result.value?.manifest).toBeNull();
     }
   });

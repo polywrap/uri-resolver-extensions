@@ -1,5 +1,5 @@
 {
-  "name": "template-wasm-rs",
+  "name": "@polywrap/wrapscan-resolver-ext",
   "description": "Polywrap Rust Wrapper Template",
   "private": true,
   "version": "0.10.6",

@@ -1,6 +1,6 @@
 format: 0.4.0
 project:
-  name: wrapscan-registry-resolver-ext
+  name: wrapscan-resolver-ext
   type: wasm/rust
 source:
   module: ./Cargo.toml

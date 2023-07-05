@@ -1,26 +1,27 @@
 pub mod wrap;
 pub use wrap::*;
 
-const WRAPSCAN_RESOLVE_URL: &str = "http/wraps.wrapscan.io/r/";
+const DEFAULT_ENDPOINT_URL: &str = "http/wraps.wrapscan.io";
+const RESOLVE_PATH: &str = "/r/";
 
 impl ModuleTrait for Module {
     fn try_resolve_uri(
         args: ArgsTryResolveUri,
         env: Option<Env>,
     ) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
-        let wrapscan_resolve_url = match env {
-            Some(env) => env.resolve_url.unwrap_or(WRAPSCAN_RESOLVE_URL.to_string()),
-            None => WRAPSCAN_RESOLVE_URL.to_string(),
-        };
-
         if args.authority != "wrapscan" {
             return Ok(None);
         }
 
-        let wrapscan_wrap_url = wrapscan_resolve_url + &args.path;
+        let endpoint_url = match env {
+            Some(env) => env.resolve_url.unwrap_or(DEFAULT_ENDPOINT_URL.to_string()),
+            None => DEFAULT_ENDPOINT_URL.to_string(),
+        };
+
+        let wrap_url = endpoint_url + RESOLVE_PATH + &args.path;
 
         Ok(Some(UriResolverMaybeUriOrManifest {
-            uri: Some(wrapscan_wrap_url),
+            uri: Some(wrap_url),
             manifest: None,
         }))
     }
