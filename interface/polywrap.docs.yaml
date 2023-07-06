@@ -1,0 +1,5 @@
+format: 0.1.0
+description: Interface for defining new URI resolver wraps.
+website: https://polywrap.io
+repository: https://github.com/polywrap/uri-resolver-extensions
+readme: ./README.md
