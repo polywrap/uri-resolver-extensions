@@ -5,5 +5,8 @@ project:
 source:
   module: ./Cargo.toml
   schema: ./polywrap.graphql
+  import_abis:
+  - uri: wrapscan/polywrap/uri-resolver@1.0.0
+    abi: ../../interface/schema.graphql
 extensions:
   build: ./polywrap.build.yaml
