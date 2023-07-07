@@ -1,5 +1,5 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
-import { PolywrapClient, ExtendableUriResolver } from "@polywrap/client-js";
+import { PolywrapClient, ExtendableUriResolver, ClientConfigBuilder } from "@polywrap/client-js";
 import path from "path";
 import {ethereumProviderPlugin, Connections} from "ethereum-provider-js";
 
@@ -9,20 +9,10 @@ describe("ens-text-record-resolver e2e tests", () => {
 
   const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
 
-  const client: PolywrapClient = new PolywrapClient({
-    packages: [
-      {
-        uri: ethereumProviderUri,
-        package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
-      }
-    ],
-    interfaces: [
-      {
-        interface: ethereumProviderUri,
-        implementations: [ethereumProviderUri]
-      }
-    ]
-  });
+  const builder = new ClientConfigBuilder()
+  builder.addPackage(ethereumProviderUri, ethereumProviderPlugin({ connections: new Connections({ networks: {} })}))
+  const client = builder.build();
+
   let wrapperUri: string;
 
   beforeAll(async () => {
