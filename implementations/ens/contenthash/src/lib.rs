@@ -126,8 +126,8 @@ fn _try_resolve_uri(
     }
 }
 
-fn network_to_connection<T: Into<String>>(network_name: T) -> Option<ENSEthereumConnection> {
-    Some(ENSEthereumConnection {
+fn network_to_connection<T: Into<String>>(network_name: T) -> Option<ENSEthersConnection> {
+    Some(ENSEthersConnection {
         network_name_or_chain_id: Some(network_name.into()),
         node: None,
     })

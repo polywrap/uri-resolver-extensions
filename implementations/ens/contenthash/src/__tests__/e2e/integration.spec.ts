@@ -14,7 +14,7 @@ type MaybeUriOrManifest = {
 };
 
 describe("ens-contenthash-resolver e2e tests", () => {
-  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
+  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@2.0.0";
   const builder = new PolywrapClientConfigBuilder();
   builder.addDefaults().setPackage(
     ethereumProviderUri,
