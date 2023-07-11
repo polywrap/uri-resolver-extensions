@@ -1,5 +1,8 @@
 pub mod wrap;
-use wrap::{*, imported::{ArgsGetResolver, ArgsGetContentHash}};
+use wrap::{
+    imported::{ArgsGetContentHash, ArgsGetResolver},
+    *,
+};
 
 const DEFAULT_ENS_REGISTRY_ADDRESS: &str = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 const PATH_SEPARATOR: &str = "/";
@@ -7,7 +10,26 @@ const PATH_SEPARATOR: &str = "/";
 struct DomainInfo {
     network_name: String,
     carry_over_path: String,
-    domain: String
+    domain: String,
+}
+
+impl ModuleTrait for Module {
+    fn try_resolve_uri(
+        args: ArgsTryResolveUri,
+        env: Option<Env>,
+    ) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        _try_resolve_uri(
+            &args,
+            env,
+            &ENSModule::get_resolver,
+            &ENSModule::get_content_hash,
+        )
+    }
+
+    fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        Ok(None)
+    }
+    
 }
 
 fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
@@ -42,22 +64,18 @@ fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
     DomainInfo {
         network_name: network_name.to_string(),
         carry_over_path: carry_over_path,
-        domain: domain.to_string()
+        domain: domain.to_string(),
     }
-}
-
-pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_content_hash)
 }
 
 fn _try_resolve_uri(
     args: &ArgsTryResolveUri,
     env: Option<Env>,
     get_resolver: &dyn Fn(&ArgsGetResolver) -> Result<String, String>,
-    get_content_hash: &dyn Fn(&ArgsGetContentHash) -> Result<String, String>
-) -> Option<UriResolverMaybeUriOrManifest> {
+    get_content_hash: &dyn Fn(&ArgsGetContentHash) -> Result<String, String>,
+) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
     if args.authority != "ens" {
-        return None;
+        return Ok(None);
     }
 
     let domain_info = parse_uri(args);
@@ -65,30 +83,36 @@ fn _try_resolve_uri(
     let DomainInfo {
         network_name,
         carry_over_path,
-        domain
+        domain,
     } = domain_info;
 
     let registry_address = match env {
-        Some(vars) => vars.registry_address.unwrap_or(DEFAULT_ENS_REGISTRY_ADDRESS.to_string()).clone(),
-        None => DEFAULT_ENS_REGISTRY_ADDRESS.to_string()
+        Some(vars) => vars
+            .registry_address
+            .unwrap_or(DEFAULT_ENS_REGISTRY_ADDRESS.to_string())
+            .clone(),
+        None => DEFAULT_ENS_REGISTRY_ADDRESS.to_string(),
     };
 
     let resolver_address = match get_resolver(&ArgsGetResolver {
         registry_address: registry_address.clone(),
         domain: domain.to_string(),
-        connection: network_to_connection(network_name.clone())
+        connection: network_to_connection(network_name.clone()),
     }) {
         Ok(value) => value,
-        Err(_) => panic!("Error getting resolver address for registry: {}", registry_address)
+        Err(_) => panic!(
+            "Error getting resolver address for registry: {}",
+            registry_address
+        ),
     };
 
     let contenthash = match get_content_hash(&ArgsGetContentHash {
         domain: domain.clone(),
         resolver_address,
-        connection: network_to_connection(network_name.clone())
+        connection: network_to_connection(network_name.clone()),
     }) {
         Ok(value) => value,
-        Err(_) => panic!("Error getting contenthash for domain: {}", domain)
+        Err(_) => panic!("Error getting contenthash for domain: {}", domain),
     };
 
     if contenthash == "0x" {
@@ -96,26 +120,22 @@ fn _try_resolve_uri(
     }
 
     if carry_over_path.is_empty() {
-        redirect("ens-contenthash/".to_owned() + &contenthash)
+        Ok(redirect("ens-contenthash/".to_owned() + &contenthash))
     } else {
-        redirect("ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path)
+        Ok(redirect("ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path))
     }
 }
 
 fn network_to_connection<T: Into<String>>(network_name: T) -> Option<ENSEthereumConnection> {
     Some(ENSEthereumConnection {
         network_name_or_chain_id: Some(network_name.into()),
-        node: None
+        node: None,
     })
 }
 
 fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
     Some(UriResolverMaybeUriOrManifest {
         uri: Some(uri.into()),
-        manifest: None
+        manifest: None,
     })
-} 
-
-pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    None
 }
