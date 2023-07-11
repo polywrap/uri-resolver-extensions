@@ -1,6 +1,6 @@
 [package]
 name = "wrapscan-uri-resolver"
-version = "0.1.0"
+version = "1.0.0"
 description = "A Polywrap Wasm wrapper for resolving Wrapscan registry URIs"
 authors = ["Polywrap"]
 repository = "https://github.com/polywrap/monorepo"

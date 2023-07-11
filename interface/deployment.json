@@ -12,7 +12,7 @@
         "name": "http_deploy",
         "id": "ipfs_deploy.http_deploy",
         "input": "wrap://ipfs/QmeHyySwhkYvKqaPNtcq7wYDb1M9QnaqbaX1eDNDqW5fdt",
-        "result": "wrap://http/https://wraps.wrapscan.io/r/wrap/uri-resolver@1.0.0"
+        "result": "wrap://http/https://wraps.wrapscan.io/r/polywrap/uri-resolver@1.0.0"
       }
     ]
   }

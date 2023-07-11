@@ -1,5 +1,5 @@
-#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ipfs/QmSAXrSLcmGUkQRrApAtG5qTPmuRMMX2Zf1wihpguDQfbm"
-#import { Module } into ENS from "wrap://ipfs/QmWG8NJnvGMCosxaUWuRna33MSDR331rByGTdy4EDsVjNL"
+#import { Module, MaybeUriOrManifest } into UriResolver from "wrap://ens/wraps.eth:uri-resolver-ext@1.1.0"
+#import { Module } into ENS from "wrap://ipfs/QmbESzCRArrazFff9EbDeZ44fmENBZfVBkG7AMrAvjevQL"
 
 type Module implements UriResolver_Module {}
 
