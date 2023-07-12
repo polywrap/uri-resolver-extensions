@@ -1,17 +1,11 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
-import { PolywrapClient, ExtendableUriResolver, PolywrapClientConfigBuilder, IWrapPackage } from "@polywrap/client-js";
+import { PolywrapClient, PolywrapClientConfigBuilder } from "@polywrap/client-js";
 import path from "path";
-import {ethereumProviderPlugin, Connections} from "ethereum-provider-js";
-
 jest.setTimeout(60000);
 
 describe("ens-text-record-resolver e2e tests", () => {
-
-  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
-
   const builder = new PolywrapClientConfigBuilder()
-  builder.addDefaults().setPackage(ethereumProviderUri, ethereumProviderPlugin({ connections: new Connections({ networks: {} })}) as IWrapPackage)
-
+  builder.addDefaults()
   const client = new PolywrapClient(builder.build())
 
   let wrapperUri: string;

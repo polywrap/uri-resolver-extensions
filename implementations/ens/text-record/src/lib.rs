@@ -283,7 +283,7 @@ mod tests {
         text_record_value: String,
         expected_res: &Option<UriResolverMaybeUriOrManifest>,
     ) {
-        let result =  _try_resolve_uri(&args, None, &|_| Ok("0x123".to_string()), &|args| {
+        let result = _try_resolve_uri(&args, None, &|_| Ok("0x123".to_string()), &|args| {
             let ArgsGetTextRecord {
                 domain: _,
                 resolver_address: _,
@@ -297,11 +297,10 @@ mod tests {
                 Err("".to_string())
             }
         });
-        
-        match result  {
-            Ok(uri) => {
-                match uri {
-                    Some(UriResolverMaybeUriOrManifest {
+
+        match result {
+            Ok(uri) => match uri {
+                Some(UriResolverMaybeUriOrManifest {
                     uri: Some(uri),
                     manifest: None,
                 }) => match expected_res {
@@ -334,9 +333,8 @@ mod tests {
                     None => (),
                     _ => panic!("Expected a null response"),
                 },
-                _ => assert!(false)
-            }
-        },
+                _ => assert!(false),
+            },
             Err(_) => {
                 panic!("Expect an Ok response")
             }
