@@ -1,10 +1,8 @@
 import {
   PolywrapClient,
   PolywrapClientConfigBuilder,
-  IWrapPackage,
 } from "@polywrap/client-js";
 import path from "path";
-import { Connections, ethereumProviderPlugin } from "ethereum-provider-js";
 
 jest.setTimeout(60000);
 
@@ -14,14 +12,8 @@ type MaybeUriOrManifest = {
 };
 
 describe("ens-contenthash-resolver e2e tests", () => {
-  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@2.0.0";
   const builder = new PolywrapClientConfigBuilder();
-  builder.addDefaults().setPackage(
-    ethereumProviderUri,
-    ethereumProviderPlugin({
-      connections: new Connections({ networks: {} }),
-    }) as IWrapPackage
-  );
+  builder.addDefaults();
   const client: PolywrapClient = new PolywrapClient(builder.build());
   let wrapperUri: string;
 
@@ -103,17 +95,8 @@ describe("ens-contenthash-resolver e2e tests", () => {
   });
 
   it("uses registry address in env", async () => {
-    const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
     const builder = new PolywrapClientConfigBuilder();
-    builder
-      .addDefaults()
-      .setPackage(
-        ethereumProviderUri,
-        ethereumProviderPlugin({
-          connections: new Connections({ networks: {} }),
-        }) as IWrapPackage
-      )
-      .addEnv(wrapperUri, { registryAddress: "0x123" });
+    builder.addDefaults().addEnv(wrapperUri, { registryAddress: "0x123" });
     const client: PolywrapClient = new PolywrapClient(builder.build());
 
     const result = await client.invoke<MaybeUriOrManifest>({
