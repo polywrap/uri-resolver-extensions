@@ -1,12 +1,7 @@
 import {
-  IWrapPackage,
   PolywrapClient,
   PolywrapClientConfigBuilder,
 } from "@polywrap/client-js";
-import {
-  ethereumProviderPlugin,
-  Connections,
-} from "@polywrap/ethereum-provider-js";
 import path from "path";
 
 jest.setTimeout(60000);
@@ -18,16 +13,8 @@ type MaybeUriOrManifest = {
 
 describe("ipfs-ens-contenthash-resolver e2e tests", () => {
   const builder = new PolywrapClientConfigBuilder();
-  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
 
-  builder
-    .addDefaults()
-    .setPackage(
-      ethereumProviderUri,
-      ethereumProviderPlugin({
-        connections: new Connections({ networks: {} }),
-      }) as IWrapPackage
-    );
+  builder.addDefaults();
   const client: PolywrapClient = new PolywrapClient(builder.build());
   let wrapperUri: string;
 
