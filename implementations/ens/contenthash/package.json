@@ -1,5 +1,5 @@
 {
-  "name": "ens-contenthash-uri-resolver",
+  "name": "ens-contenthash-uri-resolver-wrap",
   "description": "ENS contenthash resolver wrap for Polywrap",
   "private": true,
   "version": "1.0.0",

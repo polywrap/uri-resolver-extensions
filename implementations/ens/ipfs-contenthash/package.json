@@ -1,8 +1,8 @@
 {
-  "name": "template-wasm-rs",
-  "description": "Polywrap Rust Wrapper Template",
+  "name": "ens-ipfs-contenthash-uri-resolver-wrap",
+  "description": "IPFS contenthash URI resolver for ENS",
   "private": true,
-  "version": "0.9.4",
+  "version": "1.0.0",
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
     "codegen": "npx polywrap codegen",
