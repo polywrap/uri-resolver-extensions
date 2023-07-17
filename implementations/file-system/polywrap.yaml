@@ -1,6 +1,6 @@
 format: 0.3.0
 project:
-  name: file-system-uri-resolver-ext
+  name: file-system-uri-resolver
   type: wasm/rust
 source:
   module: ./Cargo.toml
