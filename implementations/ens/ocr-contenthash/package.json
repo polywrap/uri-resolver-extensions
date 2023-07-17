@@ -1,5 +1,5 @@
 {
-  "name": "ens-ocr-contenthash-uri-resolver",
+  "name": "ens-ocr-contenthash-uri-resolver-wrap",
   "description": "ENS OCR Contenthash URI Resolver",
   "private": true,
   "version": "1.0.0",
