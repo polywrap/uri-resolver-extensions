@@ -1,8 +1,8 @@
 {
-  "name": "template-wasm-rs",
-  "description": "Polywrap Rust Wrapper Template",
+  "name": "ens-ocr-contenthash-uri-resolver",
+  "description": "ENS OCR Contenthash URI Resolver",
   "private": true,
-  "version": "0.9.4",
+  "version": "1.0.0",
   "scripts": {
     "build": "npx polywrap build",
     "codegen": "npx polywrap codegen",
