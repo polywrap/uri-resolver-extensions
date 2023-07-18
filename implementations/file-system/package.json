@@ -14,7 +14,7 @@
     "@polywrap/client-config-builder-js": "0.10.0-pre.8",
     "@polywrap/wasm-js": "0.10.0-pre.8",
     "temp-fs-plugin-js": "0.10.0-pre.8",
-    "polywrap": "0.10.0-pre.13",
+    "polywrap": "0.11.0-pre.4",
     "@types/jest": "26.0.8",
     "jest": "26.6.3",
     "ts-jest": "26.5.4",

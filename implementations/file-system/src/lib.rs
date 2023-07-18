@@ -11,7 +11,25 @@ use std::path::Path;
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+impl ModuleTrait for Module {
+    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        Ok(_try_resolve_uri(&args, env))
+    } 
+
+    fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        let res = FileSystemModule::read_file(&ArgsReadFile {
+            path: args.path
+        });
+    
+        if res.is_err() {
+            return Ok(None);
+        }
+    
+        Ok(Some(res.unwrap()))
+    }
+}
+
+pub fn _try_resolve_uri(args: &ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "fs" && args.authority != "file" {
         return None;
     }
@@ -55,16 +73,4 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
             panic!("Error checking if manifest exists");
         }
     }
-}
-
-pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    let res = FileSystemModule::read_file(&ArgsReadFile {
-        path: args.path
-    });
-
-    if res.is_err() {
-        return None;
-    }
-
-    Some(res.unwrap())
 }

@@ -10,6 +10,16 @@ struct DomainInfo {
     domain: String
 }
 
+impl ModuleTrait for Module {
+    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        Ok(_try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_content_hash))
+    } 
+
+    fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        Ok(None)
+    }
+}
+
 fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
     let path_parts: Vec<&str> = args.path.split(PATH_SEPARATOR).collect();
 
@@ -44,10 +54,6 @@ fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
         carry_over_path: carry_over_path,
         domain: domain.to_string()
     }
-}
-
-pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_content_hash)
 }
 
 fn _try_resolve_uri(
@@ -115,7 +121,3 @@ fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
         manifest: None
     })
 } 
-
-pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    None
-}

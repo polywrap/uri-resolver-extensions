@@ -4,7 +4,17 @@ use base58::ToBase58;
 use wrap::*;
 use hex;
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+impl ModuleTrait for Module {
+    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        Ok(_try_resolve_uri(&args, env))
+    } 
+
+    fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        Ok(None)
+    }
+}
+
+pub fn _try_resolve_uri(args: &ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
     if args.authority != "ens-contenthash" {
         return None;
     }
@@ -23,10 +33,6 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
     }
 
     return None;
-}
-
-pub fn get_file(_: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    None
 }
 
 fn is_hex_string(value: &str, length: i32) -> bool {

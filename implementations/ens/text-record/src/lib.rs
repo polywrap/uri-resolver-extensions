@@ -13,6 +13,18 @@ struct TextRecordInfo {
     text_record_key: String
 }
 
+impl ModuleTrait for Module {
+    // wrap://ens/test.eth:v1/wrap.info
+    // wrap://ens/goerli/test.eth:v1/wrap.info
+    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        Ok(_try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_text_record))
+    } 
+
+    fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        Ok(None)
+    }
+}
+
 fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
     if args.authority != "ens" {
         return None;
@@ -67,12 +79,6 @@ fn parse_uri(args: &ArgsTryResolveUri) -> Option<TextRecordInfo> {
             text_record_key: POLYWRAP_TEXT_RECORD_PREFIX.to_string() + text_record_key
          }
     )
-}
-
-// wrap://ens/test.eth:v1/wrap.info
-// wrap://ens/goerli/test.eth:v1/wrap.info
-pub fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
-    _try_resolve_uri(&args, env, &ENSModule::get_resolver, &ENSModule::get_text_record)
 }
 
 fn _try_resolve_uri(
@@ -138,10 +144,6 @@ fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
         manifest: None
     })
 } 
-
-pub fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    None
-}
 
 #[cfg(test)]
 mod tests {
