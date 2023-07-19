@@ -1,9 +1,13 @@
-format: 0.2.0
+format: 0.3.0
+primaryJobName: http_deploy
 jobs:
-  deploy-http:
+  http_deploy:
     steps:
       - name: "http-deploy"
         package: "http"
         uri: "fs/."
         config:
           postUrl: http://localhost:3500/wrappers/local/test-wrapper
+          headers:
+            - name: "todo"
+              value: "remove this after https://github.com/polywrap/cli/issues/1835"
