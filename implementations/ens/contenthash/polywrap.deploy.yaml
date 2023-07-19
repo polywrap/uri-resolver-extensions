@@ -8,3 +8,11 @@ jobs:
         uri: fs/./build
         config:
           gatewayUri: https://ipfs.wrappers.io
+      - name: http_deploy
+        package: http
+        uri: $$ipfs_deploy
+        config:
+          postUrl: https://wraps.wrapscan.io/r/wrap/ens-contenthash-uri-resolver@1.0.0
+          headers:
+            - name: Authorization
+              value: $POLYWRAP_WRAPSCAN_AUTH_HEADER_PROD
