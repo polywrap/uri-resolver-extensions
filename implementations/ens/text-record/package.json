@@ -10,7 +10,8 @@
     "test": "jest --passWithNoTests --runInBand --verbose"
   },
   "devDependencies": {
-    "ethereum-provider-js": "0.2.1",
+    "@polywrap/client-js": "0.11.0",
+    "@polywrap/core-js": "0.11.0",
     "@types/jest": "27.0.3",
     "jest": "26.6.3",
     "polywrap": "0.11.0-pre.4",

@@ -1,12 +1,8 @@
-use polywrap_wasm_rs::{Map};
-use base64::{decode};
-use crate::imported::{HttpRequest, HttpResponse, HttpResponseType, HttpModule, ArgsGet};
+use crate::imported::{ArgsGet, HttpModule, HttpRequest, HttpResponse, HttpResponseType};
+use base64::decode;
+use polywrap_wasm_rs::Map;
 
-pub fn exec_sequential(
-    providers: &Vec<&str>,
-    cid: &str,
-    timeout: u32,
-) -> Result<Vec<u8>, String> {
+pub fn exec_sequential(providers: &Vec<&str>, cid: &str, timeout: u32) -> Result<Vec<u8>, String> {
     let mut errors: Vec<String> = Vec::new();
     for provider in providers {
         let result: Result<Vec<u8>, String> = exec_cat(provider, cid, timeout);
@@ -31,7 +27,10 @@ pub fn exec_cat(ipfs_provider: &str, cid: &str, timeout: u32) -> Result<Vec<u8>,
         form_data: None,
     };
 
-    let http_result = HttpModule::get(&ArgsGet { url, request: Some(request) });
+    let http_result = HttpModule::get(&ArgsGet {
+        url,
+        request: Some(request),
+    });
     let result = unwrap_http_result(http_result)?;
     decode(result).map_err(|e| build_exec_error(ipfs_provider, timeout, &format!("{}", e)))
 }
@@ -42,10 +41,15 @@ fn unwrap_http_result(http_result: Result<Option<HttpResponse>, String>) -> Resu
         .ok_or("IPFS method 'cat' failed. HTTP response is null.".to_string())?;
 
     if response.status != 200 {
-        panic!("IPFS method 'cat' failed. Http error. Status code: {}. Status: {}", response.status, response.status_text);
+        panic!(
+            "IPFS method 'cat' failed. Http error. Status code: {}. Status: {}",
+            response.status, response.status_text
+        );
     }
 
-    response.body.ok_or("IPFS method 'cat' failed. HTTP response body is null.".to_string())
+    response
+        .body
+        .ok_or("IPFS method 'cat' failed. HTTP response body is null.".to_string())
 }
 
 fn parse_http_error(err: String) -> String {
@@ -57,10 +61,9 @@ fn parse_http_error(err: String) -> String {
     message
 }
 
-fn build_exec_error(provider: &str, timeout: u32, error: &str) -> String  {
-    return format!("An error occurred\nOperation: cat\nProvider: {}\nTimeout: {}\nError: {}",
-                   provider,
-                   timeout,
-                   error
+fn build_exec_error(provider: &str, timeout: u32, error: &str) -> String {
+    return format!(
+        "An error occurred\nOperation: cat\nProvider: {}\nTimeout: {}\nError: {}",
+        provider, timeout, error
     );
 }

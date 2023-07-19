@@ -1,28 +1,13 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
-import { PolywrapClient, ExtendableUriResolver } from "@polywrap/client-js";
+import { PolywrapClient, PolywrapClientConfigBuilder } from "@polywrap/client-js";
 import path from "path";
-import {ethereumProviderPlugin, Connections} from "ethereum-provider-js";
-
 jest.setTimeout(60000);
 
 describe("ens-text-record-resolver e2e tests", () => {
+  const builder = new PolywrapClientConfigBuilder()
+  builder.addDefaults()
+  const client = new PolywrapClient(builder.build())
 
-  const ethereumProviderUri = "wrap://ens/wraps.eth:ethereum-provider@1.1.0";
-
-  const client: PolywrapClient = new PolywrapClient({
-    packages: [
-      {
-        uri: ethereumProviderUri,
-        package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
-      }
-    ],
-    interfaces: [
-      {
-        interface: ethereumProviderUri,
-        implementations: [ethereumProviderUri]
-      }
-    ]
-  });
   let wrapperUri: string;
 
   beforeAll(async () => {
@@ -131,25 +116,8 @@ describe("ens-text-record-resolver e2e tests", () => {
   });
 
   it("recursively resolves", async () => {
-    const client = new PolywrapClient({
-      interfaces: [
-        {
-          interface: ExtendableUriResolver.extInterfaceUri.uri,
-          implementations: [wrapperUri]
-        },
-        {
-          interface: ethereumProviderUri,
-          implementations: [ethereumProviderUri]
-        }
-      ],
-      packages: [
-        {
-          uri: ethereumProviderUri,
-          package: ethereumProviderPlugin({ connections: new Connections({ networks: {} }) }),
-        }
-      ],
-    });
-
+    const builder = new PolywrapClientConfigBuilder()
+    const client = new PolywrapClient(builder.addDefaults().build())
     const result = await client.invoke({
       uri: wrapperUri,
       method: "tryResolveUri",
@@ -166,17 +134,15 @@ describe("ens-text-record-resolver e2e tests", () => {
         uri: "wrap://ens/goerli/wrappers.polywrap-test.eth:foo"
       });
     }
-
     const context = new UriResolutionContext();
     const uri = await client.tryResolveUri({
       uri: "ens/goerli/wrappers.polywrap-test.eth:package@1.0.0",
       resolutionContext: context
     });
     const path = context.getResolutionPath();
-
     expect(uri.ok).toBeTruthy();
     if (uri.ok) {
-      expect(uri.value.type).toBe("wrapper");
+      expect(uri.value.type).toBe("package");
     }
     expect(path).toStrictEqual([
       new Uri("ens/goerli/wrappers.polywrap-test.eth:package@1.0.0"),

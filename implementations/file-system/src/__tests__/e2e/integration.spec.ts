@@ -5,8 +5,8 @@ import {
 import fs from "fs";
 import path from "path";
 import {WasmPackage} from "@polywrap/wasm-js";
-import {ClientConfigBuilder} from "@polywrap/client-config-builder-js";
-import {fileSystemPlugin} from "temp-fs-plugin-js";
+import {PolywrapClientConfigBuilder} from "@polywrap/client-config-builder-js";
+import {fileSystemPlugin} from "@polywrap/file-system-plugin-js";
 
 jest.setTimeout(120000);
 
@@ -24,13 +24,13 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
     fs.readFileSync(path.join(wrapperPath, "wrap.wasm"))
   );
 
-  const config = new ClientConfigBuilder()
-    .addPackage(fsResolverUri, wrapperPackage)
-    .addPackage("wrap://ens/wraps.eth:file-system@1.0.0", fileSystemPlugin({}))
+  const config = new PolywrapClientConfigBuilder()
+    .setPackage(fsResolverUri, wrapperPackage)
+    .setPackage("wrap://ens/wraps.eth:file-system@1.0.0", fileSystemPlugin({}) as any)
     .addInterfaceImplementation(ExtendableUriResolver.extInterfaceUri.uri, fsResolverUri)
     .build()
 
-  const client = new PolywrapClient(config, { noDefaults: true })
+  const client = new PolywrapClient(config)
 
   const manifest = fs.readFileSync(
     __dirname + "/../test-wrapper/wrap.info"

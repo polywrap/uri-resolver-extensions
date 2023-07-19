@@ -1,4 +1,7 @@
-import { PolywrapClient } from "@polywrap/client-js";
+import {
+  PolywrapClient,
+  PolywrapClientConfigBuilder,
+} from "@polywrap/client-js";
 import path from "path";
 
 jest.setTimeout(60000);
@@ -6,18 +9,20 @@ jest.setTimeout(60000);
 type MaybeUriOrManifest = {
   uri: string;
   manifest: Uint8Array;
-}
+};
 
 describe("ipfs-ens-contenthash-resolver e2e tests", () => {
+  const builder = new PolywrapClientConfigBuilder();
 
-  const client: PolywrapClient = new PolywrapClient();
+  builder.addDefaults();
+  const client: PolywrapClient = new PolywrapClient(builder.build());
   let wrapperUri: string;
 
   beforeAll(() => {
     const dirname: string = path.resolve(__dirname);
     const wrapperPath: string = path.join(dirname, "..", "..", "..");
     wrapperUri = `fs/${wrapperPath}/build`;
-  })
+  });
 
   it("sanity", async () => {
     const result = await client.invoke<MaybeUriOrManifest>({
@@ -25,8 +30,8 @@ describe("ipfs-ens-contenthash-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "ens-contenthash",
-        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
-      }
+        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971",
+      },
     });
 
     if (!result.ok) throw result.error;
@@ -42,8 +47,8 @@ describe("ipfs-ens-contenthash-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "foo",
-        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
-      }
+        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971",
+      },
     });
 
     if (!result.ok) throw result.error;
@@ -56,8 +61,8 @@ describe("ipfs-ens-contenthash-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "ens-contenthash",
-        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c9710"
-      }
+        path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c9710",
+      },
     });
 
     if (!result.ok) throw result.error;

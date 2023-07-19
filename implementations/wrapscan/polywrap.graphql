@@ -1,0 +1,7 @@
+#import * into UriResolver from "wrapscan/polywrap/uri-resolver@1.0"
+
+type Module implements UriResolver_Module {}
+
+type Env {
+  providerUrl: String
+}

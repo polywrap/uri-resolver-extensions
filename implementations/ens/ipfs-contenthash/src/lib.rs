@@ -1,38 +1,44 @@
 pub mod wrap;
 
 use base58::ToBase58;
-use wrap::*;
 use hex;
+use wrap::*;
 
 impl ModuleTrait for Module {
-    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
-        Ok(_try_resolve_uri(&args, env))
-    } 
+    fn try_resolve_uri(
+        args: ArgsTryResolveUri,
+        env: Option<Env>,
+    ) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        _try_resolve_uri(&args, env)
+    }
 
     fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
         Ok(None)
     }
 }
 
-pub fn _try_resolve_uri(args: &ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+pub fn _try_resolve_uri(
+    args: &ArgsTryResolveUri,
+    _env: Option<Env>,
+) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
     if args.authority != "ens-contenthash" {
-        return None;
+        return Ok(None);
     }
 
     if args.path.starts_with("0xe3010170") && is_hex_string(&args.path, 38) {
         let hex_data = &args.path[10..];
         let cid = match hex::decode(hex_data) {
             Ok(bytes) => bytes.to_base58(),
-            Err(err) => panic!("Error decoding hex({}): {}", hex_data, err),
+            Err(err) => return Err(format!("Error decoding hex({}): {}", hex_data, err)),
         };
 
-        return Some(UriResolverMaybeUriOrManifest {
+        return Ok(Some(UriResolverMaybeUriOrManifest {
             uri: Some(format!("wrap://ipfs/{cid}")),
             manifest: None,
-        });
+        }));
     }
 
-    return None;
+    return Ok(None);
 }
 
 fn is_hex_string(value: &str, length: i32) -> bool {
