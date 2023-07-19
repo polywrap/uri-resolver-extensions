@@ -82,7 +82,7 @@ pub fn _try_resolve_uri(
             timeout: None,
             form_data: None,
         }),
-    })?;
+    }).map_err(|err| format!("Error during HTTP request: {}", err))?;
 
     let response = match result {
         None => return Ok(None),
