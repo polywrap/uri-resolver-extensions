@@ -27,7 +27,7 @@ describe("file-system-uri-resolver-ext e2e tests", () => {
   const config = new PolywrapClientConfigBuilder()
     .setPackage(fsResolverUri, wrapperPackage)
     .setPackage("wrap://ens/wraps.eth:file-system@1.0.0", fileSystemPlugin({}) as any)
-    .addInterfaceImplementation(ExtendableUriResolver.extInterfaceUri.uri, fsResolverUri)
+    .addInterfaceImplementation(ExtendableUriResolver.defaultExtInterfaceUris[0].toString(), fsResolverUri)
     .build()
 
   const client = new PolywrapClient(config)

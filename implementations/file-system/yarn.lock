@@ -1240,7 +1240,7 @@
     "@polywrap/plugin-js" "0.10.0"
     ethers "5.7.0"
 
-"@polywrap/file-system-plugin-js@^0.10.0", "@polywrap/file-system-plugin-js@~0.10.0":
+"@polywrap/file-system-plugin-js@0.10.0", "@polywrap/file-system-plugin-js@~0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@polywrap/file-system-plugin-js/-/file-system-plugin-js-0.10.0.tgz#7814e0b1c0bb170ab85500f67aca6af4c17ec19f"
   integrity sha512-QWDpeVBACeK8PqZUwby/zlozG/07fpvJN5kQtw5e7ha4K5blX1j1i6ixgLKlYyQsaaTBxS6aAF3C0ryt4BsJcQ==

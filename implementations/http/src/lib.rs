@@ -25,13 +25,9 @@ impl ModuleTrait for Module {
                 timeout: None,
                 form_data: None,
             }),
-        });
+        }).map_err(|err| format!("Error during HTTP request: {}", err))?;
 
-        if let Err(err) = result {
-            return Err(format!("Error during HTTP request: {}", err));
-        }
-
-        let response = match result.unwrap() {
+        let response = match result {
             None => return Ok(None),
             Some(x) => x,
         };
@@ -86,10 +82,9 @@ pub fn _try_resolve_uri(
             timeout: None,
             form_data: None,
         }),
-    })
-    .map_err(|err| format!("Error during HTTP request: {}", err));
+    })?;
 
-    let response = match result.unwrap() {
+    let response = match result {
         None => return Ok(None),
         Some(x) => x,
     };

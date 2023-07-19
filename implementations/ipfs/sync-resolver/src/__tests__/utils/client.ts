@@ -5,7 +5,7 @@ import {
 } from "@polywrap/client-js";
 import { PluginPackage } from "@polywrap/plugin-js";
 import { WasmPackage } from "@polywrap/wasm-js";
-import { ClientConfigBuilder, DefaultBundle } from "@polywrap/client-config-builder-js";
+import { PolywrapClientConfigBuilder, Sys } from "@polywrap/client-config-builder-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
 import path from "path";
 
@@ -20,16 +20,16 @@ export function getClientConfig(
   const ipfsResolverPath = path.resolve(path.join(__dirname, "/../../../build"));
   const ipfsResolverFsUri = `wrap://fs/${ipfsResolverPath}`;
 
-  return new ClientConfigBuilder()
-    .addPackage(ipfsResolverUri, ipfsResolver)
-    .addPackage("wrap://ens/wraps.eth:ipfs-http-client@1.0.0", DefaultBundle.embeds.ipfsHttpClient.package)
+  return new PolywrapClientConfigBuilder()
+    .setPackage(ipfsResolverUri, ipfsResolver)
+    .setPackage("wrap://ens/wraps.eth:ipfs-http-client@1.0.0", Sys.bundle.ipfsHttpClient.package!)
     .addEnvs({
       [ipfsResolverUri]: { provider: "https://ipfs.wrappers.io", timeout, retries },
     })
-    .addRedirects({
+    .setRedirects({
       [ipfsResolverUri]: ipfsResolverFsUri,
     })
-    .addPackages({
+    .setPackages({
       "wrap://ens/wraps.eth:http@1.1.0": (customHttpPlugin ? customHttpPlugin : httpPlugin({})) as IWrapPackage
     })
     .addInterfaceImplementations(
