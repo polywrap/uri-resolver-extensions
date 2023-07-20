@@ -1,4 +1,4 @@
-#import { Module } into UriResolver from "wrapscan/polywrap/uri-resolver@1.0"
+#import { Module } into UriResolver from "wrapscan.io/polywrap/uri-resolver@1.0"
 
 type Module implements UriResolver_Module {}
 
