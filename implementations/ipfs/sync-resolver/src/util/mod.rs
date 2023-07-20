@@ -1,5 +1,5 @@
-pub mod options;
 pub mod exec;
+pub mod options;
 
-pub use options::*;
 pub use exec::*;
+pub use options::*;

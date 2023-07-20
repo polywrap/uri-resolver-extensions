@@ -3,7 +3,7 @@ pub use wrap::*;
 
 const DEFAULT_PROVIDER_URL: &str = "http/wraps.wrapscan.io";
 const RESOLVE_PATH: &str = "/r/";
-const AUTHORITY: &str = "wrapscan";
+const AUTHORITY: &str = "wrapscan.io";
 
 impl ModuleTrait for Module {
     fn try_resolve_uri(

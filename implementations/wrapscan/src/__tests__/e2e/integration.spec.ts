@@ -45,7 +45,7 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
-        authority: "wrapscan",
+        authority: "wrapscan.io",
         path: testWrapPath,
       },
     });
@@ -63,7 +63,7 @@ describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
       uri: wrapperUri,
       method: "tryResolveUri",
       args: {
-        authority: "wrapscan",
+        authority: "wrapscan.io",
         path: testWrapPath,
       },
       env: {

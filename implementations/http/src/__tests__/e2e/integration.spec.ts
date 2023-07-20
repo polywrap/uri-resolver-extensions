@@ -1,4 +1,4 @@
-import {PolywrapClient} from "@polywrap/client-js";
+import {PolywrapClient, PolywrapClientConfigBuilder} from "@polywrap/client-js";
 import { runCLI } from "@polywrap/test-env-js";
 import path from "path";
 import fs from "fs";
@@ -13,12 +13,11 @@ type MaybeUriOrManifest = {
 
 describe("http-resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient({
-    packages: [{
-      uri: "wrap://ens/wraps.eth:http@1.1.0",
-      package: httpPlugin({})
-    }]
-  });
+  const config = new PolywrapClientConfigBuilder()
+    .addDefaults()
+    .setPackage("wrap://ens/wraps.eth:http@1.1.0", httpPlugin({}) as any)
+    .build();
+  const client: PolywrapClient = new PolywrapClient(config);
   let wrapperUri: string;
   const manifest = fs.readFileSync(
     __dirname + "/../test-wrapper/wrap.info"
@@ -111,7 +110,7 @@ describe("http-resolver e2e tests", () => {
 
     expect(result.ok).toBeFalsy();
     if (!result.ok) {
-      expect(result.error?.toString()).toMatch(/^WrapError: __wrap_abort: Error during HTTP request: WrapError: Request failed with status code 404/);
+      expect(result.error?.toString()).toMatch(/WrapError: Request failed with status code 404/);
     }
   });
 

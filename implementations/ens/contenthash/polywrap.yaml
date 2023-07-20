@@ -1,8 +1,11 @@
-format: 0.3.0
+format: 0.5.0
 project:
-  name: ens-contenthash-uri-resolver-ext
+  name: ens-contenthash-uri-resolver
   type: wasm/rust
 source:
   module: ./Cargo.toml
   schema: ./polywrap.graphql
+  import_abis:
+  - uri: wrapscan.io/polywrap/uri-resolver@1.0
+    abi: ../../../interface/polywrap.graphql
 resources: ./resources

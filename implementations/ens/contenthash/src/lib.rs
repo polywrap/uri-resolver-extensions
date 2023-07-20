@@ -29,7 +29,6 @@ impl ModuleTrait for Module {
     fn get_file(_args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
         Ok(None)
     }
-    
 }
 
 fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
@@ -67,7 +66,6 @@ fn parse_uri(args: &ArgsTryResolveUri) -> DomainInfo {
         domain: domain.to_string(),
     }
 }
-
 fn _try_resolve_uri(
     args: &ArgsTryResolveUri,
     env: Option<Env>,
@@ -122,7 +120,9 @@ fn _try_resolve_uri(
     if carry_over_path.is_empty() {
         Ok(redirect("ens-contenthash/".to_owned() + &contenthash))
     } else {
-        Ok(redirect("ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path))
+        Ok(redirect(
+            "ens-contenthash/".to_owned() + &contenthash + "/" + &carry_over_path,
+        ))
     }
 }
 

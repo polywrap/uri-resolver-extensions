@@ -164,7 +164,6 @@ fn redirect<T: Into<String>>(uri: T) -> Option<UriResolverMaybeUriOrManifest> {
         manifest: None,
     })
 }
-
 #[cfg(test)]
 mod tests {
     pub use crate::wrap::*;

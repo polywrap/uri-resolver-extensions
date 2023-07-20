@@ -1,14 +1,56 @@
 pub mod wrap;
-use polywrap_wasm_rs::Map;
 use base64::decode;
-use wrap::{*, imported::ArgsGet};
+use polywrap_wasm_rs::Map;
+use wrap::{imported::ArgsGet, *};
 
 const MANIFEST_SEARCH_PATTERN: &str = "wrap.info";
 const URI_HEADER_KEY: &str = "x-wrap-uri";
 
-pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<UriResolverMaybeUriOrManifest> {
+impl ModuleTrait for Module {
+    fn try_resolve_uri(
+        args: ArgsTryResolveUri,
+        env: Option<Env>,
+    ) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+        _try_resolve_uri(&args, env)
+    }
+
+    fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Result<Option<Vec<u8>>, String> {
+        let result = HttpModule::get(&ArgsGet {
+            url: args.path,
+            request: Some(HttpRequest {
+                response_type: HttpResponseType::BINARY,
+                headers: None,
+                url_params: None,
+                body: None,
+                timeout: None,
+                form_data: None,
+            }),
+        }).map_err(|err| format!("Error during HTTP request: {}", err))?;
+
+        let response = match result {
+            None => return Ok(None),
+            Some(x) => x,
+        };
+
+        match response.body {
+            None => Ok(None),
+            Some(body) => match decode(body) {
+                Ok(body) => Ok(Some(body)),
+                Err(err) => Err(format!(
+                    "Error during base64 decoding of body: {}",
+                    err.to_string()
+                )),
+            },
+        }
+    }
+}
+
+pub fn _try_resolve_uri(
+    args: &ArgsTryResolveUri,
+    _env: Option<Env>,
+) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
     if args.authority != "http" && args.authority != "https" {
-        return None;
+        return Ok(None);
     }
 
     let path = if args.path.starts_with("https://") {
@@ -32,92 +74,58 @@ pub fn try_resolve_uri(args: ArgsTryResolveUri, _env: Option<Env>) -> Option<Uri
 
     let result = HttpModule::get(&ArgsGet {
         url: url.clone(),
-        request: Some(HttpHttpRequest{
-            response_type: HttpHttpResponseType::BINARY,
+        request: Some(HttpRequest {
+            response_type: HttpResponseType::BINARY,
             headers: None,
             url_params: None,
             body: None,
             timeout: None,
             form_data: None,
-        })
-    });
+        }),
+    }).map_err(|err| format!("Error during HTTP request: {}", err))?;
 
-    if let Err(err) = result {
-        panic!("Error during HTTP request: {}", err);
-    }
-
-    let response = match result.unwrap() {
-        None => return None,
+    let response = match result {
+        None => return Ok(None),
         Some(x) => x,
     };
 
     let redirect_uri = get_redirect_uri_from_headers(&response.headers);
 
-    let manifest = get_manifest_from_body(&response.body);
+    let manifest = get_manifest_from_body(&response.body)?;
 
     if redirect_uri.is_none() && manifest.is_none() {
         panic!("No URI or manifest found at {}", &url);
-    } 
-    
-    Some(UriResolverMaybeUriOrManifest {
-        uri: redirect_uri,
-        manifest
-    })
-}
-
-pub fn get_file(args: ArgsGetFile, _env: Option<Env>) -> Option<Vec<u8>> {
-    let result = HttpModule::get(&ArgsGet {
-        url: args.path,
-        request: Some(HttpHttpRequest{
-            response_type: HttpHttpResponseType::BINARY,
-            headers: None,
-            url_params: None,
-            body: None,
-            timeout: None,
-            form_data: None,
-        })
-    });
-
-    if let Err(err) = result {
-        panic!("Error during HTTP request: {}", err);
     }
 
-    let response = match result.unwrap() {
-        None => return None,
-        Some(x) => x
-    };
-
-    match response.body {
-        None => return None,
-        Some(body) => match decode(body) {
-            Ok(body) => return Some(body),
-            Err(err) => {
-                panic!("Error during base64 decoding of body: {}", err.to_string());
-            }
-        }
-    };
+    Ok(Some(UriResolverMaybeUriOrManifest {
+        uri: redirect_uri,
+        manifest,
+    }))
 }
 
 fn get_redirect_uri_from_headers(headers: &Option<Map<String, String>>) -> Option<String> {
     if let Some(headers) = headers {
         if let Some(uri) = headers.get(URI_HEADER_KEY) {
-            return Some(uri.clone())
+            return Some(uri.clone());
         }
     }
 
     None
 }
 
-fn get_manifest_from_body(body: &Option<String>) -> Option<Vec<u8>> {
+fn get_manifest_from_body(body: &Option<String>) -> Result<Option<Vec<u8>>, String> {
     match body {
-        None => None,
-        Some(body) => if body.len() == 0 {
-            None
-        } else {
-            match decode(body) {
-                Ok(body) => Some(body),
-                Err(err) => {
-                    panic!("Error during base64 decoding of body: {}", err.to_string());
+        None => Ok(None),
+        Some(body) => {
+            if body.len() == 0 {
+                Ok(None)
+            } else {
+                match decode(body) {
+                    Ok(body) => Ok(Some(body)),
+                    Err(err) => Err(format!(
+                        "Error during base64 decoding of body: {}",
+                        err.to_string()
+                    )),
                 }
             }
         }

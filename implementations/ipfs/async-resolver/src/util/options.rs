@@ -8,7 +8,6 @@ pub struct Options<'t> {
 }
 
 pub fn get_options<'t>(env: &'t Env, is_get_file: bool) -> Options<'t> {
-
     let disable_parallel_requests = env.disable_parallel_requests.unwrap_or(false);
 
     let timeout = env.timeout.unwrap_or(5000);
@@ -29,7 +28,8 @@ pub fn get_options<'t>(env: &'t Env, is_get_file: bool) -> Options<'t> {
 
     // env.fallback_providers are added last
     if let Some(fallback_providers) = &env.fallback_providers {
-        fallback_providers.iter()
+        fallback_providers
+            .iter()
             .map(|s| s.as_ref())
             .for_each(|p| providers.push(p));
     }

@@ -1,11 +1,14 @@
 pub mod wrap;
 use wrap::*;
 mod util;
-use util::*;
 use cid::Cid;
+use util::*;
 
 impl ModuleTrait for Module {
-    fn try_resolve_uri(args: ArgsTryResolveUri, env: Option<Env>) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
+    fn try_resolve_uri(
+        args: ArgsTryResolveUri,
+        env: Option<Env>,
+    ) -> Result<Option<UriResolverMaybeUriOrManifest>, String> {
         let env = env.expect("IPFS uri resolver requires a configured Env");
 
         if args.authority != "ipfs" && args.authority != "wrap" {
@@ -20,9 +23,9 @@ impl ModuleTrait for Module {
         let options: Options = get_options(&env, false);
         let manifest: Vec<u8> = exec_with_options(&path, &options);
 
-        return Ok(Some(UriResolverMaybeUriOrManifest { 
-            manifest: Some(manifest), 
-            uri: None 
+        return Ok(Some(UriResolverMaybeUriOrManifest {
+            manifest: Some(manifest),
+            uri: None,
         }));
     }
 
@@ -37,7 +40,7 @@ fn exec_with_options(path: &str, options: &Options) -> Vec<u8> {
     let mut attempts = options.retries + 1;
     loop {
         let result = exec_sequential(&options.providers, &path, options.timeout);
-        
+
         match result {
             Ok(result) => return result,
             Err(err) => {
