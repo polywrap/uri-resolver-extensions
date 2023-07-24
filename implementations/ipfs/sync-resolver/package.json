@@ -1,5 +1,5 @@
 {
-  "name": "ipfs-uri-resolver-sync-wrap",
+  "name": "ipfs-uri-resolver-sync",
   "private": true,
   "scripts": {
     "build": "npx polywrap build",

@@ -22,7 +22,7 @@ export function getClientConfig(
 
   return new PolywrapClientConfigBuilder()
     .setPackage(ipfsResolverUri, ipfsResolver)
-    .setPackage("wrap://ens/wraps.eth:ipfs-http-client@1.0.0", Sys.bundle.ipfsHttpClient.package!)
+    .setPackage("wrapscan.io/polywrap/ipfs-http-client@1.0.0", Sys.bundle.ipfsHttpClient.package!)
     .addEnvs({
       [ipfsResolverUri]: { provider: "https://ipfs.wrappers.io", timeout, retries },
     })
@@ -30,7 +30,7 @@ export function getClientConfig(
       [ipfsResolverUri]: ipfsResolverFsUri,
     })
     .setPackages({
-      "wrap://ens/wraps.eth:http@1.1.0": (customHttpPlugin ? customHttpPlugin : httpPlugin({})) as IWrapPackage
+      "wrapscan.io/polywrap/http@1.0": (customHttpPlugin ? customHttpPlugin : httpPlugin({})) as IWrapPackage
     })
     .addInterfaceImplementations(
       ExtendableUriResolver.defaultExtInterfaceUris[0].uri,[

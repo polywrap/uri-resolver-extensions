@@ -8,4 +8,5 @@ source:
   import_abis:
   - uri: wrapscan.io/polywrap/uri-resolver@1.0
     abi: ../../../interface/polywrap.graphql
-resources: ./resources
+extensions:
+  docs: ./polywrap.docs.yaml

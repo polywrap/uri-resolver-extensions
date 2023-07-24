@@ -1,14 +1,4 @@
-# Polywrap IPFS Wasm Wrapper
-The IPFS Wasm wrapper allows a Polywrap Client to interact with [IPFS](https://ipfs.io/).
-
-# How To Run
-
-## Install Dependencies
-`nvm install && nvm use`  
-`yarn`  
-
-## Build
-`yarn build`  
-
-## Test
-`yarn test`  
+# Synchronous IPFS URI Resolver Wrap
+Resolve IPFS URIs, prefaced with the `ipfs` URI authority. For example:
+- `wrap://ipfs/QmSAXrSLcmGUkQRrApAtG5qTPmuRMMX2Zf1wihpguDQfbm`
+- `wrap://ipfs/QmSXBti6Zf9yAXShBUCe79B1cpAeMZZKj7Ai1iF4g2EFNM`
