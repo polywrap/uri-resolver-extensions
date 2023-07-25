@@ -1,8 +1,6 @@
 {
-  "name": "@polywrap/wrapscan-uri-resolver",
-  "description": "Polywrap Rust Wrapper Template",
+  "name": "wrapscan-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "codegen": "npx polywrap codegen",
     "build": "npx polywrap build",
