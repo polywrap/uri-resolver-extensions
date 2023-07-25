@@ -6,9 +6,9 @@ Resolve IPFS URIs, prefaced with the `ipfs` URI authority. For example:
 ## Usage
 Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-The Async IPFS URI Resolver Extension Wrapper can make concurrent requests to providers. This feature is enabled by default when an implementation of the Concurrent interface `"wrap://wrapscan.io/polywrap/concurrent@1.0` is registered in the client configuration.
+The Async IPFS URI Resolver wrap can make concurrent requests to providers. This feature is enabled by default when an implementation of the Concurrent interface `"wrap://wrapscan.io/polywrap/concurrent@1.0` is registered in the client configuration.
 
-If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
+If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
 ```typescript
 const uri = "wrap://wrapscan.io/ipfs-uri-resolver-async@1.0";
 

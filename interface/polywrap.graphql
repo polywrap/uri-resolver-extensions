@@ -1,6 +1,6 @@
 type Module {
   """
-  Attempt to resolve a wrapper from its URI.
+  Attempt to resolve a wrap from its URI.
     @param authority - URI authority (ex: "file")
     @param path - URI path (ex: "/path/to/wrapper")
   """
@@ -20,7 +20,7 @@ type Module {
 
 type MaybeUriOrManifest {
   """
-  A new URI to be used for resolving the wrapper (redirection).
+  A new URI to be used for resolving the wrap (redirection).
   """
   uri: String
 

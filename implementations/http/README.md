@@ -6,7 +6,7 @@ Resolve HTTP URIs, prefaced with the `http` or `https` URI authority. For exampl
 ## Usage
 Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
+If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
 
 ```typescript
 const uri = "wrap://wrapscan.io/polywrap/http-uri-resolver@1.0";

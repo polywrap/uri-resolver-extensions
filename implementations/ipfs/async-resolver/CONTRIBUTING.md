@@ -1,5 +1,5 @@
 # Polywrap IPFS Wasm Wrapper
-The IPFS Wasm wrapper allows a Polywrap Client to interact with [IPFS](https://ipfs.io/).
+The IPFS Wasm wrap allows a Polywrap Client to interact with [IPFS](https://ipfs.io/).
 
 # How To Run
 
