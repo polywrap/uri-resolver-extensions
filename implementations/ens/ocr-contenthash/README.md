@@ -1,4 +1,4 @@
-# ENS OCR Contenthash URI Resolver Extension Wrapper
+# ENS OCR Contenthash URI Resolver
 Resolve ENS Contenthash URIs, prefaced with the `ens-contenthash` URI authority, that can be decoded into OCR IDs. For example:
 - `wrap://ens-contenthash/0x4d00e700000000000014ea000000000000000000000000000000000f0a5b5600000000001123fb0000000000e4e3040000000000e4e364`
 

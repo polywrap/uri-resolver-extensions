@@ -1,8 +1,6 @@
 {
-  "name": "ens-contenthash-uri-resolver-wrap",
-  "description": "ENS contenthash resolver wrap for Polywrap",
+  "name": "ens-contenthash-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "npx polywrap build",
     "codegen": "npx polywrap codegen",

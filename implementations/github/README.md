@@ -1,4 +1,4 @@
-# HTTP URI Resolver Extension Wrapper
+# HTTP URI Resolver
 Resolve URIs prefaced with the `github.com`, `http` or `https` URI authority.
 
 ## Support

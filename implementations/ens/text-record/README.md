@@ -1,4 +1,4 @@
-# ENS Text Record URI Resolver Extension Wrapper
+# ENS Text Record URI Resolver
 Resolve ENS Text Record URIs, prefaced with the `ens` URI authority and suffixed with the text record separator `:`. For example:
 - `wrap://ens/myuri.eth:pkg`
 - `wrap://ens/wrappers.myuri.eth:goat@1.4.2`

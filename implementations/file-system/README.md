@@ -1,4 +1,4 @@
-# File System URI Resolver Extension Wrapper
+# File System URI Resolver
 Resolve filesystem based URIs, prefaced with the `fs` or `file` URI authority. For example:
 - `wrap://fs/./path/to/wrapper-dir`
 - `wrap://file/path/to/wrapper-dir`

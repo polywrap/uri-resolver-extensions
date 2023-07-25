@@ -1,4 +1,4 @@
-# HTTP URI Resolver Extension Wrapper
+# HTTP URI Resolver
 Resolve HTTP URIs, prefaced with the `http` or `https` URI authority. For example:
 - `wrap://http/https://myuri.com`
 - `wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build`
