@@ -3,24 +3,13 @@ Resolve HTTP URIs, prefaced with the `http` or `https` URI authority. For exampl
 - `wrap://http/https://myuri.com`
 - `wrap://http/https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/build`
 
-| Version | URI | WRAP Version |
-|-|-|-|
-| 1.0.0 | [`wrap://ens/wraps.eth:http-uri-resolver-ext@1.0.0`](https://wrappers.io/v/ens/wraps.eth:http-uri-resolver-ext@1.0.0) | 0.1 |
-
-## Interface
-```graphql
-#import * into UriResolver from "wrap://ens/wraps.eth:uri-resolver-ext@1.1.0"
-#import { Module } into Http from "wrap://ens/wraps.eth:http@1.1.0"
-
-type Module implements UriResolver_Module {}
-```
-
 ## Usage
 Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
 If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
+
 ```typescript
-const uri = "wrap://ens/wraps.eth:http-uri-resolver-ext@1.0.0";
+const uri = "wrap://wrapscan.io/polywrap/http-uri-resolver@1.0";
 
 await client.invoke({
   uri,
@@ -40,5 +29,6 @@ await client.invoke({
 });
 ```
 
-## Source Code
-[Link](https://github.com/polywrap/uri-resolver-extensions/tree/master/implementations/http)
+## Support
+
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).
