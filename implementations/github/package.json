@@ -1,8 +1,6 @@
 {
-  "name": "github-uri-resolver-wrap",
-  "description": "Github URI resolver",
+  "name": "github-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "npx polywrap build",
     "codegen": "npx polywrap codegen",
