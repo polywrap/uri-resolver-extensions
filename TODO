@@ -3,3 +3,6 @@ integrations/http
 
 integrations/github
 - swap "wrap://ens/wraps.eth:http@1.1.0" with "wrapscan.io/polywrap/http@1.0" once HTTP interface is published
+
+integrations/file-system
+- swap "wrap://ens/wraps.eth:file-system@1.0.0" with "wrapscan.io/polywrap/file-system@1.0" once FS interface is published

@@ -1,8 +1,6 @@
 {
-  "name": "file-system-uri-resolver-wrap",
-  "description": "File System URI resolver",
+  "name": "file-system-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
     "codegen": "npx polywrap codegen",
