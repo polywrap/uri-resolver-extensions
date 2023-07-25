@@ -8,7 +8,7 @@ Polywrap client configurations should allow users to register URI Resolver Exten
 If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
 
 ```typescript
-const uri = "wrap://ens/wraps.eth:ens-ocr-contenthash-uri-resolver-ext@1.0.0";
+const uri = "wrap://wrapscan.io/polywrap/ens-ocr-contenthash-uri-resolver@1.0";
 
 await client.invoke({
   uri,
@@ -20,5 +20,6 @@ await client.invoke({
 });
 ```
 
-## Source Code
-[Link](https://github.com/polywrap/uri-resolver-extensions/tree/master/implementations/ens-ocr-contenthash)
+## Support
+
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).

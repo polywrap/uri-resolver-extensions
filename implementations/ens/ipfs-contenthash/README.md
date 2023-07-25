@@ -1,14 +1,25 @@
-# Polywrap Wasm Wrapper Template
-A simple starter template for a Rust Wasm wrapper. For more information on how this project works, and a step by step on how to extend its behavior, see the documentation [here](https://docs.polywrap.io/).
+# ENS IPFS Contenthash URI Resolver Extension Wrapper
+Resolve ENS Contenthash URIs, prefaced with the `ens-contenthash` URI authority, that can be decoded into IFPS CIDs. For example:
+- `wrap://ens-contenthash/0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971`
 
-# How To Run
+## Usage
+Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-## Install Dependencies
-`nvm install && nvm use`  
-`yarn`  
+If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
 
-## Build
-`yarn build`  
+```typescript
+const uri = "wrap://wrapscan.io/polywrap/ens-ipfs-contenthash-uri-resolver@1.0";
 
-## Test
-`yarn test`  
+await client.invoke({
+  uri,
+  method: "tryResolveUri",
+  args: {
+    authority: "ens-contenthash",
+    path: "0xe3010170122099414d050f2047adef185f430d0b8780e6fd793bfde965627b01e48f5ac0c971"
+  }
+});
+```
+
+## Support
+
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).

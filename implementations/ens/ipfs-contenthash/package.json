@@ -1,8 +1,6 @@
 {
-  "name": "ens-ipfs-contenthash-uri-resolver-wrap",
-  "description": "IPFS contenthash URI resolver for ENS",
+  "name": "ens-ipfs-contenthash-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
     "codegen": "npx polywrap codegen",

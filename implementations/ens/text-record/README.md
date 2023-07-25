@@ -6,7 +6,8 @@ Resolve ENS Text Record URIs, prefaced with the `ens` URI authority and suffixed
 ## Usage
 Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-If you'd like to invoke the wrapper directly, here is an example using the JS PolywrapClient:
+If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
+
 ```typescript
 const uri = "wrap://wrapscan.io/ens-text-record-uri-resolver@1.0";
 
