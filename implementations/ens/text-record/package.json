@@ -1,8 +1,6 @@
 {
-  "name": "ens-text-record-uri-resolver-wrap",
-  "description": "Wrapper resolving ENS text records",
+  "name": "ens-text-record-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "codegen": "npx polywrap codegen",
     "build": "npx polywrap build",

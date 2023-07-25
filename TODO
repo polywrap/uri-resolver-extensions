@@ -6,3 +6,6 @@ integrations/github
 
 integrations/file-system
 - swap "wrap://ens/wraps.eth:file-system@1.0.0" with "wrapscan.io/polywrap/file-system@1.0" once FS interface is published
+
+all pacakges
+- Remove "name" field from pacakge.json?
