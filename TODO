@@ -9,4 +9,3 @@ integrations/file-system
 
 all pacakges
 - Remove "name" field from pacakge.json?
-- find all references  to "wrapper", replace with "wrap"
