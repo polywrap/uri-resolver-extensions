@@ -1,8 +1,6 @@
 {
-  "name": "ens-ocr-contenthash-uri-resolver-wrap",
-  "description": "ENS OCR Contenthash URI Resolver",
+  "name": "ens-ocr-contenthash-uri-resolver",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "npx polywrap build",
     "codegen": "npx polywrap codegen",
