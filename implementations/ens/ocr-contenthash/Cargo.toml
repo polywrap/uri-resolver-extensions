@@ -1,9 +1,9 @@
 [package]
-name = "ipfs-ens-contenthash-uri-resolver-rs"
+name = "ens-ocr-contenthash-uri-resolver"
 version = "0.1.0"
 description = "A Polywrap Wasm wrapper for ENS content hash URI resolution (IPFS content)"
 authors = ["Polywrap"]
-repository = "https://github.com/polywrap/monorepo"
+repository = "https://github.com/polywrap/uri-resolver-extensions"
 license = "MIT"
 edition = "2021"
 

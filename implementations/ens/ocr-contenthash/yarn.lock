@@ -1140,22 +1140,6 @@
     "@polywrap/wasm-js" "0.12.0-pre.1"
     "@polywrap/web3-config-bundle-js" "0.12.0-pre.1"
 
-"@polywrap/client-js@0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@polywrap/client-js/-/client-js-0.11.0.tgz#9359ce9ebf838ff26b834cd482f2e77357b8f482"
-  integrity sha512-2QGTtuDfbyClomx1GmHExWbvlbTGRsX+e918olvJryGawUcYgAwmOmZQIyH+0KTWtEXGrKbbk4SW1z1yjj2lTQ==
-  dependencies:
-    "@polywrap/client-config-builder-js" "0.11.0"
-    "@polywrap/core-client-js" "0.11.0"
-    "@polywrap/core-js" "0.11.0"
-    "@polywrap/msgpack-js" "0.11.0"
-    "@polywrap/plugin-js" "0.11.0"
-    "@polywrap/result" "0.11.0"
-    "@polywrap/tracing-js" "0.11.0"
-    "@polywrap/uri-resolver-extensions-js" "0.11.0"
-    "@polywrap/uri-resolvers-js" "0.11.0"
-    "@polywrap/wrap-manifest-types-js" "0.11.0"
-
 "@polywrap/client-js@0.12.0-pre.1":
   version "0.12.0-pre.1"
   resolved "https://registry.yarnpkg.com/@polywrap/client-js/-/client-js-0.12.0-pre.1.tgz#1df47c4eef946dc74ed4025e4726377c89b3b70c"
@@ -1171,6 +1155,22 @@
     "@polywrap/uri-resolver-extensions-js" "0.12.0-pre.1"
     "@polywrap/uri-resolvers-js" "0.12.0-pre.1"
     "@polywrap/wrap-manifest-types-js" "0.12.0-pre.1"
+
+"@polywrap/client-js@~0.11.0-pre.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@polywrap/client-js/-/client-js-0.11.0.tgz#9359ce9ebf838ff26b834cd482f2e77357b8f482"
+  integrity sha512-2QGTtuDfbyClomx1GmHExWbvlbTGRsX+e918olvJryGawUcYgAwmOmZQIyH+0KTWtEXGrKbbk4SW1z1yjj2lTQ==
+  dependencies:
+    "@polywrap/client-config-builder-js" "0.11.0"
+    "@polywrap/core-client-js" "0.11.0"
+    "@polywrap/core-js" "0.11.0"
+    "@polywrap/msgpack-js" "0.11.0"
+    "@polywrap/plugin-js" "0.11.0"
+    "@polywrap/result" "0.11.0"
+    "@polywrap/tracing-js" "0.11.0"
+    "@polywrap/uri-resolver-extensions-js" "0.11.0"
+    "@polywrap/uri-resolvers-js" "0.11.0"
+    "@polywrap/wrap-manifest-types-js" "0.11.0"
 
 "@polywrap/concurrent-plugin-js@~0.10.0":
   version "0.10.0"
@@ -4415,7 +4415,7 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-polywrap@0.11.0-pre.4:
+polywrap@~0.11.0-pre.4:
   version "0.11.0-pre.4"
   resolved "https://registry.yarnpkg.com/polywrap/-/polywrap-0.11.0-pre.4.tgz#6fcaf1cf912e17537acf51882b624c7c05b286b4"
   integrity sha512-hmnR+eBXRJE3rCHTGk8PCBKwDjxNTLqqRdqcMcCAvrdtnv4Qpwjd6pZ9/z6GbvqKCrR71SuV5y+51pGbQwSQkA==
