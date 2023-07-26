@@ -1,5 +1,5 @@
 [package]
-name = "github-uri-resolver-rs"
+name = "github-uri-resolver"
 version = "0.1.0"
 description = "A Polywrap Wasm wrapper for resolving GitHub URIs"
 authors = ["Polywrap"]

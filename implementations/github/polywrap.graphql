@@ -1,5 +1,5 @@
 #import { Module } into UriResolver from "wrapscan.io/polywrap/uri-resolver@1.0"
-#import { Module } into Http from "wrap://ens/wraps.eth:http@1.1.0"
+#import { Module } into Http from "wrapscan.io/polywrap/http@1.0"
 
 type Module implements UriResolver_Module {}
 
