@@ -1,9 +1,9 @@
 [package]
-name = "http-uri-resolver-rs"
+name = "http-uri-resolver"
 version = "0.1.0"
 description = "A Polywrap Wasm wrapper for resolving HTTP URIs"
 authors = ["Polywrap"]
-repository = "https://github.com/polywrap/monorepo"
+repository = "https://github.com/polywrap/uri-resolver-extensions"
 license = "MIT"
 edition = "2021"
 

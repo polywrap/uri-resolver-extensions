@@ -3,11 +3,11 @@ import {
   PolywrapClientConfigBuilder,
 } from "@polywrap/client-js";
 import { runCli } from "@polywrap/cli-js";
+import { httpPlugin } from "@polywrap/http-plugin-js";
 import path from "path";
 import fs from "fs";
-import { httpPlugin } from "temp-http-plugin-js";
 
-jest.setTimeout(90000);
+jest.setTimeout(60000);
 
 type MaybeUriOrManifest = {
   uri: string;
@@ -17,7 +17,7 @@ type MaybeUriOrManifest = {
 describe("http-resolver e2e tests", () => {
   const config = new PolywrapClientConfigBuilder()
     .addDefaults()
-    .setPackage("wrap://ens/wraps.eth:http@1.1.0", httpPlugin({}) as any)
+    .setPackage("wrapscan.io/polywrap/http@1.0", httpPlugin({}) as any)
     .build();
   const client: PolywrapClient = new PolywrapClient(config);
   let wrapperUri: string;
