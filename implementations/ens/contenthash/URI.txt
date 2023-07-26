@@ -1,1 +1,1 @@
-wrap://ipfs/QmPTHkmgJ8DEwtpWMBx6CWQx3RTR7oU7NQE8V8GiA1QiS1
+wrap://http/https://wraps.wrapscan.io/r/polywrap/ens-contenthash-uri-resolver@1.0.0
