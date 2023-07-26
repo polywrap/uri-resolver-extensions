@@ -1,5 +1,4 @@
 {
-  "name": "ens-ipfs-contenthash-uri-resolver",
   "private": true,
   "scripts": {
     "build": "yarn codegen && npx polywrap build",
