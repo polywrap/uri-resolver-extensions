@@ -1,12 +1,21 @@
 import { UriResolutionContext, Uri } from "@polywrap/core-js";
 import { PolywrapClient, PolywrapClientConfigBuilder } from "@polywrap/client-js";
+import { Connections, ethereumWalletPlugin } from "@polywrap/ethereum-wallet-js";
 import path from "path";
 jest.setTimeout(60000);
 
 describe("ens-text-record-resolver e2e tests", () => {
-  const builder = new PolywrapClientConfigBuilder()
-  builder.addDefaults()
-  const client = new PolywrapClient(builder.build())
+  const builder = new PolywrapClientConfigBuilder();
+  builder.addDefaults();
+  builder.setPackage(
+    "wrapscan.io/polywrap/ethereum-wallet@1.0",
+    ethereumWalletPlugin({
+      connections: new Connections({
+        networks: { }
+      })
+    })
+  );
+  const client = new PolywrapClient(builder.build());
 
   let wrapperUri: string;
 
@@ -116,8 +125,6 @@ describe("ens-text-record-resolver e2e tests", () => {
   });
 
   it("recursively resolves", async () => {
-    const builder = new PolywrapClientConfigBuilder()
-    const client = new PolywrapClient(builder.addDefaults().build())
     const result = await client.invoke({
       uri: wrapperUri,
       method: "tryResolveUri",
