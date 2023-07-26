@@ -2,6 +2,7 @@ import {
   PolywrapClient,
   PolywrapClientConfigBuilder,
 } from "@polywrap/client-js";
+import { ethereumWalletPlugin, Connections } from "@polywrap/ethereum-wallet-js";
 import path from "path";
 
 jest.setTimeout(60000);
@@ -12,8 +13,16 @@ type MaybeUriOrManifest = {
 };
 
 describe("ens-contenthash-resolver e2e tests", () => {
-  const builder = new PolywrapClientConfigBuilder();
-  builder.addDefaults();
+  const builder = new PolywrapClientConfigBuilder()
+    .addDefaults()
+    .setPackage(
+      "wrapscan.io/polywrap/ethereum-wallet@1.0",
+      ethereumWalletPlugin({
+        connections: new Connections({
+          networks: {}
+        })
+      })
+    );
   const client: PolywrapClient = new PolywrapClient(builder.build());
   let wrapperUri: string;
 

@@ -1,8 +1,5 @@
 {
-  "name": "ens-contenthash-uri-resolver-wrap",
-  "description": "ENS contenthash resolver wrap for Polywrap",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "npx polywrap build",
     "codegen": "npx polywrap codegen",
@@ -10,10 +7,12 @@
     "test": "jest --passWithNoTests --runInBand --verbose"
   },
   "devDependencies": {
-    "@polywrap/core-js": "0.11.0",
-    "@polywrap/client-js": "0.12.0-pre.1",
+    "@polywrap/core-js": "~0.12.0-pre.1",
+    "@polywrap/client-js": "~0.12.0-pre.1",
+    "@polywrap/ethereum-wallet-js": "~0.1.0",
+    "@types/jest": "27.0.3",
     "jest": "26.6.3",
-    "polywrap": "0.11.0-pre.4",
+    "polywrap": "~0.11.0-pre.4",
     "ts-jest": "26.5.4",
     "typescript": "4.1.6"
   }

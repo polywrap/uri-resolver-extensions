@@ -1,4 +1,4 @@
-format: 0.3.0
+format: 0.4.0
 primaryJobName: ipfs_deploy
 jobs:
   ipfs_deploy:
@@ -12,7 +12,7 @@ jobs:
         package: http
         uri: $$ipfs_deploy
         config:
-          postUrl: https://wraps.wrapscan.io/r/polywrap/ens-text-record-uri-resolver@1.0.0
+          postUrl: https://wraps.wrapscan.io/r/polywrap/ens-text-record-uri-resolver@1.0.1
           headers:
             - name: Authorization
               value: $POLYWRAP_WRAPSCAN_AUTH_HEADER_PROD

@@ -194,7 +194,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "ipfs-uri-resolver-rs"
+name = "ipfs-uri-resolver-async"
 version = "0.1.0"
 dependencies = [
  "cid",

@@ -4271,7 +4271,7 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-polywrap@0.11.0-pre.4:
+polywrap@~0.11.0-pre.4:
   version "0.11.0-pre.4"
   resolved "https://registry.yarnpkg.com/polywrap/-/polywrap-0.11.0-pre.4.tgz#6fcaf1cf912e17537acf51882b624c7c05b286b4"
   integrity sha512-hmnR+eBXRJE3rCHTGk8PCBKwDjxNTLqqRdqcMcCAvrdtnv4Qpwjd6pZ9/z6GbvqKCrR71SuV5y+51pGbQwSQkA==

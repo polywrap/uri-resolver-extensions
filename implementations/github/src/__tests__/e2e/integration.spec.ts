@@ -1,4 +1,10 @@
-import {PolywrapClient, Uri} from "@polywrap/client-js";
+import {
+  PolywrapClientConfigBuilder,
+  PolywrapClient,
+  IWrapPackage,
+  Uri
+} from "@polywrap/client-js";
+import { httpPlugin } from "@polywrap/http-plugin-js";
 import path from "path";
 
 jest.setTimeout(90000);
@@ -10,10 +16,14 @@ type MaybeUriOrManifest = {
 
 describe("github resolver e2e tests", () => {
 
-  const client: PolywrapClient = new PolywrapClient();
+  let client: PolywrapClient;
   let wrapperUri: string;
 
   beforeAll(async () => {
+    const builder = new PolywrapClientConfigBuilder()
+      .addDefaults()
+      .setPackage("wrapscan.io/polywrap/http@1.0", httpPlugin({ }) as IWrapPackage);
+    client = new PolywrapClient(builder.build());
     const dirname: string = path.resolve(__dirname);
     const wrapperPath: string = path.join(dirname, "..", "..", "..");
     wrapperUri = `fs/${wrapperPath}/build`;

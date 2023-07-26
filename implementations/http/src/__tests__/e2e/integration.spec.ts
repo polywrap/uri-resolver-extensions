@@ -1,21 +1,23 @@
-import {PolywrapClient, PolywrapClientConfigBuilder} from "@polywrap/client-js";
-import { runCLI } from "@polywrap/test-env-js";
+import {
+  PolywrapClient,
+  PolywrapClientConfigBuilder,
+} from "@polywrap/client-js";
+import { runCli } from "@polywrap/cli-js";
+import { httpPlugin } from "@polywrap/http-plugin-js";
 import path from "path";
 import fs from "fs";
-import {httpPlugin} from "temp-http-plugin-js";
 
-jest.setTimeout(90000);
+jest.setTimeout(60000);
 
 type MaybeUriOrManifest = {
   uri: string;
   manifest: Uint8Array;
-}
+};
 
 describe("http-resolver e2e tests", () => {
-
   const config = new PolywrapClientConfigBuilder()
     .addDefaults()
-    .setPackage("wrap://ens/wraps.eth:http@1.1.0", httpPlugin({}) as any)
+    .setPackage("wrapscan.io/polywrap/http@1.0", httpPlugin({}) as any)
     .build();
   const client: PolywrapClient = new PolywrapClient(config);
   let wrapperUri: string;
@@ -27,20 +29,26 @@ describe("http-resolver e2e tests", () => {
     const dirname: string = path.resolve(__dirname);
     const wrapperPath: string = path.join(dirname, "..", "..", "..");
     wrapperUri = `fs/${wrapperPath}/build`;
-    await runCLI({
+    await runCli({
       args: ["infra", "up"],
-      cwd: path.join(dirname, "../test-wrapper")
+      config: {
+        cwd: path.join(dirname, "../test-wrapper"),
+      },
     });
-    await runCLI({
+    await runCli({
       args: ["deploy"],
-      cwd: path.join(dirname, "../test-wrapper")
+      config: {
+        cwd: path.join(dirname, "../test-wrapper"),
+      },
     });
   });
 
   afterAll(async () => {
-    const { exitCode, stderr } = await runCLI({
+    const { exitCode, stderr } = await runCli({
       args: ["infra", "down"],
-      cwd: path.join(__dirname, "../test-wrapper")
+      config: {
+        cwd: path.join(__dirname, "../test-wrapper"),
+      },
     });
 
     if (exitCode !== 0) {
@@ -54,8 +62,8 @@ describe("http-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "http",
-        path: "http://localhost:3500/wrappers/local/test-wrapper"
-      }
+        path: "http://localhost:3500/wrappers/local/test-wrapper",
+      },
     });
 
     expect(result.ok).toBeTruthy();
@@ -71,8 +79,8 @@ describe("http-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "http",
-        path: "localhost:3500/wrappers/local/test-wrapper"
-      }
+        path: "localhost:3500/wrappers/local/test-wrapper",
+      },
     });
 
     expect(result.ok).toBeTruthy();
@@ -88,8 +96,8 @@ describe("http-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "foo",
-        path: "http://localhost:3500/wrappers/local/test-wrapper"
-      }
+        path: "http://localhost:3500/wrappers/local/test-wrapper",
+      },
     });
 
     expect(result.ok).toBeTruthy();
@@ -104,13 +112,15 @@ describe("http-resolver e2e tests", () => {
       method: "tryResolveUri",
       args: {
         authority: "http",
-        path: "http://localhost:3500/wrappers/local/foo"
-      }
+        path: "http://localhost:3500/wrappers/local/foo",
+      },
     });
 
     expect(result.ok).toBeFalsy();
     if (!result.ok) {
-      expect(result.error?.toString()).toMatch(/WrapError: Request failed with status code 404/);
+      expect(result.error?.toString()).toMatch(
+        /WrapError: Request failed with status code 404/
+      );
     }
   });
 
@@ -119,8 +129,8 @@ describe("http-resolver e2e tests", () => {
       uri: wrapperUri,
       method: "getFile",
       args: {
-        path: "http://localhost:3500/wrappers/local/test-wrapper/wrap.info"
-      }
+        path: "http://localhost:3500/wrappers/local/test-wrapper/wrap.info",
+      },
     });
 
     if (!result.ok) throw result.error;

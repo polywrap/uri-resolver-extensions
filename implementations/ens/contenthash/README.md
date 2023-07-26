@@ -1,14 +1,26 @@
-# Polywrap Wasm Wrapper Template
-A simple starter template for a Rust Wasm wrapper. For more information on how this project works, and a step by step on how to extend its behavior, see the documentation [here](https://docs.polywrap.io/).
+# ENS Contenthash URI Resolver
+Resolve ENS URIs, prefaced with the `ens` URI authority. For example:
+- `wrap://ens/myuri.eth`
+- `wrap://ens/wrappers.myuri.eth`
 
-# How To Run
+## Usage
+Polywrap client configurations should allow users to register URI Resolver Extensions, so please defer to your client's documentation for details.
 
-## Install Dependencies
-`nvm install && nvm use`  
-`yarn`  
+If you'd like to invoke the wrap directly, here is an example using the JS PolywrapClient:
 
-## Build
-`yarn build`  
+```typescript
+const uri = "wrap://wrapscan.io/polywrap/ens-uri-resolver@1.0";
 
-## Test
-`yarn test`  
+await client.invoke({
+  uri,
+  method: "tryResolveUri",
+  args: {
+    authority: "ens",
+    path: "myuri.eth"
+  }
+});
+```
+
+## Support
+
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).

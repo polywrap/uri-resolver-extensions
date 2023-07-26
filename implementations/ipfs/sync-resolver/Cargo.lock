@@ -200,7 +200,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "ipfs-uri-resolver-rs"
+name = "ipfs-uri-resolver-sync"
 version = "0.1.0"
 dependencies = [
  "base64",

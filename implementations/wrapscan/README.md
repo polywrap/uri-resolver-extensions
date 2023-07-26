@@ -1,15 +1,6 @@
-# Polywrap Wasm Wrapper Template
-A simple starter template for a Rust Wasm wrapper. For more information on how this project works, and a step by step on how to extend its behavior, see the documentation [here](https://docs.polywrap.io/).
+# Wrapscan URI Resolver
+Resolves WRAP URIs using the `wrapscan.io` authority.
 
-# How To Run
+## Support
 
-## Install Dependencies
-`nvm install && nvm use`  
-`yarn`  
-
-## Codegen & Build
-`yarn codegen`  
-`yarn build`  
-
-## Test
-`yarn test`  
+For any questions or problems related to this wrap or Polywrap at large, please visit our [Discord](https://discord.polywrap.io).

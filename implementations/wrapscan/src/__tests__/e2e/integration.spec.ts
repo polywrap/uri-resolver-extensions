@@ -8,7 +8,7 @@ type MaybeUriOrManifest = {
   manifest: Uint8Array;
 };
 
-describe("wrapscan-registry-uri-resolver-ext e2e tests", () => {
+describe("wrapscan-uri-resolver e2e tests", () => {
   const client: PolywrapClient = new PolywrapClient();
 
   const testWrapPath = "wrap/test-wrap@1.0.0";

@@ -4,9 +4,6 @@ use base64::decode;
 use std::str::from_utf8;
 use wrap::{imported::ArgsGet, *};
 
-// polywrap/ipfs/tree/main/http-client/ipfs-http-client
-// https://raw.githubusercontent.com/polywrap/ipfs/main/http-client/ipfs-http-client/polywrap.deployment.txt
-
 const GITHUB_RAW_URL: &str = "https://raw.githubusercontent.com";
 const URI_SEARCH_PATTERN: &str = "URI.txt";
 
