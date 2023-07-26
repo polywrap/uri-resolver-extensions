@@ -6,7 +6,13 @@
         "name": "ipfs_deploy",
         "id": "ipfs_deploy.ipfs_deploy",
         "input": "wrap://fs/./build",
-        "result": "wrap://ipfs/QmV2rgJ9zCUVqLppqXjAqCG3i9Fucb1bS1LrvTrjA49kPj"
+        "result": "wrap://ipfs/Qmd2kqwzvup19s92qvCFoY7Z1PvEyLs5TxrBhe297RKdiZ"
+      },
+      {
+        "name": "http_deploy",
+        "id": "ipfs_deploy.http_deploy",
+        "input": "wrap://ipfs/Qmd2kqwzvup19s92qvCFoY7Z1PvEyLs5TxrBhe297RKdiZ",
+        "result": "wrap://http/https://wraps.wrapscan.io/r/polywrap/github-uri-resolver@1.0.0"
       }
     ]
   }
