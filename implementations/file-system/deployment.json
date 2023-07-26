@@ -6,7 +6,13 @@
         "name": "ipfs_deploy",
         "id": "ipfs_deploy.ipfs_deploy",
         "input": "wrap://fs/./build",
-        "result": "wrap://ipfs/QmZZioVBCL21CrFWc9ZzEY5ShkfnG88Fk3xm14qW7yVLuj"
+        "result": "wrap://ipfs/QmW4aPwQhnjJsuWGLu3vmn9zR9JpUdDDjqp2uveceky5aa"
+      },
+      {
+        "name": "http_deploy",
+        "id": "ipfs_deploy.http_deploy",
+        "input": "wrap://ipfs/QmW4aPwQhnjJsuWGLu3vmn9zR9JpUdDDjqp2uveceky5aa",
+        "result": "wrap://http/https://wraps.wrapscan.io/r/polywrap/file-system-uri-resolver@1.0.1"
       }
     ]
   }
