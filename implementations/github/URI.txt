@@ -1,1 +1,1 @@
-wrap://ipfs/QmV2rgJ9zCUVqLppqXjAqCG3i9Fucb1bS1LrvTrjA49kPj
+wrap://http/https://wraps.wrapscan.io/r/polywrap/github-uri-resolver@1.0.0
