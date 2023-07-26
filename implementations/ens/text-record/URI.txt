@@ -1,1 +1,1 @@
-wrap://ipfs/QmdYoDrXPxgjSoWuSWirWYxU5BLtpGVKd3z2GXKhW2VXLh
+wrap://http/https://wraps.wrapscan.io/r/polywrap/ens-text-record-uri-resolver@1.0.1
