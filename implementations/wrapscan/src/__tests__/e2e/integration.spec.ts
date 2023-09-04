@@ -12,8 +12,8 @@ describe("wrapscan-uri-resolver e2e tests", () => {
   const client: PolywrapClient = new PolywrapClient();
 
   const testWrapPath = "wrap/test-wrap@1.0.0";
-  const wrapscanUrl = "http/wraps.wrapscan.io";
-  const wrapscanDevUrl = "http/dev.wraps.wrapscan.io";
+  const wrapscanUrl = "https/wraps.wrapscan.io";
+  const wrapscanDevUrl = "https/dev.wraps.wrapscan.io";
   const resolvePath = "/r/";
 
   let wrapperUri: string;
