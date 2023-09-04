@@ -1,1 +1,1 @@
-wrap://ipfs/QmYg55yAtGHqEpiA5nRNHu9qEdAWYWs72qgeUShUCZd3Pb
+wrap://http/https://wraps.wrapscan.io/r/polywrap/wrapscan-uri-resolver@1.0.2
