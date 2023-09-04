@@ -1,7 +1,7 @@
 pub mod wrap;
 pub use wrap::*;
 
-const DEFAULT_PROVIDER_URL: &str = "http/wraps.wrapscan.io";
+const DEFAULT_PROVIDER_URL: &str = "https/wraps.wrapscan.io";
 const RESOLVE_PATH: &str = "/r/";
 const AUTHORITY: &str = "wrapscan.io";
 
